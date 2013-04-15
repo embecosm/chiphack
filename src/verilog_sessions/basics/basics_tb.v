@@ -1,4 +1,4 @@
-module edge_detect_tb();
+module basics_tb();
 
 // inputs to module are registers
 reg         CLK;
@@ -19,7 +19,7 @@ end
 always
   #1 CLK = !CLK;
 
-edge_detect ed_0 (
+basics basics_0 (
 //////////// CLOCK //////////
   .CLOCK_50(CLK), //input
 //////////// LED //////////
