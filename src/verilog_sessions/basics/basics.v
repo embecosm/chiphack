@@ -7,6 +7,11 @@ A basic module / template for the DE0-Nano board
 `define COUNTER_SIZE 32 // 32 bits
 `define SLOW_CLK_BIT 16 // 16th bit
 
+//// for simulation
+//`define COUNTER_SIZE 8 // 32 bits
+//`define SLOW_CLK_BIT 2 // 16th bit
+
+
 module basics(
   //////////// CLOCK //////////
   input 		          		CLOCK_50,
@@ -57,7 +62,8 @@ module basics(
   Wire instantiation
   */
   wire [07:00] led_out;
-
+  wire         button_ed;
+  
   // assign the most significant bit of the counter to be
   // the LED clock; this will produce a much slower clock
   // ~400 ms high time
