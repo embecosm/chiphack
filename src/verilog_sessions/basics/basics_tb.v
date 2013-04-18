@@ -1,9 +1,11 @@
+`define M 100
+
 module basics_tb();
 
 // inputs to module are registers
 reg         CLK;
-reg [01:00] keys;
-reg [03:00] switches;
+reg         reset;
+reg         button;
 
 // outputs from module are wires
 wire [07:00] leds;
@@ -11,13 +13,13 @@ wire [07:00] leds;
 initial begin
   // initialise inputs to module
   CLK = 0;
-  switches = 0;
-  keys = 0;  
+  reset = 1;
+  button = 1;  
 end
 
 // create a clock
 always
-  #1 CLK = !CLK;
+  #5 CLK = !CLK;
 
 basics basics_0 (
 //////////// CLOCK //////////
@@ -25,9 +27,9 @@ basics basics_0 (
 //////////// LED //////////
   .LED(leds[07:00]), // 8 bit output
 //////////// KEY //////////
-  .KEY(keys[01:00]), // 2 bit input
+  .KEY({button, reset}), // 2 bit input
 //////////// SW //////////
-  .SW(switches[03:00]),  // 4 bit input
+  .SW(4'b0000),  // 4 bit input
 //////////// SDRAM //////////
   .DRAM_ADDR(), // 13 bit 
   .DRAM_BA(),  // 2 bit
@@ -61,11 +63,12 @@ basics basics_0 (
 
 initial begin
 
-  #100 keys[0] = 1;
-  #200 keys[0] = 0;
+  #100
+  #(10*`M) reset = 0;
+  #(20*`M) reset = 1;
   
-  #300 keys[1] = 1;
-  #300 keys[1] = 0;
+  #(30*`M) button = 0;
+  #(70*`M) button = 1;
 
 end
 
