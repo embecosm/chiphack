@@ -84,8 +84,10 @@ end
 always @(posedge CLOCK_50) begin
   if (reset == 1'b1) begin
     last_input <= 0;
-  if (pb_ed == 1'b1)
+  end
+  if (pb_ed == 1'b1) begin
     last_input <= SW;
+  end
 end
 
 // state machine
