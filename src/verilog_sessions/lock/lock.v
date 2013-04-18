@@ -61,12 +61,12 @@ parameter LOCKED=3'b000, OK1=3'b001, OK2=3'b010,
 // the lock's combination
 parameter COMBO={4'b1000, 4'b0100, 4'b0010, 4'b0001};
 
-reg  [02:00] state;
+reg  [02:00] state, next_state;
 reg  [15:00] count;
 reg  [03:00] last_input;
 
 assign reset = !KEY[0];
-assign pb = KEY[1];
+assign pb = !KEY[1];
 assign slow_clock = count[15];
 assign LED[03:00] = last_input;
 assign LED[06:04] = state;
@@ -90,52 +90,56 @@ always @(posedge CLOCK_50) begin
   end
 end
 
+// next state assignment
+always @(posedge slow_clock) begin
+  if (reset) state <= LOCKED;
+  else       state <= next_state;
+end
+
 // state machine
 always @(posedge slow_clock) begin
-  if (reset == 1'b1) begin
-    state <= LOCKED;
+  if (reset) begin
+    next_state <= LOCKED;
   end
-  else begin 
-    if (pb_ed == 1'b1) begin
-      case (state)
-        LOCKED: begin
-		            if (SW == COMBO[OK1*4-1:OK1*4-4]) begin
- 					     state <= OK1;
-						end
-                end
+  else
+  if (pb_ed == 1'b1) begin
+    case (state)
+      LOCKED: begin
+ 	             if (SW == COMBO[OK1*4-1:OK1*4-4])
+ 					   next_state <= OK1;
+					 else
+					   next_state <= LOCKED;
+              end
 
- 		  OK1:  begin
-		          if (SW == COMBO[OK2*4-1:OK2*4-4]) begin
-					   state <= OK2;
-					 end	
-                else
-				      state <= LOCKED;
-   		     end
+ 		OK1:  begin
+		        if (SW == COMBO[OK2*4-1:OK2*4-4])
+		 	       next_state <= OK2;	
+              else
+				    next_state <= LOCKED;
+   		   end
 
-		  OK2:  begin
-		          if (SW == COMBO[OK3*4-1:OK3*4-4]) begin
-					   state <= OK3;
-					 end
-                else
-				      state <= LOCKED;
-  		        end
+		OK2:  begin
+		        if (SW == COMBO[OK3*4-1:OK3*4-4])
+					 next_state <= OK3;
+              else
+				    next_state <= LOCKED;
+  		      end
 
-		  OK3:  begin
-		          if (SW == COMBO[OK4*4-1:OK4*4-4]) begin
-					   state <= OPEN;
-					 end	
-                else
-				      state <= LOCKED;
-		        end
+		OK3:  begin
+		        if (SW == COMBO[OK4*4-1:OK4*4-4])
+					 next_state <= OPEN;
+              else
+				    next_state <= LOCKED;
+		      end
 
-		  OPEN: begin
-	           end
+		OPEN: begin
+		          next_state <= OPEN;
+	         end
 
-		  default: begin
-		             state <= LOCKED;
-		           end  
-      endcase
-	 end	
+      default: begin
+                 next_state <= LOCKED;
+               end  
+    endcase
   end
 end
 
@@ -151,7 +155,7 @@ module edge_detect(
 
   reg a, b;
 
-  assign OUT = b & !a;
+  assign OUT = a & !b;
 
   always @(posedge CLK) begin
     a <= IN;
