@@ -31,7 +31,7 @@ uart.qpf: uart.tcl uart.v
 
 
 clean:
-	rm -rf uart.sim waves.vcd *~ uart.qpf db output_files uart.qsf
+	rm -rf uart.sim waves.vcd *~ db output_files
 
 
 
