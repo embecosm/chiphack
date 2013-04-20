@@ -1,6 +1,7 @@
 #============================================================
 # Build by Terasic System Builder
 #============================================================
+project_new uart -overwrite
 
 set_global_assignment -name FAMILY "Cyclone IV E"
 set_global_assignment -name DEVICE EP4CE22F17C6
@@ -67,9 +68,9 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SW[0]
 #============================================================
 # UART Tx (and VCC to drive a buffer)
 #============================================================
-set_location_assignment PIN_T13 -to UART_TX
+set_location_assignment PIN_N11 -to UART_TX
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to UART_TX
-set_location_assignment PIN _12-to UART_VCC
+set_location_assignment PIN_R10 -to UART_VCC
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to UART_VCC
 
 
@@ -91,10 +92,13 @@ set_global_assignment -name EDA_TEST_BENCH_MODULE_NAME uart_tb -section_id uart_
 set_global_assignment -name EDA_TEST_BENCH_FILE uart_tb.v -section_id uart_tb
 set_global_assignment -name VERILOG_FILE uart_tb.v
 set_global_assignment -name VERILOG_FILE uart.v
-set_global_assignment -name SOURCE_FILE uart.qsf
+
 set_global_assignment -name PROJECT_OUTPUT_DIRECTORY output_files
 set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
 set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
 set_global_assignment -name EDA_TEST_BENCH_NAME uart_tb -section_id eda_simulation
 set_global_assignment -name EDA_TEST_BENCH_RUN_SIM_FOR "2 s" -section_id uart_tb
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
+
+
+project_close
