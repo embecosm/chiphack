@@ -4,8 +4,15 @@ A basic module / template for the DE0-Nano board
 
 */
 
-`define COUNTER_SIZE 32 // 32 bits
-`define SLOW_CLK_BIT 16 // 16th bit
+`ifdef SIMULATE
+ // for simulation
+ `define COUNTER_SIZE 8 // 32 bits
+ `define SLOW_CLK_BIT 2 // 16th bit
+`else
+ // For ordinary use
+ `define COUNTER_SIZE 32 // 32 bits
+ `define SLOW_CLK_BIT 16 // 16th bit
+`endif
 
 //// for simulation
 //`define COUNTER_SIZE 8 // 32 bits
