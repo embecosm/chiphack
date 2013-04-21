@@ -10,11 +10,19 @@ reg         button;
 // outputs from module are wires
 wire [07:00] leds;
 
+`ifdef IV_DUMP
+// Enable dumping
+initial begin
+   $dumpfile("iv_dump.vcd");
+   $dumpvars;
+end
+`endif
+
 initial begin
   // initialise inputs to module
   CLK = 0;
   reset = 1;
-  button = 1;  
+  button = 1;
 end
 
 // create a clock
