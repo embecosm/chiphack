@@ -1,126 +1,55 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
+
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Chip Hack : An Introduction to FPGA Programming" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
     <title>Chip Hack</title>
-
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
   </head>
+
   <body>
-    <div class="wrapper">
-      <header>
-	<img src="/images/logo.png" title="Chip Hack" alt="Chip Hack logo"> 
-        <p><strong>Saturday 20th & Sunday 21st April 2013</strong></p>
-	<p>The Centre for Creative Collaboration<br/>16 Acton Street, London, WC1X 9NG.</p>
-	<p><a href="http://www.eventbrite.co.uk/event/5796317943?ref=ebtnebregn" target="_blank"><img src="http://www.eventbrite.co.uk/custombutton?eid=5796317943" alt="Eventbrite - Chip Hack" /></a></p>
-        <p>Sponsored by:</p>
-        <p><a href="http://www.embecosm.com"><img src="/images/embecosm.png" title="Embecosm" alt="Embecosm logo"></a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a><br />
-        Chip Hack logo based on a <a href="http://commons.wikimedia.org/wiki/File:Ic-package-BGA.svg" title="Original image files on Wikimedia Commons">drawing by ZyMOS</a>, CC BY-SA 3.0</small></p>
-      </header>
-      <section>
-        <h1>An Introduction to FPGA Programming</h1>
 
-<p>Chip Hack is a two day workshop that provides an introduction to programming field-programmable gate arrays (FPGA), which is aimed at complete beginners with no prior experience of hardware description languages (HDL) and FPGA workflows.<p>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/embecosm/chiphack">View on GitHub</a>
 
-<p>All original materials used in the workshop will be made available under open licences and published to GitHub.</p>
+          <h1 id="project_title">Chip Hack</h1>
+          <h2 id="project_tagline">An Introduction to FPGA Programming</h2>
 
-<p>Free <a href="#freefpga">FPGA development systems will be given to the first five teachers</a> that register upon their completing the workshop.</p>
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/embecosm/chiphack/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/embecosm/chiphack/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
 
-<p>Chip Hack is a <a href="#hfday">Hardware Freedom Day</a> event.</p>
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1><a href="http://www.chiphack.org">Chip Hack</a></h1>
 
-<h2>Schedule</h2>
+<p>This repository (and its companion <a href="https://github.com/embecosm/chiphack/wiki">wiki</a>) contains tutorial code and documentation for the <a href="http://www.chiphack.org">Chip Hack</a> Introduction to FPGA Programming event, a 2 day workshop originally run on the weekend of Saturday 20th and Sunday 21st April 2013 at The Centre for Creative Collaboration in London, UK.</p>
 
-<p><em>Note that timings are approximate and details subject to change!</em></p>
+<p>The materials will continue to be updated and a second Chip Hack event is tentatively planned for October 2013 in Cambridge, UK.</p>
 
-<h3>Saturday (10:00-17:00)</h3>
-
-<p>Day one will commence with an FPGA primer and introduction to the <a href="http://en.wikipedia.org/wiki/Verilog" title="Wikipedia: Verilog">Verilog</a> HDL. Following which participants will learn by example through a series of increasingly complex hands-on projects, starting with a simple LED-based counter which can be incremented and decremented using push buttons.<p>
-
-<h3>Sunday (10:00-16:00)</h3>
-
-<p>The morning of day two will be spent implementing a <a href="http://en.wikipedia.org/wiki/Universal_asynchronous_receiver/transmitter" title="Wikipedia:UART">UART</a> transmitter, and for the more ambitious a UART receiver also if time permits.</p>
-
-<p>In the afternoon there will be an introduction to the <a href="http://en.wikipedia.org/wiki/OpenRISC" title="Wikipedia: OpenRISC">OpenRISC</a> Reference Platform system-on-chip (ORPSoC), and a practical exercise in which participants will program their boards with an ORPSoC configuration and run bare metal code on the processor!</p>
-
-<p>The event will close with an introduction to the use of Verilog in creating software models of processor designs that are capable of running programs and having a debugger attached to them.</p>
-
-<h2>Suitability</h2>
-
-<p>While no HDL or FPGA programming experience is required it is expected that participants will at least have some programming experience and an understanding of basic digital electronics.</p>
-
-<h2>Preparing for the event</h2>
-
-<h3>Hardware</h3>
-
-<p>The workshop will be based around the <a href="http://www.altera.co.uk/education/univ/materials/boards/de0-nano/unv-de0-nano-board.html" title=Altera: DE0-Nano">DE0-Nano</a>, a highly capable but affordable FPGA development board that features a device with 22,320 logic elements, along with buttons, switches, LEDs, ADC, accelerometer and I/O pins.</p>
-
-<p>It is suggested that participants purchase their own DE0-Nano from a supplier such as <a href="http://uk.rs-online.com/web/p/programmable-logic-development-kits/7689039/" title="DE0-Nano @ RS">RS Components</a> or <a href="http://uk.farnell.com/terasic-technologies/p0082/cyclone-iv-fpga-deonano-dev-board/dp/2076463" title="DE0-Nano @ Farnell">Farnell</a>. A limited number of boards will be made available for those without their own, however, should the majority not bring hardware some may have to work in small groups.</p>
-
-<p>A laptop computer with a USB port will be required.</p>
-
-<h3>Software</h3>
-
-<p>The <a href="https://www.altera.com/download/software/quartus-ii-we" title="altera.com: Quartus II Web Edition">Quartus II Web Edition</a> software should be installed <em><u>in advance</u></em>.</p>
-
-<h2>Lunch</h2>
-
-<p>Lunch will be provided on both days. Please ensure that you make clear any dietary requirements during registration.</p>
-
-<h2>Who</h2>
-
-<p>Chip Hack is sponsored by Embecosm and brought to you by a team of experienced open source software and hardware hackers.</p>
-
-<h3>Julius Baxter (OpenRISC)</h3>
-
-<p><a href="http://juliusbaxter.net/" title="Julius Baxter - personal website">Julius Baxter</a> has been involved with the OpenRISC project for 5 years, and during that time he's worked on everything from processor Verilog RTL to the Linux kernel port. Julius maintains a role as an active developer and maintainer on the OpenRISC project, largely dealing with RTL, toolchain and architecture work.</p>
-
-<h3>Dr Jeremy Bennett (Embecosm)</h3>
-
-<p><a href="http://www.embecosm.com/about/" title="Embecosm - About">Dr Jeremy Bennett</a> is the founder of Embecosm, and an expert on hardware modelling and embedded software development. Prior to founding Embecosm, Dr Bennett was Vice President of ARC International PLC and previously Vice President of Marconi PLC.</p>
-
-<h3>Simon Cook (Embecosm)</h3>
-
-<p><a href="http://www.embecosm.com/about/" title="Embecosm - About">Simon Cook</a> has a background in low-power processors, with a particular focus on the energy constraints of code running in embedded environments. He also provides support for Embecosm's work on low level binutils for both GNU and LLVM toolchains.</p>
-
-<h3>Saar Drimer (Boldport)</h3>
-
-<p><a href="http://uk.linkedin.com/in/saardrimer" title="Saar Drimer - LinkedIn">Saar Drimer</a> is an experienced hardware engineer. In the past few years he's been developing tools for effective and efficient hardware design.</p>
-
-<h3>Omer Kilic (Erlang Solutions)</h3>
-
-<p><a href="http://omer.kilic.name/" title="Omer Kilic - personal website">Omer Kilic</a> works on Erlang Embedded, a Knowledge Transfer Partnership project in collaboration with University of Kent. The aim of this project is to bring the benefits of concurrent systems development using Erlang to the field of embedded systems; through investigation, analysis, software development and evaluation.</p>
-
-<h2 id="freefpga">Free FPGA development systems</h2>
-
-<p>Embecosm will donate DE0-Nano FPGA development boards to the first five school teachers that register for the event.</p>
-
-<p>Conditions:</a>
-
-<p><ul>
-<li>You must have indicated that you are a school teacher when registering</li>
-<li>You must be able to prove that you currently hold a teaching position</li>
-<li>You must complete both days of the workshop</li>
-<li>Hardware is provided without any support or warranties</li>
-<li>There is no cash alternative</li>
-</ul></p>
-
-<h2 id="hfday">Hardware Freedom Day</h2>
-
-<p>Chip Hack is a <a href="http://www.hfday.org/" title="Hardware Freedom Day 2013">Hardware Freedom Day 2013</a> event.</p>
-
+<p>All are encouraged to use and contribute to these materials, issues should be logged using the issue tracker, and there is a <a href="https://groups.google.com/d/forum/chiphack">Google group</a> for discussion.</p>
       </section>
+    </div>
 
-      <footer>
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Chip Hack maintained by <a href="https://github.com/embecosm">embecosm</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
-    <script src="javascripts/scale.fix.js"></script>
+
     
+
   </body>
 </html>
