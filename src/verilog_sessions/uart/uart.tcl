@@ -68,10 +68,10 @@ set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SW[0]
 #============================================================
 # UART Tx (and VCC to drive a buffer)
 #============================================================
-set_location_assignment PIN_N11 -to UART_TX
+set_location_assignment PIN_L14 -to UART_TX
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to UART_TX
-set_location_assignment PIN_R10 -to UART_VCC
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to UART_VCC
+set_location_assignment PIN_P15 -to UART_GND
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to UART_GND
 
 
 #============================================================

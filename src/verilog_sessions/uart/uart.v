@@ -15,7 +15,7 @@ module uart(
   input 		     [3:0]		SW,
 
   output reg                                    UART_TX,
-  output                                        UART_VCC
+  output                                        UART_GND
 );
 
    // Some register and wire declarations
@@ -28,11 +28,11 @@ module uart(
    wire 					reset;
    assign reset = ~KEY[0];
 
-   // Tie UART_VCC high - it's used to drive the buffer on the UART board
-   assign UART_VCC = 1;
+   // Tie UART_GND low
+   assign UART_GND = 0;
    
    //UART transmit at 115200 baud from 50MHz clock
-   reg [7:0] 					clock_divider_counter;
+   reg [9:0] 					clock_divider_counter;
    reg 						uart_clock;
 
 
@@ -45,7 +45,8 @@ module uart(
      begin
 	if (reset == 1'b1)
 	  clock_divider_counter <= 0;
-	else if (/* when might we want this counter to go back to zero?*/)
+	else if (/* FILL ME IN - what conditiono will make us 
+		                 reset this counter? */)
 	  clock_divider_counter <= 0;
 	else
 	  // Otherwise increment the counter
@@ -57,8 +58,9 @@ module uart(
      begin
 	if (reset == 1'b1)
 	  uart_clock <= 0;
-	else if (/*What condition here to make the clock toggle? 
-		  Think about the value of teh clock_divider_counter */)
+	else if (/* FILL ME IN - what conditiono will make us 
+		                 toggle the clock?
+		    (hint: the same as the above counter condition) */)
 	  uart_clock <= ~uart_clock;
      end
    
@@ -78,6 +80,7 @@ module uart(
 	  end
 	else
 	  begin
+	     
 	     // What follows is the skeleton of the state machine to control
 	     // the bits going onto the UART transmit line.
 	     // You will want to, from the idle state:
@@ -90,21 +93,32 @@ module uart(
 		 begin
 		    // Idle state - We want to transition to the start bit state
 		    //              when the pushbutton is pressed. (A signal
-		    //              detecting this is provided.)
-		    //              Hint: You can assign the start bit to the 
-		    //              UART TX line in this state as we transition.
+		    //              detecting this is provided - "key1_edge_detect".)
 		 end
 	       1:
 		 begin
-		    // Start bit state
+		    // Start bit state, and progress onto the next state
+		    /* Fill me in - assign UART_TX here */
 		 end
-	       2,3,4,5,6,7,8:
+	       2,3,4,5,6,7,8,9:
 		 begin
 		    // Data bits
+		    // when transmit_state is 2 we want transmit_data[0]
+		    // when transmit_state is 3 we want transmit_data[1]
+		    // ...
+		    // when transmit_state is 9 we want transmit_data[7]
+		    /* Fill me - assign appropriate data bit to UART_TX here
+		               - don't forget to continue incrementing the
+		                 state
+		     */
 		 end
-	       9:
+	       10:
 		 begin
 		    // Stop bit, and transition back to idle (0)
+		    /* Fill me in - drive the final bit onto UART_TX.
+		                  - also make sure the transmit_data
+		                    changes so we see something different 
+		                    next time */
 		 end
 	       default:
 		 // Shouldn't reach here, but just incase, go back to idle!

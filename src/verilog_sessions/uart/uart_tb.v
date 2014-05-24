@@ -1,4 +1,4 @@
-`define M 100
+`define M 300
 
 module uart_tb();
 

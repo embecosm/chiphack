@@ -18,7 +18,7 @@
 #
 # Quartus II 32-bit
 # Version 12.1 Build 243 01/31/2013 Service Pack 1 SJ Web Edition
-# Date created = 11:29:43  April 20, 2013
+# Date created = 10:53:40  May 24, 2014
 #
 # -------------------------------------------------------------------------- #
 #
@@ -78,10 +78,10 @@ set_location_assignment PIN_B9 -to SW[2]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SW[2]
 set_location_assignment PIN_M15 -to SW[3]
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SW[3]
-set_location_assignment PIN_N11 -to UART_TX
+set_location_assignment PIN_L14 -to UART_TX
 set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to UART_TX
-set_location_assignment PIN_R10 -to UART_VCC
-set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to UART_VCC
+set_location_assignment PIN_P15 -to UART_GND
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to UART_GND
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
 set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
