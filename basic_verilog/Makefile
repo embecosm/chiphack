@@ -14,8 +14,8 @@
 ###############################################################################
 
 # Default name of serial adaptor if none is provided by the user
-SERIAL := /dev/cu.usbserial # For macOS (maybe)
-#SERIAL := /dev/ttyUSB0 # The default for linux (usually)
+#SERIAL := /dev/cu.usbserial # For macOS (maybe)
+SERIAL := /dev/ttyUSB0 # The default for linux (usually)
 
 # Leave as the basic make, so that people can initially get something running
 chip.bin: ./led/chip.v ./led/led.v blackice.pcf
@@ -26,6 +26,12 @@ chip.bin: ./led/chip.v ./led/led.v blackice.pcf
 .PHONY: button
 button: ./button/chip.v ./button/button.v blackice.pcf
 		yosys -q -p "synth_ice40 -blif chip.blif" ./button/chip.v ./button/button.v
+		arachne-pnr -d 8k -P tq144:4k -p blackice.pcf chip.blif -o chip.txt
+		icepack chip.txt chip.bin
+
+.PHONY: fibonacci
+fibonacci: ./fibonacci/chip.v ./fibonacci/fibonacci.v blackice.pcf
+		yosys -q -p "synth_ice40 -blif chip.blif" ./fibonacci/chip.v ./fibonacci/fibonacci.v
 		arachne-pnr -d 8k -P tq144:4k -p blackice.pcf chip.blif -o chip.txt
 		icepack chip.txt chip.bin
 

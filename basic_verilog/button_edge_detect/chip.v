@@ -34,24 +34,16 @@ module chip (
   assign RAMWE = 1'b1;
   assign RAMCS = 1'b1;
 
-  // Set unused pmod pins to default
   assign PMOD[51:0] = {51{1'b0}};
 
-  wire OUT, IN;
-  assign IN = OUT;
-
   button_ed my_button_ed (
-    .clk   (clk),
-  //  .led (PMOD[55]),
-    .buttons (BUT[1:0]),
-    .IN (IN)
+    /* Here be where you need enter some inputs and outputs
+    */
   );
 
   edge_detect my_edge_detect (
-    .clk   (clk),
-    .buttons (BUT[1:0]),
-    .led (PMOD[55:52]),
-    .OUT (OUT)
+    /*Here also
+    */
   );
 
 endmodule

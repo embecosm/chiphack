@@ -9,6 +9,6 @@ To compile:
 
 To Program the board:
   - Inside the makefile you may need to the change SERIAL to the port on your system
-  - Then simply run make upload
+  - Then simply run 'make upload'
 
 'make clean' will declutter the folder for you.

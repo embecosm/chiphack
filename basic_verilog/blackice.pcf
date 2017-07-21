@@ -144,3 +144,7 @@ set_io RAMCS 136
 # Onboard 12Mhz oscillator
 set_io clk 129
 
+# Buttons
+
+set_io BUT[0] 63
+set_io BUT[1] 64

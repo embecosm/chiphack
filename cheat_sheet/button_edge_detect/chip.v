@@ -13,11 +13,41 @@
 *                                                                             *
 ******************************************************************************/
 
-module button_ed(	/* 	Here you need to
-											Add inputs and outputs
-									*/
-								);
+module chip (
+    // 100MHz clock input
+    input  clk,
+    // SRAM Memory lines
+    output [18:0] ADR,
+    output [15:0] DAT,
+    output RAMOE,
+    output RAMWE,
+    output RAMCS,
+    // All PMOD outputs
+    output [55:0] PMOD,
+    input [1:0] BUT
+  );
 
-	// We want something to happen on the posedge of the edge detect
+  // SRAM signals are not use in this design, lets set them to default values
+  assign ADR[18:0] = {19{1'b0}};
+  assign DAT[15:0] = {16{1'b0}};
+  assign RAMOE = 1'b1;
+  assign RAMWE = 1'b1;
+  assign RAMCS = 1'b1;
+
+  assign PMOD[51:0] = {51{1'b0}};
+
+  wire OUT;
+
+  button_ed my_button_ed (
+    .clk   (clk),
+    .led (PMOD[55:52]),
+    .OUT (OUT)
+  );
+
+  edge_detect my_edge_detect (
+    .clk   (clk),
+    .buttons (BUT[1:0]),
+    .OUT (OUT)
+  );
 
 endmodule

@@ -13,11 +13,17 @@
 *                                                                             *
 ******************************************************************************/
 
-module button_ed(	/* 	Here you need to
-											Add inputs and outputs
-									*/
+module button_ed(	input clk,
+	 								input OUT,
+									output [3:0] led
 								);
 
-	// We want something to happen on the posedge of the edge detect
+	reg [3:0] count;
+
+	assign led = count;
+
+	always @(posedge OUT) begin
+		count <= count + 1;
+	end
 
 endmodule

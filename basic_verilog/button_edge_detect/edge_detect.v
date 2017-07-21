@@ -1,44 +1,14 @@
-// edge detect module
-// Commandeered from Dr. Saar Drimer (https://www.boldport.com/blog/2015/4/3/edge-detect-ad-nauseam)
+
 module edge_detect(
-  input  clk,
-  input [1:0] buttons,
-  output [3:0] led,
-  output OUT
+  /* Here we need to input our buttons and the clock
+      And to output the edge detect signal
+  */
   );
 
-  reg a, b;
-  reg [3:0] count;
+  // The buttons on the mystorm are "active low" (they read as 1 when not pressed, and 0 when pressed)
 
-// What on earth is up with this??? /////
+  // We then have to produce a slower clock
 
-  //assign led[3] = buttons[0]; //Works when led[3] is showing something?? but not else?!?
-  //assign led[2] = buttons[0];
-  assign led[3:0] = count;
-
-//////////////////////////////////////////////
-
-  // the edge detect signal is (b AND (NOT a))
-  assign OUT = a & !b;
-
-  always @(posedge clk) begin
-    // It's always good to have a reset condition, otherwise
-    // the state of the register will show up as undertemined
-    // in simulation ('x')
-    if (buttons[0] == 1'b1) begin
-       a <= 0;
-       b <= 0;
-     end
-     else begin
-       a <= buttons[1];
-       b <= a;
-     end
-  end
-
-  // Testing edge detect in module:
-
-  always @(negedge OUT) begin
-    count <= count + 1;
-  end
+  // Then we follow Saar's edge detect tutorial, but using the slow clock  
 
 endmodule
