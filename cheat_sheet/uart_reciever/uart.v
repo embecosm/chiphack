@@ -124,7 +124,6 @@ module uart(  input clk,
     if (reset) begin
      // Reset to the "IDLE" state
       recieve_state <= 0;
-      saved_counter = 0;
     end
     else begin
       case (recieve_state)

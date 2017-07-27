@@ -37,8 +37,6 @@ module chip (
   assign RAMWE = 1'b1;
   assign RAMCS = 1'b1;
 
-  assign PMOD[48:0] = {49{1'b0}};
-
   wire OUT;
 
   wire enter_ed;
@@ -53,9 +51,6 @@ module chip (
   reg uart_clock;
 
   always @(posedge clk) begin
-    if (next_ed == 1) begin
-      counter <= counter + 1;
-    end
    	if (reset == 1'b1)
    	  clock_divider_counter <= 0;
    	else if (clock_divider_counter == 434)
