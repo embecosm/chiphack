@@ -1,0 +1,77 @@
+###############################################################################
+#                                                                             #
+# Copyright 2016 myStorm Copyright and related                                #
+# rights are licensed under the Solderpad Hardware License, Version 0.51      #
+# (the “License”); you may not use this file except in compliance with        #
+# the License. You may obtain a copy of the License at                        #
+# http://solderpad.org/licenses/SHL-0.51. Unless required by applicable       #
+# law or agreed to in writing, software, hardware and materials               #
+# distributed under this License is distributed on an “AS IS” BASIS,          #
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or             #
+# implied. See the License for the specific language governing                #
+# permissions and limitations under the License.                              #
+#                                                                             #
+###############################################################################
+
+# User Constraint File for myStorm
+
+#pmod 13 lvds pairs 17 & 23
+set_io UART_RX 28 # 23a  #pmod[49]
+set_io UART_TX 24 # 17b  #pmod[50]
+set_io UART_GND 23 # 17a #pmod[51]
+
+#pmod 14 SPI muxed with leds
+set_io PMOD[52] 71 #LD4,!SS,p14_1
+set_io PMOD[53] 67 #LD3,MISO,p14_2
+set_io PMOD[54] 68 #LD2,MOSI,p14_3
+set_io PMOD[55] 70 #LD1,SCL,p14_4
+
+# SRAM
+set_io ADR[0] 137
+set_io ADR[1] 138
+set_io ADR[2] 139
+set_io ADR[3] 141
+set_io ADR[4] 142
+set_io ADR[5] 42
+set_io ADR[6] 43
+set_io ADR[7] 44
+set_io ADR[8] 73
+set_io ADR[9] 74
+set_io ADR[10] 75
+set_io ADR[11] 76
+set_io ADR[12] 115
+set_io ADR[13] 116
+set_io ADR[14] 117
+set_io ADR[15] 118
+set_io ADR[16] 119
+set_io ADR[17] 78
+set_io ADR[18] 62
+
+set_io DAT[0] 135
+set_io DAT[1] 134
+set_io DAT[2] 130
+set_io DAT[3] 128
+set_io DAT[4] 125
+set_io DAT[5] 124
+set_io DAT[6] 122
+set_io DAT[7] 121
+set_io DAT[8] 61
+set_io DAT[9] 60
+set_io DAT[10] 56
+set_io DAT[11] 55
+set_io DAT[12] 52
+set_io DAT[13] 49
+set_io DAT[14] 48
+set_io DAT[15] 47
+
+set_io RAMOE 45
+set_io RAMWE 120
+set_io RAMCS 136
+
+# Onboard 12Mhz oscillator
+set_io clk 129
+
+# Buttons
+
+set_io BUT[0] 63
+set_io BUT[1] 64
