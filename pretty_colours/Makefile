@@ -14,8 +14,8 @@
 ###############################################################################
 
 # Default name of serial adaptor if none is provided by the user
-SERIAL := /dev/cu.usbserial # For macOS (maybe)
-#SERIAL := /dev/ttyUSB0 # The default for linux (usually)
+#SERIAL := /dev/cu.usbmodem1421 # For macOS (maybe)
+SERIAL := /dev/ttyACM0 # The default for linux (usually)
 
 chip.bin: chip.v count.v blackice.pcf
 	yosys -q -p "synth_ice40 -blif chip.blif" chip.v count.v
@@ -24,7 +24,8 @@ chip.bin: chip.v count.v blackice.pcf
 
 .PHONY: upload
 upload:
-	stty -f $(SERIAL) 115200 & cat chip.bin >$(SERIAL)
+	#	stty -f $(SERIAL) raw & cat chip.bin >$(SERIAL) # for macOS
+		stty -F $(SERIAL) raw & cat chip.bin >$(SERIAL) # for linux
 
 .PHONY: clean
 clean:

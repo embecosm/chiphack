@@ -14,8 +14,8 @@
 ###############################################################################
 
 # Default name of serial adaptor if none is provided by the user
-#SERIAL := /dev/cu.usbserial # For macOS (maybe)
-SERIAL := /dev/ttyUSB0 # The default for linux (usually)
+#SERIAL := /dev/cu.usbmodem1421 # For macOS (maybe)
+SERIAL := /dev/ttyACM0 # The default for linux (usually)
 
 # Leave as the basic make, so that people can initially get something running
 chip.bin: ./led/chip.v ./led/led.v blackice.pcf
@@ -48,21 +48,29 @@ blink: ./blink/chip.v ./blink/blink.v blackice.pcf
 		icepack chip.txt chip.bin
 
 .PHONY: lock
-lock: ./lock/chip.v ./lock/lock.v blackice.pcf
-		yosys -q -p "synth_ice40 -blif chip.blif" ./lock/chip.v ./lock/lock.v
+lock: ./lock/chip.v ./lock/lock.v ./lock/edge_detect.v blackice.pcf
+		yosys -q -p "synth_ice40 -blif chip.blif" ./lock/chip.v ./lock/lock.v ./lock/edge_detect.v
 		arachne-pnr -d 8k -P tq144:4k -p blackice.pcf chip.blif -o chip.txt
 		icepack chip.txt chip.bin
 
 .PHONY: uart
-uart: ./uart/chip.v ./uart/uart.v blackice.pcf
-		yosys -q -p "synth_ice40 -blif chip.blif" ./uart/chip.v ./uart/uart.v
+uart: ./uart/chip.v ./uart/uart.v ./uart/edge_detect.v blackice.pcf
+		yosys -q -p "synth_ice40 -blif chip.blif" ./uart/chip.v ./uart/uart.v ./uart/edge_detect.v
 		arachne-pnr -d 8k -P tq144:4k -p blackice.pcf chip.blif -o chip.txt
 		icepack chip.txt chip.bin
+
+.PHONY: uart_reciever
+uart_reciever: ./uart_reciever/chip.v ./uart_reciever/uart.v ./uart_reciever/edge_detect.v blackice_uart.pcf
+		yosys -q -p "synth_ice40 -blif chip.blif" ./uart_reciever/chip.v ./uart_reciever/uart.v ./uart_reciever/edge_detect.v
+		arachne-pnr -d 8k -P tq144:4k -p blackice_uart.pcf chip.blif -o chip.txt
+		icepack chip.txt chip.bin
+
 
 # Upload to a mac, may have to change name of the port accordingly
 .PHONY: upload
 upload:
-	stty -f $(SERIAL) 115200 & cat chip.bin >$(SERIAL)
+#	stty -f $(SERIAL) raw & cat chip.bin >$(SERIAL) # for macOS
+	stty -F $(SERIAL) raw & cat chip.bin >$(SERIAL) # for linux
 
 .PHONY: clean
 clean:

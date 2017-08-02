@@ -14,7 +14,7 @@
 ###############################################################################
 
 # Default name of serial adaptor if none is provided by the user
-SERIAL := /dev/cu.usbserial # For macOS (maybe)
+SERIAL := /dev/cu.wchusbserial1410 # For macOS (maybe)
 #SERIAL := /dev/ttyUSB0 # The default for linux (usually)
 
 # Leave as the basic make, so that people can initially get something running
