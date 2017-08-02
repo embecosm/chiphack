@@ -24,7 +24,7 @@ chip.bin: chip.v count.v blackice.pcf
 
 .PHONY: upload
 upload:
-	#	stty -f $(SERIAL) raw & cat chip.bin >$(SERIAL) # for macOS
+#	stty -f $(SERIAL) raw & cat chip.bin >$(SERIAL) # for macOS
 		stty -F $(SERIAL) raw & cat chip.bin >$(SERIAL) # for linux
 
 .PHONY: clean
