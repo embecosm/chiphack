@@ -1,0 +1,364 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Chip Hack by Embecosm</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport"
+	  content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+
+      <header>
+        <img src="/images/logo.png" title="Chip Hack" alt="Chip Hack logo">
+      </header>
+
+      <section>
+        <h1>ChipHack/EDSAC Challenge: 6-8 September 2017</h1>
+
+	<p>
+	  To celebrate the 60th anniversary of the BCS and its founding
+	  president,
+	  <a href="https://en.wikipedia.org/wiki/Maurice_Wilkes"
+	     title="Maurice Wilkes on Wikipedia">Maurice Wilkes</a>, this
+	  workshop will recreate
+	  <a href="https://en.wikipedia.org/wiki/Electronic_delay_storage_automatic_calculator"
+	     title="EDSAC on Wikipedia">EDSAC</a> on an FPGA, rather than
+	  using OpenRISC.  EDSAC was designed by Maurice Wilkes and was one
+	  of the very first general purpose computers.
+	</p>
+
+	<p>
+	  We'll be reusing the logic of EDSAC, but with FPGA rather than
+	  valves, and attempt to interface to modern recreations of a paper
+	  tape reader, terminal printer, startup panel and air delay line
+	  (rather than the original mercury delay line).
+	</p>
+
+	<p>
+	  We shall also use the MyStorm BlackIce FPGA board.  Designed for use
+	  by hobbyists and supporting the YoSys open source tool chain, the
+	  initial idea for this board came from a BCS Open Source Specialist
+	  Group meeting in May 2016.
+	</p>
+
+	<h2>Registration</h2>
+
+	<p>
+	  Registration is free, but you <strong>must</strong> register in
+	  advance at the
+	  <a href="https://www.eventbrite.co.uk/e/chiphack-edsac-challenge-registration-35008847405">event page</a>.
+	  ChipHack is invariably heavily over-subscribed, with a
+	  waiting list, so we will not be able to accept registrations on the
+	  day.
+	</p>
+
+	<h2>Venue</h2>
+
+	<p>
+	  We shall be using the main room at
+	  <a href="http://www.hebdenbridgetownhall.org.uk/"
+	     title="Hebden Bridge Towh Hall main page">Hebden Bridge Town
+	   Hall</a>.
+	</p>
+
+	<p>
+	  The Town Hall<br/>
+	  St George's Street<br/>
+	  Hebden Bridge  HX7 7BY
+        </p>
+
+	<h2>Equipment</h2>
+
+	<h3>Equipment provided by you</h3>
+
+	<p>
+	  You should bring a laptop.  If you have a Raspberry Pi and/or an
+	  Arduino, you may find it useful to bring these along as well.  All
+	  the tools for the workshop will run on the laptop.
+	</p>
+
+	<h3>Equipment provided by us</h3>
+
+	<p>
+	  We will provide.
+	</p>
+
+	<ul>
+	  <li>A MyStorm BlackIce FPGA development board + USB cable;</li>
+	  <li>A UART to USB converter + USB cable; and</li>
+	  <li>Wires to connect the UART to the Mystorm board.</li>
+	</ul>
+
+	<p>
+	  You may keep the UART at the end of the course.  The Mystorm boards
+	  will be returned to the BCS for reuse on future courses.  However,
+	  if you wish, you may purchase your MyStorm board at cost for £42
+	  (inc VAT).
+	</p>
+
+	<h3>Other equipment</h3>
+
+	<p>
+	  The latter part of the workshop involves trying to interface EDSAC
+	  to recreations of some of its peripherals.  We'll bring some of
+	  these with us, but if you would like to try creating your own, the
+	  design details are on
+	  <a href="https://github.com/embecosm/edsac-peripherals"
+	     title="GitHub EDSAC peripherals">GitHub</a>.
+	</p>
+
+	<p>
+	  This is a work in progress, so keep checking back for updates.
+	</p>
+
+	<h2>Software installation</h2>
+
+	<p>
+	  You need to install the Yosys tool chain.  All software is free and
+	  open source.
+
+	  The following steps are for installing software on Ubuntu 16.04 or
+	  later, and cover the building and installation of three tools, which
+	  are required for programming the myStorm board.  You can use these
+	  for a laptop running Linux, or to install the tools on a Raspberry
+	  Pi.
+	</p>
+
+	<p>
+	  Instructions for installation on Mac and Windows will follow in a
+	  few days.
+	</p>
+
+	<h3>Downloading and installing pre-requisites</h3>
+
+	<p>
+	  These are needed for compiling and installing the icestorm and
+	  Arachne-PNR tools later.
+	</p>
+
+	<pre>
+sudo apt-get install build-essential clang bison flex libreadline-dev \
+gawk tcl-dev libffi-dev git mercurial graphviz xdot pkg-config python \
+	  python3 libftdi-dev vim htop screen iverilog
+	</pre>
+
+	<h3>Downloading and installing IceStorm</h3>
+
+	<p>Starting in an empty directory:</p>
+
+	<pre>
+git clone https://github.com/cliffordwolf/icestorm.git icestorm
+cd icestorm
+make
+sudo make install
+	</pre>
+
+	<h3>Downloading and installing IceStorm</h3>
+
+	<p>Starting in the same directory:</p>
+
+	<pre>
+	  git clone https://github.com/cseed/arachne-pnr.git arachne-pnr
+	  cd arachne-pnr
+	  make -j
+	  sudo make install
+	</pre>
+
+	<h3>Downloading and installing Yosys</h3>
+
+	<p>Starting in the same directory:</p>
+
+	<pre>
+git clone https://github.com/cliffordwolf/yosys.git yosys
+cd yosys
+make -j
+sudo make install
+	</pre>
+
+	<h3>Downloading the resources for Chip Hack</h3>
+
+	<p>This is done by cloning the Chip Hack repository:</p>
+
+	<pre>git clone https://github.com/embecosm/chiphack.git</pre>
+
+	<h2>Discussion</h2>
+
+	Discuss on the
+	  <a href="https://groups.google.com/d/forum/chiphack"
+	     title="Google Group link">Chip Hack Google Group</a>
+	  or
+	  <a href="https://chiphack2017.slack.com"
+	     title="ChipHack 2017 Slack team">Chip Hack 2017 Slack team</a>.
+	</p>
+
+	<h2>Schedule</h2>
+
+	<table>
+          <tbody>
+            <tr>
+              <th>Day</th>
+              <th>Time</th>
+              <th>Speaker</th>
+              <th>Title</th>
+            </tr>
+            <tr>
+	      <td rowspan="11">Wed 6 Sep</td>
+	      <td>09:00-09:05</td>
+	      <td>Jeremy Bennett</td>
+	      <td>Welcome</td>
+	    </tr>
+	    <tr>
+	      <td>09:05-09:20</td>
+	      <td>Dan Gorringe</td>
+	      <td>Installing and using the tools</td>
+	    </tr>
+	    <tr>
+	      <td>10:00-10:20</td>
+	      <td>Jeremy Bennett</td>
+	      <td>Basic Verilog & the LED example</td>
+	    </tr>
+	    <tr>
+	      <td>10:30-11:00</td>
+	      <td colspan="2" style="text-align: center"><em>Coffee/tea/soft drinks available</em></td>
+	    </tr>
+	    <tr>
+	      <td>11:30-11:50</td>
+	      <td>Al Wood</td>
+	      <td>More Verilog & the UART receiver</td>
+	    </tr>
+	    <tr>
+	      <td>12:30-13:30</td>
+	      <td colspan="2" style="text-align: center"><em>Lunch available''</td>
+	    </tr>
+	    <tr>
+	      <td>14:00-14:20</td>
+	      <td>Richard Miller</td>
+	      <td>Interfacing to MyStorm</td>
+	    </tr>
+	    <tr>
+	      <td>15:00-15:30</td>
+	      <td colspan="2" style="text-align: center"><em>Coffee/tea/soft drinks available</em></td>
+	    </tr>
+	    <tr>
+	      <td>16:00-16:20</td>
+	      <td>Philipp Wagner</td>
+	      <td>Even more Verilog & the UART transmitter</td>
+	    </tr>
+	    <tr>
+	      <td>18:00      </td>
+	      <td colspan="2" style="text-align: center"><em>Session close</em></td>
+	    </tr>
+	    <tr>
+	      <td>19:00      </td>
+	      <td colspan="2" style="text-align: center"><em>Gather in the pub (TBC)</em></td>
+	    </tr>
+	    <tr>
+	      <td rowspan="13">Thu 7 Sep</td>
+	      <td>09:00-09:05</td>
+	      <td>Kevin Murrell</td>
+	      <td>Welcome</td>
+	    </tr>
+	    <tr>
+	      <td>09:05-09:20</td>
+	      <td>Malcolm Campbell-Kelly</td>
+	      <td>The original EDSAC (part 1)</td>
+	    </tr>
+	    <tr>
+	      <td>10:00-10:20</td>
+	      <td>Dan Gorringe</td>
+	      <td>Bringing up EDSAC</td>
+	    </tr>
+	    <tr>
+	      <td>10:30-11:00</td>
+	      <td colspan="2" style="text-align: center"><em>Coffee/tea/soft drinks available</em></td>
+	    </tr>
+	    <tr>
+	      <td>11:00-11:20</td>
+	      <td>Bill Purvis</td>
+	      <td>The first implementation of EDSAC in Verilog</td>
+	    </tr>
+	    <tr>
+	      <td>12:00-12:20</td>
+	      <td>Hatim Kanchwala</td>
+	      <td>The structure of the GSoC EDSAC implementation</td>
+	    </tr>
+	    <tr>
+	      <td>12:30-13:30</td>
+	      <td colspan="2" style="text-align: center"><em>Lunch available</em></td>
+	    </tr>
+	    <tr>
+	      <td>14:00-14:20</td>
+	      <td>Peter Bennett</td>
+	      <td>Recreating EDSAC peripherals</td>
+	    </tr>
+	    <tr>
+	      <td>15:00-15:30</td>
+	      <td colspan="2" style="text-align: center"><em>Coffee/tea/soft drinks available</em></td>
+	    </tr>
+	    <tr>
+	      <td>16:00-16:20</td>
+	      <td>Malcolm Campbell-Kelly</td>
+	      <td>The original EDSAC (part 2)</td>
+	    </tr>
+	    <tr>
+	      <td>17:00-17:20</td>
+	      <td>Ken Boak</td>
+	      <td>Building a simple EDSAC simulator</td>
+	    </tr>
+	    <tr>
+	      <td>18:00      </td>
+	      <td colspan="2" style="text-align: center"><em>Session close</em></td>
+	    </tr>
+	    <tr>
+	      <td>19:00      </td>
+	      <td colspan="2" style="text-align: center"><em>Gather in the pub (TBC)</em></td>
+	    </tr>
+	    <tr>
+	      <td rowspan="5">Fri 8 Sep</td><
+	      <td>09:00-09:05</td>
+	      <td>Mary Bennett</td>
+	      <td>Welcome</td>
+	    </tr>
+	    <tr>
+	      <td>09:05-09:20</td>
+	      <td>Kevin Murrell</td>
+	      <td>The EDSAC replica project</td>
+	    </tr>
+	    <tr>
+	      <td>10:00-10:20</td>
+	      <td>Everyone</td>
+	      <td>What next for EDSAC</td>
+	    </tr>
+	    <tr>
+	      <td>10:30-11:00</td>
+	      <td colspan="2" style="text-align: center"><em>Coffee/tea/soft drinks available</em></td>
+	    </tr>
+	    <tr>
+	      <td>11:45      </td>
+	      <td colspan="2" style="text-align: center"><em>Event close</em></td>
+	    </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <footer>
+        <p>
+	  <small>Logo based on a <a href="http://commons.wikimedia.org/wiki/File:Ic-package-BGA.svg" title="Original image files on Wikimedia Commons">drawing by ZyMOS</a>, CC BY-SA 3.0.<br />
+            Hosted on GitHub Pages &mdash; Theme
+            by <a href="https://github.com/orderedlist">orderedlist.</a></small>
+	</p>
+      </footer>
+    </div>
+
+    <script src="javascripts/scale.fix.js"></script>
+
+  </body>
+</html>
