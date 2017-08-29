@@ -97,83 +97,83 @@ module uart(  input clk,
             else
               word_state <= word_state + 1;
             begin
-              if (word_state == 1) begin
-                transmit_state <= 1;
-                word_state <= word_state + 1;
-                transmit_data <= 8'h48; //H
-              end
-              if (word_state == 2) begin
-                transmit_state <= 1;
-                word_state <= word_state + 1;
-                transmit_data <= 8'h65; //e
-              end
-              if (word_state == 3) begin
-                transmit_state <= 1;
-                word_state <= word_state + 1;
-                transmit_data <= 8'h6c; //l
-              end
-              if (word_state == 4) begin
-                transmit_state <= 1;
-                word_state <= word_state + 1;
-                transmit_data <= 8'h6c; //l
-              end
-              if (word_state == 5) begin
-                transmit_state <= 1;
-                word_state <= word_state + 1;
-                transmit_data <= 8'h6f; //o
-              end
-              if (word_state == 6) begin
-                transmit_state <= 1;
-                word_state <= word_state + 1;
-                transmit_data <= 8'h2c; //,
-              end
-              if (word_state == 7) begin
-                transmit_state <= 1;
-                word_state <= word_state + 1;
-                transmit_data <= 8'h20; //
-              end
-              if (word_state == 8) begin
-                transmit_state <= 1;
-                word_state <= word_state + 1;
-                transmit_data <= 8'h57; //W
-              end
-              if (word_state == 9) begin
-                transmit_state <= 1;
-                word_state <= word_state + 1;
-                transmit_data <= 8'h6f; //o
-              end
-              if (word_state == 10) begin
-                transmit_state <= 1;
-                word_state <= word_state + 1;
-                transmit_data <= 8'h72; //r
-              end
-              if (word_state == 11) begin
-                transmit_state <= 1;
-                word_state <= word_state + 1;
-                transmit_data <= 8'h6c; //l
-              end
-              if (word_state == 12) begin
-                transmit_state <= 1;
-                word_state <= word_state + 1;
-                transmit_data <= 8'h64; //d
-              end
-              if (word_state == 13) begin
-                transmit_state <= 1;
-                word_state <= word_state + 1;
-                transmit_data <= 8'h21; //!
-              end
-              if (word_state == 14) begin
-                transmit_state <= 1;
-                word_state <= word_state + 1;
-                transmit_data <= 8'hA; //
-              end
-              if (word_state == 15) begin
-                transmit_state <= 0;
-                word_state <= 1;
-                transmit_data <= 8'hD; //
-              end
+            if (word_state == 1) begin
+              transmit_state <= 1;
+              word_state <= word_state + 1;
+              transmit_data <= 8'h48; //H
+            end
+            if (word_state == 2) begin
+              transmit_state <= 1;
+              word_state <= word_state + 1;
+              transmit_data <= 8'h65; //e
+            end
+            if (word_state == 3) begin
+              transmit_state <= 1;
+              word_state <= word_state + 1;
+              transmit_data <= 8'h6c; //l
+            end
+            if (word_state == 4) begin
+              transmit_state <= 1;
+              word_state <= word_state + 1;
+              transmit_data <= 8'h6c; //l
+            end
+            if (word_state == 5) begin
+              transmit_state <= 1;
+              word_state <= word_state + 1;
+              transmit_data <= 8'h6f; //o
+            end
+            if (word_state == 6) begin
+              transmit_state <= 1;
+              word_state <= word_state + 1;
+              transmit_data <= 8'h2c; //,
+            end
+            if (word_state == 7) begin
+              transmit_state <= 1;
+              word_state <= word_state + 1;
+              transmit_data <= 8'h20; //
+            end
+            if (word_state == 8) begin
+              transmit_state <= 1;
+              word_state <= word_state + 1;
+              transmit_data <= 8'h57; //W
+            end
+            if (word_state == 9) begin
+              transmit_state <= 1;
+              word_state <= word_state + 1;
+              transmit_data <= 8'h6f; //o
+            end
+            if (word_state == 10) begin
+              transmit_state <= 1;
+              word_state <= word_state + 1;
+              transmit_data <= 8'h72; //r
+            end
+            if (word_state == 11) begin
+              transmit_state <= 1;
+              word_state <= word_state + 1;
+              transmit_data <= 8'h6c; //l
+            end
+            if (word_state == 12) begin
+              transmit_state <= 1;
+              word_state <= word_state + 1;
+              transmit_data <= 8'h64; //d
+            end
+            if (word_state == 13) begin
+              transmit_state <= 1;
+              word_state <= word_state + 1;
+              transmit_data <= 8'h21; //!
+            end
+            if (word_state == 14) begin
+              transmit_state <= 1;
+              word_state <= word_state + 1;
+              transmit_data <= 8'hA; //
+            end
+            if (word_state == 15) begin
+              transmit_state <= 0;
+              word_state <= 1;
+              transmit_data <= 8'hD; //
             end
           end
+        end
 
  	       default:
  		       // Shouldn't reach here, but just incase, go back to idle!

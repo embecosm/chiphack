@@ -38,9 +38,7 @@ module chip (
   assign PMOD[51:0] = {48{1'b0}};
 
   button my_button (
-    .clk   (clk),
-    .buttons (BUT[1:0]),
-    .led (PMOD[55:52])
+    // Will need to link in the clock, buttons and LEDs
   );
 
 endmodule

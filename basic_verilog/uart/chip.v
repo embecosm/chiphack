@@ -27,50 +27,14 @@ module chip (
     input [1:0] BUT
   );
 
-  // SRAM signals are not use in this design, lets set them to default values
-  assign ADR[18:0] = {19{1'b0}};
-  assign DAT[15:0] = {16{1'b0}};
-  assign RAMOE = 1'b1;
-  assign RAMWE = 1'b1;
-  assign RAMCS = 1'b1;
-
-  assign PMOD[49:0] = {49{1'b0}};
-
-  wire OUT;
-
-  wire enter_ed;
-  wire next_ed;
-
   //UART(/slow) clock
   // We need to create a slow clokc for the uart to communicate over
   // We will be creating and then using a 115200 baud clock
 
-  reg [9:0] clock_divider_counter;
-  reg uart_clock;
-
   // The current clock is 100MHz
   // to get the divider counter we need to take the current clock and divide by twice the clock rate desired
   // e.g. 50x10^6/115200 = 434
-  always @(posedge clk) begin
-    if (next_ed == 1) begin
-      counter <= counter + 1;
-    end
-   	if (reset == 1'b1)
-   	  clock_divider_counter <= 0;
-   	else if (clock_divider_counter == 434)
-   	  clock_divider_counter <= 0;
-   	else
-   	  // Otherwise increment the counter
-   	  clock_divider_counter <= clock_divider_counter + 1;
-  end
 
-    // Generate a clock (toggle this register)
-  always @(posedge clk) begin
- 	  if (reset == 1'b1)
- 	    uart_clock <= 0;
- 	  else if (clock_divider_counter == 434)
- 	    uart_clock <= ~uart_clock;
-    end
 // UART ports!
   // You can assign two PMODs to be the UART_GND and UART_TX as both are outputs
 

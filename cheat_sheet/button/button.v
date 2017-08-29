@@ -20,6 +20,9 @@ module button(input clk, input [1:0] buttons, output [3:0] led);
 	assign led = count;
 
 	always @(posedge buttons[0])
-		count <= count + 1;
+		if (count == 4) begin
+			count <= 15;
+		end
+		else count <= count + 1;
 
 endmodule

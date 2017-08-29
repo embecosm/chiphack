@@ -47,12 +47,9 @@ module chip (
   reg uart_clock;
 
   always @(posedge clk) begin
-    if (next_ed == 1) begin
-      counter <= counter + 1;
-    end
-   	if (reset == 1'b1)
-   	  clock_divider_counter <= 0;
-   	else if (clock_divider_counter == 434)
+  // 	if (reset == 1'b1)
+  // 	  clock_divider_counter <= 0;
+   	if (clock_divider_counter == 434)
    	  clock_divider_counter <= 0;
    	else
    	  // Otherwise increment the counter
@@ -61,9 +58,9 @@ module chip (
 
     // Generate a clock (toggle this register)
   always @(posedge clk) begin
- 	  if (reset == 1'b1)
- 	    uart_clock <= 0;
- 	  else if (clock_divider_counter == 434)
+ 	  //if (reset == 1'b1)
+ 	  //  uart_clock <= 0;
+ 	  if (clock_divider_counter == 434)
  	    uart_clock <= ~uart_clock;
     end
 

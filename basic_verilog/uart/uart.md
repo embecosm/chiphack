@@ -21,9 +21,11 @@ The major parts of a UART transmitter are
 
 #### Clock divider
 
-The _baud_ rate (bit rate) we'll use is `115200`. That's a transmission rate of 115200 bits a second.
+The _baud_ rate (bit rate) we'll use is `115200`. That's a transmission rate of `115200` bits a second.
 
-The board's 100MHz clock must be divided down to this rate to drive the transmit logic.
+The board's `100MHz` clock must be divided down to this rate to drive the transmit logic.
+
+You do this by: `115200/(2*<BaudRate>)`
 
 #### What to design
 
@@ -31,8 +33,8 @@ Build a system which takes the 100MHz clock and generates a 115.2kHz clock.
 
 Use this to run a state machine which
 
-* starts off by transmitting the data 0x30 (ASCII '0') after reset
-* then detects if the pushbutton 1 (Key 1) has been pressed, and if so
+* starts off by transmitting the data `0x30` (ASCII '0') after reset
+* then detects if the pushbutton `1` (Key 1) has been pressed, and if so
  * transmits current word
  * increments word counting
 * Once the data reaches the final word, should start the sequence again
@@ -73,4 +75,4 @@ Optionally, if you _don't_ have `screen` installed you can try
 
 #### Stimulate the UART
 
-Press **KEY1** to make the UART transmit the next chracter. You should see it turn up on the UART console, and see the LEDs increment showing the value last transmitted.
+Press **KEY1** to make the UART transmit the next chracter. You should see it turn up on the UART console.

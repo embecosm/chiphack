@@ -9,4 +9,4 @@ We shall be using Saar's verilog.
 
 ![Alt Text](./diagram_clock.jpeg)
 
-We can then attach a similar counter as to the previous counter to test. You can do this however you like however I used another verilog file.
+We can then attach a similar counter as to the previous counter to test. You can do this however you like, however I used another verilog file.

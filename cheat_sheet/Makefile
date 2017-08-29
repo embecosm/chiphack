@@ -15,7 +15,7 @@
 
 # Default name of serial adaptor if none is provided by the user
 #SERIAL := /dev/cu.usbmodem1421 # For macOS (maybe)
-SERIAL := /dev/ttyACM0 # The default for linux (usually)
+#SERIAL := /dev/ttyACM0 # The default for linux (usually)
 
 # Leave as the basic make, so that people can initially get something running
 chip.bin: ./led/chip.v ./led/led.v blackice.pcf
@@ -70,7 +70,7 @@ uart_reciever: ./uart_reciever/chip.v ./uart_reciever/uart.v ./uart_reciever/edg
 .PHONY: upload
 upload:
 #stty -f $(SERIAL) raw & cat chip.bin >$(SERIAL) # for macOS
-		stty -F $(SERIAL) raw & cat chip.bin >$(SERIAL) # for linux
+	stty -F $(SERIAL) raw & cat chip.bin >$(SERIAL) # for linux
 
 .PHONY: clean
 clean:
