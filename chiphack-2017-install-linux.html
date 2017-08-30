@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>ChipHack Installation guide for Linux</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport"
+	  content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+
+      <header>
+        <a href="http://chiphack.org/"><img src="/images/logo.png"
+                                            title="ChipHack"
+					    alt="ChipHack logo"></a>
+      </header>
+
+      <section>
+        <h1>ChipHack Installation guide for Linux</h1>
+
+
+	  You need to install the Yosys tool chain.  All software is free and
+	  open source.
+
+	  The following steps are for installing software on Ubuntu 16.04 or
+	  later, and cover the building and installation of three tools, which
+	  are required for programming the myStorm board.  You can use these
+	  for a laptop running Linux, or to install the tools on a Raspberry
+	  Pi.
+	</p>
+
+	<h3>Downloading and installing pre-requisites</h3>
+
+	<p>
+	  TThese are needed for compiling and installing the icestorm,
+	  Arachne-PNR and yosys tools later.
+	</p>
+
+	<pre>
+sudo apt-get install build-essential clang bison flex libreadline-dev \
+gawk tcl-dev libffi-dev git mercurial graphviz xdot pkg-config python \
+	  python3 libftdi-dev vim htop screen iverilog</pre>
+
+	<h3>Downloading and installing IceStorm</h3>
+
+	<p>Starting in an empty directory:</p>
+
+	<pre>
+git clone https://github.com/cliffordwolf/icestorm.git icestorm
+cd icestorm
+make
+sudo make install</pre>
+
+	<h3>Downloading and installing arachne-pnr</h3>
+
+	<p>Starting in the same directory:</p>
+
+	<pre>
+git clone https://github.com/cseed/arachne-pnr.git arachne-pnr
+cd arachne-pnr
+make -j
+sudo make install</pre>
+
+	<h3>Downloading and installing Yosys</h3>
+
+	<p>Starting in the same directory:</p>
+
+	<pre>
+git clone https://github.com/cliffordwolf/yosys.git yosys
+cd yosys
+make -j
+sudo make install</pre>
+
+	<h3>Downloading the resources for ChipHack</h3>
+
+	<p>This is done by cloning the ChipHack repository:</p>
+
+	<pre>git clone https://github.com/embecosm/chiphack.git</pre>
+
+	<h2>Discussion</h2>
+
+	If you encounter issues you can discuss on the
+	  <a href="https://groups.google.com/d/forum/chiphack"
+	     title="Google Group link">ChipHack Google Group</a>
+	  or
+	  <a href="https://chiphack2017.slack.com"
+	     title="ChipHack 2017 Slack team">ChipHack 2017 Slack team</a>.
+	</p>
+
+      </section>
+
+      <footer>
+        <p>
+	  <small>Logo based on a <a href="http://commons.wikimedia.org/wiki/File:Ic-package-BGA.svg" title="Original image files on Wikimedia Commons">drawing by ZyMOS</a>, CC BY-SA 3.0.<br />
+            Hosted on GitHub Pages &mdash; Theme
+            by <a href="https://github.com/orderedlist">orderedlist.</a></small>
+	</p>
+      </footer>
+    </div>
+
+    <script src="javascripts/scale.fix.js"></script>
+
+  </body>
+</html>
