@@ -34,7 +34,7 @@ make slides
 The slides will be found as HTML in the build/slides directory. Just open
 `index.html` in your browser.
 
-## Tutorial code: guide
+## Tutorial code
 
 The tutorial code is in individual directories.
 
@@ -61,15 +61,18 @@ To install everything you need follow the guides on chiphack.org:
 
 ### Linux
 
-Simply run the `make` for the basic led example, for others run make followed by the project name, e.g. `make blink`
+Simply run `make` for the basic led example, for others run make followed by
+the project name, e.g. `make blink`
 
 ### macOS
 
-You will need to change the makefile, by commenting out the linux lines and uncommenting the mac lines, then as above.
+You will need to change the makefile, by commenting out the linux lines and
+uncommenting the mac lines, then as above.
 
 ### Windows
 
-You will need to copy the blackice.pcf into the folder you want to compile, then run `apio build --size 8k --type hx --pack tq144:4k`
+You will need to copy the blackice.pcf into the folder you want to compile,
+then run `apio build --size 8k --type hx --pack tq144:4k`
 
 ## To upload programs
 
@@ -85,6 +88,9 @@ You will need to have changed your makefile, else same as linux
 
 ### Windows
 
-You will need to connect to the board using tera term. Select the serial option, then go to setup>serial. Delete the Baud rate option, set data as 8 bit, no parity, 1 bit stop and no flow control.
+You will need to connect to the board using tera term. Select the serial
+option, then go to setup>serial. Delete the Baud rate option, set data as 8
+bit, no parity, 1 bit stop and no flow control.
 
-Then file>send file navigate to hardware.bin , tick the Binary option box and open.
+Then file>send file navigate to hardware.bin , tick the Binary option box and
+open.
