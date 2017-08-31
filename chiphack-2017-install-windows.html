@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>ChipHack Installation guide for Windows</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport"
+	  content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+
+      <header>
+        <a href="http://chiphack.org/"><img src="/images/logo.png"
+                                            title="ChipHack"
+					    alt="ChipHack logo"></a>
+      </header>
+
+      <section>
+        <h1>ChipHack Installation guide for Windows</h1>
+
+	  The following steps are for installing software on windows 10
+	  and cover the installation of APIO, required to compile programs for
+	  the myStorm board.
+	</p>
+
+	<h3>Downloading and installing Python</h3>
+
+	<p>
+	  From the official python website download and install <a href="https://www.python.org/downloads/release/python-2713">Python2.7</a>
+  </p>
+
+  <p>
+    Then add to your path. With the default install locations open a command
+    line and type:
+  </p>
+
+	<pre>
+set PATH = %PATH%;C:\Python27;C:\Python27\Lib;C:\Python27\DLLs;C:\Python27\Scripts</pre>
+
+	<h3>Downloading and installing APIO</h3>
+
+  <p>
+    In a command line:
+  </p>
+
+	<pre>
+pip install apio</pre>
+
+  <p>
+    Then to download all the apio packages:
+  </p>
+
+  <pre>
+apio install -a</pre>
+
+	<h3>Downloading the resources for ChipHack</h3>
+
+	<p>
+    This is done by downloading the <a href="https://github.com/embecosm/chiphack">Chiphack repository</a> on github
+  </p>
+
+  <h3>Uploading to the myStorm Board </h3>
+
+  <p>
+    To upload to the board we shall be using tera term <a href="https://ttssh2.osdn.jp/index.html.en">tera term</a>, which you need to download.
+  </p>
+
+  <h3>Testing compilation</h3>
+
+  <p>
+    To test that the tools have been installed properly
+  </p>
+
+  <p>
+    From inside the /chiphack/pretty_colours/ folder in a command line:
+  </p>
+
+  <pre>
+apio build --size 8k --type hx --pack tq144:4k</pre>
+
+	<h2>Discussion</h2>
+
+	If you encounter issues you can discuss on the
+	  <a href="https://groups.google.com/d/forum/chiphack"
+	     title="Google Group link">ChipHack Google Group</a>
+	  or
+	  <a href="https://chiphack2017.slack.com"
+	     title="ChipHack 2017 Slack team">ChipHack 2017 Slack team</a>.
+	</p>
+
+      </section>
+
+      <footer>
+        <p>
+	  <small>Logo based on a <a href="http://commons.wikimedia.org/wiki/File:Ic-package-BGA.svg" title="Original image files on Wikimedia Commons">drawing by ZyMOS</a>, CC BY-SA 3.0.<br />
+            Hosted on GitHub Pages &mdash; Theme
+            by <a href="https://github.com/orderedlist">orderedlist.</a></small>
+	</p>
+      </footer>
+    </div>
+
+    <script src="javascripts/scale.fix.js"></script>
+
+  </body>
+</html>
