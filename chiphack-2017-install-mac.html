@@ -57,7 +57,7 @@ brew install libftdi0 python3 gawk pkg-config libffi bison mercurial</pre>
 	<pre>
 git clone https://github.com/cliffordwolf/icestorm.git icestorm
 cd icestorm
-make
+make -j8
 sudo make install</pre>
 
 	<h3>Downloading and installing arachne-pnr</h3>
@@ -67,7 +67,7 @@ sudo make install</pre>
 	<pre>
 git clone https://github.com/cseed/arachne-pnr.git arachne-pnr
 cd arachne-pnr
-make -j
+make -j8
 sudo make install</pre>
 
 	<h3>Downloading and installing Yosys</h3>
@@ -77,7 +77,7 @@ sudo make install</pre>
 	<pre>
 git clone https://github.com/cliffordwolf/yosys.git yosys
 cd yosys
-make -j
+make -j8
 sudo make install</pre>
 
 	<h3>Downloading the resources for ChipHack</h3>
