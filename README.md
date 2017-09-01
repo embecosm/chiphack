@@ -36,19 +36,21 @@ The slides will be found as HTML in the build/slides directory. Just open
 
 ## Tutorial code
 
-The tutorial code is in individual directories.
+The tutorial code is in individual directories within the `basic_verilog`
+directory.
 
 ### basic_verilog
 
 The files are mostly empty, you shall be guided through filling these out.
 
-### pretty_colours
-
-A full project, with a chip.bin, so that you can test your installation of the tools
-
 ### cheat_sheet
 
 Corresponds to the basic_verilog files, if you get stuck.
+
+### pretty_colours
+
+A full project, with a chip.bin, so that you can test your installation of the
+tools
 
 ## Prerequisites
 
