@@ -1,0 +1,205 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>MyStorm Setup &mdash; MyStorm Setup 2017.08.30 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2017.08.30',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="MyStorm Setup 2017.08.30 documentation" href="#" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="mystorm-setup">
+<h1>MyStorm Setup<a class="headerlink" href="#mystorm-setup" title="Permalink to this headline">¶</a></h1>
+<div class="line-block">
+<div class="line">Dan Gorringe</div>
+<div class="line">Jeremy Bennett</div>
+</div>
+<div class="section" id="the-mystorm-board">
+<h2>The MyStorm Board<a class="headerlink" href="#the-mystorm-board" title="Permalink to this headline">¶</a></h2>
+<div class="figure">
+<img alt="_images/mystorm.jpg" src="_images/mystorm.jpg" />
+</div>
+</div>
+<div class="section" id="installing-the-tools">
+<h2>Installing the tools<a class="headerlink" href="#installing-the-tools" title="Permalink to this headline">¶</a></h2>
+<p>The instructions are all online:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://chiphack.org/chiphack-2017-install-linux.html">http://chiphack.org/chiphack-2017-install-linux.html</a></li>
+<li><a class="reference external" href="http://chiphack.org/chiphack-2017-install-mac.html">http://chiphack.org/chiphack-2017-install-mac.html</a></li>
+<li><a class="reference external" href="http://chiphack.org/chiphack-2017-install-windows.html">http://chiphack.org/chiphack-2017-install-windows.html</a></li>
+</ul>
+<p><strong>Note</strong> that the tools work fine on RaspberryPi.</p>
+</div>
+<div class="section" id="cloning-the-code-from-github">
+<h2>Cloning the code from GitHub<a class="headerlink" href="#cloning-the-code-from-github" title="Permalink to this headline">¶</a></h2>
+<p>The simple examples used on day 1:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">embecosm</span><span class="o">/</span><span class="n">chiphack</span><span class="o">.</span><span class="n">git</span>
+</pre></div>
+</div>
+<p>Hatim Kanchwala&#8217;s EDSAC code:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">librecores</span><span class="o">/</span><span class="n">gsoc</span><span class="o">-</span><span class="n">museum</span><span class="o">-</span><span class="n">edsac</span><span class="o">.</span><span class="n">git</span>
+</pre></div>
+</div>
+<p>The reimagined EDSAC peripherals:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">embecosm</span><span class="o">/</span><span class="n">edsac</span><span class="o">-</span><span class="n">peripherals</span><span class="o">.</span><span class="n">git</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="your-first-design-mac-linux">
+<h2>Your first design (Mac/Linux)<a class="headerlink" href="#your-first-design-mac-linux" title="Permalink to this headline">¶</a></h2>
+<p>Completed examples are in the <code class="docutils literal"><span class="pre">cheat_sheet</span></code> directory. We&#8217;ll build the very
+simplest of these to drive the red LED on the board.  First change into the
+directory with the completed examples:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">chiphack</span><span class="o">/</span><span class="n">cheat_sheet</span>
+</pre></div>
+</div>
+<p>Then <code class="docutils literal"><span class="pre">make</span></code> the LED example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">led</span>
+</pre></div>
+</div>
+<p>This will synthesize the code in <code class="docutils literal"><span class="pre">led/led.v</span></code> to a bitstream in
+<code class="docutils literal"><span class="pre">chip.bin</span></code>.</p>
+</div>
+<div class="section" id="your-first-design-windows">
+<h2>Your first design (Windows)<a class="headerlink" href="#your-first-design-windows" title="Permalink to this headline">¶</a></h2>
+<p>From <code class="docutils literal"><span class="pre">cheat_sheet</span></code>, change to the <code class="docutils literal"><span class="pre">led</span></code> directory and copy in the parent PCF
+file:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">led</span>
+<span class="n">cp</span> <span class="o">..</span>\<span class="n">blackice</span><span class="o">.</span><span class="n">pcf</span> <span class="o">.</span>
+</pre></div>
+</div>
+<p>Then synthesize the LED example with <code class="docutils literal"><span class="pre">apio</span></code>:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">apio</span> <span class="n">build</span> <span class="o">--</span><span class="n">size</span> <span class="mi">8</span><span class="n">k</span> <span class="o">--</span><span class="nb">type</span> <span class="n">hx</span> <span class="o">--</span><span class="n">pack</span> <span class="n">tq144</span><span class="p">:</span><span class="mi">4</span><span class="n">k</span>
+</pre></div>
+</div>
+<p>This will synthesize the code in <code class="docutils literal"><span class="pre">led\led.v</span></code> to a bitstream in
+<code class="docutils literal"><span class="pre">hardware\chip.bin</span></code>.</p>
+</div>
+<div class="section" id="uploading-your-design-mac-linux">
+<h2>Uploading your design (Mac/Linux)<a class="headerlink" href="#uploading-your-design-mac-linux" title="Permalink to this headline">¶</a></h2>
+<p>For Linux:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">SERIAL</span><span class="o">=/</span><span class="n">dev</span><span class="o">/</span><span class="n">ttyACM0</span> <span class="n">upload</span><span class="o">-</span><span class="n">linux</span>
+</pre></div>
+</div>
+<p>For Mac:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">SERIAL</span><span class="o">=/</span><span class="n">dev</span><span class="o">/</span><span class="n">cu</span><span class="o">.</span><span class="n">usbmodem1421</span> <span class="n">upload</span><span class="o">-</span><span class="n">linux</span>
+</pre></div>
+</div>
+<p>You may need to use a different value for <code class="docutils literal"><span class="pre">SERIAL</span></code> depending on your
+machine.</p>
+</div>
+<div class="section" id="uploading-your-design-windows">
+<h2>Uploading your design (Windows)<a class="headerlink" href="#uploading-your-design-windows" title="Permalink to this headline">¶</a></h2>
+<p>Start up <em>teraterm</em></p>
+<ul class="simple">
+<li>Select the serial option, then go to setup&gt;serial.</li>
+<li>Delete the Baud rate option</li>
+<li>Set data as 8 bit, no parity, 1 bit stop and no flow control.</li>
+<li>Then file&gt;send file navigate to hardware.bin</li>
+<li>tick the Binary option box and open</li>
+</ul>
+</div>
+<div class="section" id="your-first-design">
+<h2>Your first design<a class="headerlink" href="#your-first-design" title="Permalink to this headline">¶</a></h2>
+<div class="figure">
+<img alt="_images/mystorm-led.jpg" src="_images/mystorm-led.jpg" />
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">MyStorm Setup</a><ul>
+<li><a class="reference internal" href="#the-mystorm-board">The MyStorm Board</a></li>
+<li><a class="reference internal" href="#installing-the-tools">Installing the tools</a></li>
+<li><a class="reference internal" href="#cloning-the-code-from-github">Cloning the code from GitHub</a></li>
+<li><a class="reference internal" href="#your-first-design-mac-linux">Your first design (Mac/Linux)</a></li>
+<li><a class="reference internal" href="#your-first-design-windows">Your first design (Windows)</a></li>
+<li><a class="reference internal" href="#uploading-your-design-mac-linux">Uploading your design (Mac/Linux)</a></li>
+<li><a class="reference internal" href="#uploading-your-design-windows">Uploading your design (Windows)</a></li>
+<li><a class="reference internal" href="#your-first-design">Your first design</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Dan Gorringe, Jeremy Bennett.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/index.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
