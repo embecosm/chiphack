@@ -29,17 +29,19 @@ The instructions are all online:
 Cloning the code from GitHub
 ----------------------------
 
-The simple examples used on day 1::
+You will want to access four repositories:
 
-  git clone https://github.com/embecosm/chiphack.git
+* The simple examples used on day 1
+* Hatim Kanchwala's EDSAC code
+* The reimagined EDSAC peripherals
+* The MyStorm board design
 
-Hatim Kanchwala's EDSAC code::
+::
 
-  git clone https://github.com/librecores/gsoc-museum-edsac.git
-
-The reimagined EDSAC peripherals::
-
-  git clone https://github.com/embecosm/edsac-peripherals.git
+   git clone https://github.com/embecosm/chiphack.git
+   git clone https://github.com/librecores/gsoc-museum-edsac.git
+   git clone https://github.com/embecosm/edsac-peripherals.git
+   git clone https://gitlab.com/Folknology/mystorm.git
 
 Your first design (Mac/Linux)
 -----------------------------
