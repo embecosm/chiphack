@@ -182,4 +182,6 @@ Then try the following changes:
 
 * Try lighting up more than one LED at once.
 
-Next stage of the tutorial, we'll get the LED to flash.
+Next stage of the tutorial, we'll get the LED to change depending on which
+button is pressed.
+
