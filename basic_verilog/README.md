@@ -18,10 +18,10 @@ where `<project_name>` is the name of the project.
 
 To upload the bitstream to the board:
 ```
-make upload
+make SERIAL=/dev/ttyACM0 upload
 ```
-**Caveat** You may need to change `SERIAL` inside the `Makefile` to the USB
-port your system is using.
+**Caveat** You may need to change the value of `SERIAL` to the USB port your
+system is using.
 
 ## Cleaning up
 

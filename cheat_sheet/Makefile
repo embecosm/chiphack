@@ -15,13 +15,16 @@
 
 # Default name of serial adaptor if none is provided by the user
 #SERIAL := /dev/cu.usbmodem1421 # For macOS (maybe)
-#SERIAL := /dev/ttyACM0 # The default for linux (usually)
+SERIAL := /dev/ttyACM0 # The default for linux (usually)
 
 # Leave as the basic make, so that people can initially get something running
 chip.bin: ./led/chip.v ./led/led.v blackice.pcf
 	yosys -q -p "synth_ice40 -blif chip.blif" ./led/chip.v ./led/led.v
 	arachne-pnr -d 8k -P tq144:4k -p blackice.pcf chip.blif -o chip.txt
 	icepack chip.txt chip.bin
+
+.PHONY: led
+led: chip.bin
 
 .PHONY: button
 button: ./button/chip.v ./button/button.v blackice.pcf
@@ -65,12 +68,25 @@ uart_reciever: ./uart_reciever/chip.v ./uart_reciever/uart.v ./uart_reciever/edg
 		arachne-pnr -d 8k -P tq144:4k -p blackice_uart.pcf chip.blif -o chip.txt
 		icepack chip.txt chip.bin
 
+# Upload to Linux, may have to change name of the port accordingly
 
-# Upload to a mac, may have to change name of the port accordingly
-.PHONY: upload
-upload:
-#stty -f $(SERIAL) raw & cat chip.bin >$(SERIAL) # for macOS
-	stty -F $(SERIAL) raw & cat chip.bin >$(SERIAL) # for linux
+.PHONY: upload-linux
+upload-linux:
+	cat $(SERIAL) > /dev/null 2>&1 &
+	stty -F $(SERIAL) raw
+	cat chip.bin > $(SERIAL)
+	ps x | grep "cat $(SERIAL)" | head -1 | \
+	       sed -e 's/\([[:digit:]]*\) .*$$/now run "kill \1"/'
+
+# Upload to a Mac, may have to change name of the port accordingly
+
+.PHONY: upload-mac
+upload-mac:
+	cat $(SERIAL) > /dev/null 2>&1 &
+	stty -f $(SERIAL) raw ;\
+	cat chip.bin > $(SERIAL) ;\
+	ps x | grep "cat $(SERIAL)" | head -1 | \
+	       sed -e 's/\([[:digit:]]*\) .*$$/now run "kill \1"/'
 
 .PHONY: clean
 clean:
