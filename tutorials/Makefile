@@ -17,9 +17,10 @@
 # You should have received a copy of the GNU General Public License along with
 # this program.  If not, see <http:#www.gnu.org/licenses/>.
 
-DIRS = mystorm-setup \
-       basic-verilog \
-       combinatorial-verilog
+DIRS = mystorm-setup         \
+       basic-verilog         \
+       combinatorial-verilog \
+       sequential-verilog
 
 .PHONY: all
 all:
