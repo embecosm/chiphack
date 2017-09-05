@@ -120,7 +120,7 @@ Verilog know that?
 The Physical Constraints File (1)
 ---------------------------------
 
-the file `` blackice.pdf`` maps the named top level ports to actual pin
+The file ``blackice.pcf`` maps the named top level ports to actual pin
 numbers on the FPGA:
 
 .. code-block:: text
