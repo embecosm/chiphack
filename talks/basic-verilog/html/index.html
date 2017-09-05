@@ -143,7 +143,7 @@ Verilog know that?</p>
 </div>
 <div class="section" id="the-physical-constraints-file-1">
 <h2>The Physical Constraints File (1)<a class="headerlink" href="#the-physical-constraints-file-1" title="Permalink to this headline">¶</a></h2>
-<p>the file `` blackice.pdf`` maps the named top level ports to actual pin
+<p>The file <code class="docutils literal"><span class="pre">blackice.pcf</span></code> maps the named top level ports to actual pin
 numbers on the FPGA:</p>
 <div class="highlight-text"><div class="highlight"><pre><span></span>#pmod 1
 set_io PMOD[0] 94 # rd6
@@ -201,7 +201,8 @@ build it with:</p>
 <li>Modify <code class="docutils literal"><span class="pre">led.v</span></code> and <code class="docutils literal"><span class="pre">chip.v</span></code> to light one of the other LEDs.</li>
 <li>Try lighting up more than one LED at once.</li>
 </ul>
-<p>Next stage of the tutorial, we&#8217;ll get the LED to flash.</p>
+<p>Next stage of the tutorial, we&#8217;ll get the LED to change depending on which
+button is pressed.</p>
 </div>
 </div>
 
@@ -262,7 +263,7 @@ build it with:</p>
       &copy;2017, Dan Gorringe, Jeremy Bennett.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
       
       |

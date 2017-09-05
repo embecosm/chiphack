@@ -120,7 +120,7 @@ Verilog know that?
 The Physical Constraints File (1)
 ---------------------------------
 
-the file `` blackice.pdf`` maps the named top level ports to actual pin
+The file ``blackice.pcf`` maps the named top level ports to actual pin
 numbers on the FPGA:
 
 .. code-block:: text
@@ -182,4 +182,6 @@ Then try the following changes:
 
 * Try lighting up more than one LED at once.
 
-Next stage of the tutorial, we'll get the LED to flash.
+Next stage of the tutorial, we'll get the LED to change depending on which
+button is pressed.
+

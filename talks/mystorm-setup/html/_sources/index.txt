@@ -7,7 +7,6 @@ MyStorm Setup
 =============
 
 | Dan Gorringe
-| Jeremy Bennett
 
 
 The MyStorm Board
