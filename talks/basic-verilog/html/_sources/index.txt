@@ -168,8 +168,8 @@ MyStorm Schematic Detail
 
 .. figure:: mystorm-cad-detail.png
 
-First exercise
---------------
+Exercise 1
+----------
 
 Start with ``led.v`` in the ``basic_verilog/led`` directory.  Complete it and
 build it with::

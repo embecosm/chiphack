@@ -1,0 +1,270 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Seqential Verilog &mdash; Sequential Verilog 2017.08.30 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2017.08.30',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="Sequential Verilog 2017.08.30 documentation" href="#" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="seqential-verilog">
+<h1>Seqential Verilog<a class="headerlink" href="#seqential-verilog" title="Permalink to this headline">¶</a></h1>
+<div class="line-block">
+<div class="line">Al Wood</div>
+</div>
+<div class="section" id="registers">
+<h2>Registers<a class="headerlink" href="#registers" title="Permalink to this headline">¶</a></h2>
+<p>A simple memory to hold state, normally implemented as D-type flip-flop.</p>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="kt">reg</span>  <span class="n">y</span><span class="p">;</span>
+<span class="kt">reg</span> <span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">],</span> <span class="n">a2</span><span class="p">,</span> <span class="n">b2</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Inputs and outputs can be declared as registers:</p>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="n">mymod</span> <span class="p">(</span>
+   <span class="k">input</span> <span class="kt">reg</span> <span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">y2</span><span class="p">;</span>
+   <span class="k">output</span> <span class="kt">reg</span> <span class="p">[</span><span class="mh">2</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">y3</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>By convention usually only outputs are registers and inputs are wires.</p>
+</div>
+<div class="section" id="example-decoder-with-register">
+<h2>Example: Decoder with register<a class="headerlink" href="#example-decoder-with-register" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="n">decoder</span> <span class="p">(</span>
+   <span class="k">input</span>  <span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>     <span class="n">a</span><span class="p">,</span>
+   <span class="k">input</span>            <span class="n">en</span><span class="p">,</span>
+   <span class="k">output</span> <span class="kt">reg</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">y</span>
+  <span class="p">)</span>
+
+   <span class="k">always_comb</span>
+      <span class="k">casex</span> <span class="p">({</span><span class="n">en</span><span class="p">,</span><span class="n">a</span><span class="p">})</span>
+         <span class="mh">3</span><span class="mb">&#39;b0</span><span class="nl">xx:</span> <span class="n">y</span> <span class="o">=</span> <span class="mh">4</span><span class="mb">&#39;b0000</span><span class="p">;</span>
+         <span class="mh">3</span><span class="mb">&#39;b100</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="mh">4</span><span class="mb">&#39;b0001</span><span class="p">;</span>
+         <span class="mh">3</span><span class="mb">&#39;b101</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="mh">4</span><span class="mb">&#39;b0010</span><span class="p">;</span>
+         <span class="mh">3</span><span class="mb">&#39;b110</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="mh">4</span><span class="mb">&#39;b0100</span><span class="p">;</span>
+         <span class="mh">3</span><span class="mb">&#39;b111</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="mh">4</span><span class="mb">&#39;b1000</span><span class="p">;</span>
+      <span class="k">endcase</span>    <span class="c1">// {en,a}</span>
+
+<span class="k">endmodule</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="sequential-always-blocks">
+<h2>Sequential always blocks<a class="headerlink" href="#sequential-always-blocks" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span>
+   <span class="n">a</span> <span class="o">&lt;=</span> <span class="n">b</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>At the next positive edge of the clock, register <code class="docutils literal"><span class="pre">a</span></code> will acquire the value
+held in <code class="docutils literal"><span class="pre">b</span></code> (which could be a register or wire).</p>
+<p>SystemVerilog provides:</p>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="k">always_ff</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span>
+   <span class="n">a</span> <span class="o">&lt;=</span> <span class="n">b</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="delayed-non-blocking-assignments">
+<h2>Delayed (non-blocking) assignments<a class="headerlink" href="#delayed-non-blocking-assignments" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">&lt;=</span></code> causes the value to be transferred on the next clock edge. It should
+only be used in sequential always blocks.</p>
+<p>Conversely <code class="docutils literal"><span class="pre">=</span></code> (aka blocking assignment) happens immediately and should only
+be used in combinatorial always blocks.</p>
+<p>This means you can do surprising things with registers:</p>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="k">always_ff</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span>
+   <span class="k">begin</span>
+      <span class="n">a</span> <span class="o">&lt;=</span> <span class="n">b</span><span class="p">;</span>
+      <span class="n">b</span> <span class="o">&lt;=</span> <span class="n">a</span><span class="p">;</span>
+   <span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="common-problems">
+<h2>Common problems<a class="headerlink" href="#common-problems" title="Permalink to this headline">¶</a></h2>
+<p>You now know Verilog :-)  Here are the common &#8220;gotchas&#8221;.</p>
+<ul class="simple">
+<li>Variable assigned in multiple always blocks</li>
+<li>Incomplete branch or output assignment</li>
+</ul>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="n">alway_comb</span>
+   <span class="k">if</span> <span class="p">(</span><span class="n">a</span> <span class="o">&gt;</span> <span class="n">b</span><span class="p">)</span>
+      <span class="n">gt</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span> <span class="c1">// no eq assignment in branch</span>
+   <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">a</span> <span class="o">==</span> <span class="n">b</span><span class="p">)</span>
+      <span class="n">eq</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span> <span class="c1">// no gt assignment in branch</span>
+  <span class="c1">// final else branch omitted</span>
+</pre></div>
+</div>
+<p>According to Verilog definition <code class="docutils literal"><span class="pre">gt</span></code> and <code class="docutils literal"><span class="pre">eq</span></code> keep their previous values when
+not assigned which implies internal state, unintended latches are inferred.</p>
+</div>
+<div class="section" id="fixing-incomplete-output-assignment-1">
+<h2>Fixing incomplete output assignment (1)<a class="headerlink" href="#fixing-incomplete-output-assignment-1" title="Permalink to this headline">¶</a></h2>
+<p>These sort of issues cause endless hair pulling avoid such things. Here is how
+we could correct this:</p>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="k">always_comb</span>
+   <span class="k">if</span> <span class="p">(</span><span class="n">a</span> <span class="o">&gt;</span> <span class="n">b</span><span class="p">)</span> <span class="k">begin</span>
+      <span class="n">gt</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+      <span class="n">eq</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+   <span class="k">end</span>
+   <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">a</span> <span class="o">==</span> <span class="n">b</span><span class="p">)</span> <span class="k">begin</span>
+      <span class="n">gt</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+      <span class="n">eq</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+   <span class="k">end</span>
+   <span class="k">else</span> <span class="k">begin</span>
+      <span class="n">gt</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+      <span class="n">eq</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+   <span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="fixing-incomplete-output-assignment-2">
+<h2>Fixing incomplete output assignment (2)<a class="headerlink" href="#fixing-incomplete-output-assignment-2" title="Permalink to this headline">¶</a></h2>
+<p>Or we can use default values.</p>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="k">always_comb</span>
+   <span class="k">begin</span>
+      <span class="n">gt</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+      <span class="n">eq</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">a</span> <span class="o">&gt;</span> <span class="n">b</span><span class="p">)</span>
+         <span class="n">gt</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+      <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">a</span><span class="o">==</span><span class="n">b</span><span class="p">);</span>
+         <span class="n">eq</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+   <span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="incomplete-output-with-case-statements-1">
+<h2>Incomplete output with case statements (1)<a class="headerlink" href="#incomplete-output-with-case-statements-1" title="Permalink to this headline">¶</a></h2>
+<p>Similar problems can occur with <code class="docutils literal"><span class="pre">case</span></code> statements:</p>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="k">always_comb</span>
+   <span class="k">case</span> <span class="p">(</span><span class="n">a</span><span class="p">)</span>
+      <span class="mh">2</span><span class="mb">&#39;b00</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+      <span class="mh">2</span><span class="mb">&#39;b10</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+      <span class="mh">2</span><span class="mb">&#39;b11</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+   <span class="k">endcase</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="incomplete-output-with-case-statements-2">
+<h2>Incomplete output with case statements (2)<a class="headerlink" href="#incomplete-output-with-case-statements-2" title="Permalink to this headline">¶</a></h2>
+<p>A default clause is a good catchall.</p>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="k">always_comb</span>
+   <span class="k">case</span> <span class="p">(</span><span class="n">a</span><span class="p">)</span>
+      <span class="mh">2</span><span class="mb">&#39;b00</span><span class="o">:</span>    <span class="n">y</span> <span class="o">=</span><span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+      <span class="mh">2</span><span class="mb">&#39;b10</span><span class="o">:</span>    <span class="n">y</span> <span class="o">=</span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+      <span class="mh">2</span><span class="mb">&#39;b11</span><span class="o">:</span>    <span class="n">y</span> <span class="o">=</span><span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+      <span class="k">default</span> <span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+   <span class="k">endcase</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="exercise-3">
+<h2>Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h2>
+<p>Which is actually lots of exercises, all in <code class="docutils literal"><span class="pre">verilog_basic</span></code></p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">blink</span></code>: Make the LED flash. Extend to make LED&#8217;s flash in a pattern.</li>
+<li><code class="docutils literal"><span class="pre">fibonacci</span></code>: Count through the LEDs in a fibonacci sequence.</li>
+<li><code class="docutils literal"><span class="pre">button</span></code>: Make the LED&#8217;s count when you press the button. Why won&#8217;t it
+count nice and smoothly?</li>
+<li><code class="docutils literal"><span class="pre">button_edge_detect</span></code>: This solves the problem of detecting a button press.</li>
+<li><code class="docutils literal"><span class="pre">lock</span></code>: Unlock the device with a password. This leads into the next talk.</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Seqential Verilog</a><ul>
+<li><a class="reference internal" href="#registers">Registers</a></li>
+<li><a class="reference internal" href="#example-decoder-with-register">Example: Decoder with register</a></li>
+<li><a class="reference internal" href="#sequential-always-blocks">Sequential always blocks</a></li>
+<li><a class="reference internal" href="#delayed-non-blocking-assignments">Delayed (non-blocking) assignments</a></li>
+<li><a class="reference internal" href="#common-problems">Common problems</a></li>
+<li><a class="reference internal" href="#fixing-incomplete-output-assignment-1">Fixing incomplete output assignment (1)</a></li>
+<li><a class="reference internal" href="#fixing-incomplete-output-assignment-2">Fixing incomplete output assignment (2)</a></li>
+<li><a class="reference internal" href="#incomplete-output-with-case-statements-1">Incomplete output with case statements (1)</a></li>
+<li><a class="reference internal" href="#incomplete-output-with-case-statements-2">Incomplete output with case statements (2)</a></li>
+<li><a class="reference internal" href="#exercise-3">Exercise 3</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Al Wood.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/index.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

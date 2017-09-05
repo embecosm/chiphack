@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Seqential Verilog &mdash; MyStorm Setup</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="_static/single.css" type="text/css" />
+    
+    <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2017.08.30',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/common.js"></script>
+    
+    <script type="text/javascript" src="_static/slides.js"></script>
+    <script type="text/javascript" src="_static/sync.js"></script>
+    <script type="text/javascript" src="_static/controller.js"></script>
+    <script type="text/javascript" src="_static/init.js"></script>
+    
+    
+    <link rel="top" title="MyStorm Setup" href="#" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="seqential-verilog">
+
+<h1>Seqential Verilog</h1>
+
+<div class="line-block">
+<div class="line">Al Wood</div>
+</div>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Al Wood. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="registers">
+
+<h2>Registers</h2>
+
+<p>A simple memory to hold state, normally implemented as D-type flip-flop.</p>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="kt">reg</span>  <span class="n">y</span><span class="p">;</span>
+<span class="kt">reg</span> <span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">],</span> <span class="n">a2</span><span class="p">,</span> <span class="n">b2</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Inputs and outputs can be declared as registers:</p>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="n">mymod</span> <span class="p">(</span>
+   <span class="k">input</span> <span class="kt">reg</span> <span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">y2</span><span class="p">;</span>
+   <span class="k">output</span> <span class="kt">reg</span> <span class="p">[</span><span class="mh">2</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">y3</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>By convention usually only outputs are registers and inputs are wires.</p>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Al Wood. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="example-decoder-with-register">
+
+<h2>Example: Decoder with register</h2>
+
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="n">decoder</span> <span class="p">(</span>
+   <span class="k">input</span>  <span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>     <span class="n">a</span><span class="p">,</span>
+   <span class="k">input</span>            <span class="n">en</span><span class="p">,</span>
+   <span class="k">output</span> <span class="kt">reg</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">y</span>
+  <span class="p">)</span>
+
+   <span class="k">always_comb</span>
+      <span class="k">casex</span> <span class="p">({</span><span class="n">en</span><span class="p">,</span><span class="n">a</span><span class="p">})</span>
+         <span class="mh">3</span><span class="mb">&#39;b0</span><span class="nl">xx:</span> <span class="n">y</span> <span class="o">=</span> <span class="mh">4</span><span class="mb">&#39;b0000</span><span class="p">;</span>
+         <span class="mh">3</span><span class="mb">&#39;b100</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="mh">4</span><span class="mb">&#39;b0001</span><span class="p">;</span>
+         <span class="mh">3</span><span class="mb">&#39;b101</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="mh">4</span><span class="mb">&#39;b0010</span><span class="p">;</span>
+         <span class="mh">3</span><span class="mb">&#39;b110</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="mh">4</span><span class="mb">&#39;b0100</span><span class="p">;</span>
+         <span class="mh">3</span><span class="mb">&#39;b111</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="mh">4</span><span class="mb">&#39;b1000</span><span class="p">;</span>
+      <span class="k">endcase</span>    <span class="c1">// {en,a}</span>
+
+<span class="k">endmodule</span>
+</pre></div>
+</div>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Al Wood. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="sequential-always-blocks">
+
+<h2>Sequential always blocks</h2>
+
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span>
+   <span class="n">a</span> <span class="o">&lt;=</span> <span class="n">b</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>At the next positive edge of the clock, register <code class="docutils literal"><span class="pre">a</span></code> will acquire the value
+held in <code class="docutils literal"><span class="pre">b</span></code> (which could be a register or wire).</p>
+<p>SystemVerilog provides:</p>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="k">always_ff</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span>
+   <span class="n">a</span> <span class="o">&lt;=</span> <span class="n">b</span><span class="p">;</span>
+</pre></div>
+</div>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Al Wood. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="delayed-non-blocking-assignments">
+
+<h2>Delayed (non-blocking) assignments</h2>
+
+<p><code class="docutils literal"><span class="pre">&lt;=</span></code> causes the value to be transferred on the next clock edge. It should
+only be used in sequential always blocks.</p>
+<p>Conversely <code class="docutils literal"><span class="pre">=</span></code> (aka blocking assignment) happens immediately and should only
+be used in combinatorial always blocks.</p>
+<p>This means you can do surprising things with registers:</p>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="k">always_ff</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span>
+   <span class="k">begin</span>
+      <span class="n">a</span> <span class="o">&lt;=</span> <span class="n">b</span><span class="p">;</span>
+      <span class="n">b</span> <span class="o">&lt;=</span> <span class="n">a</span><span class="p">;</span>
+   <span class="k">end</span>
+</pre></div>
+</div>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Al Wood. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="common-problems">
+
+<h2>Common problems</h2>
+
+<p>You now know Verilog :-)  Here are the common &quot;gotchas&quot;.</p>
+<ul class="simple">
+<li>Variable assigned in multiple always blocks</li>
+<li>Incomplete branch or output assignment</li>
+</ul>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="n">alway_comb</span>
+   <span class="k">if</span> <span class="p">(</span><span class="n">a</span> <span class="o">&gt;</span> <span class="n">b</span><span class="p">)</span>
+      <span class="n">gt</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span> <span class="c1">// no eq assignment in branch</span>
+   <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">a</span> <span class="o">==</span> <span class="n">b</span><span class="p">)</span>
+      <span class="n">eq</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span> <span class="c1">// no gt assignment in branch</span>
+  <span class="c1">// final else branch omitted</span>
+</pre></div>
+</div>
+<p>According to Verilog definition <code class="docutils literal"><span class="pre">gt</span></code> and <code class="docutils literal"><span class="pre">eq</span></code> keep their previous values when
+not assigned which implies internal state, unintended latches are inferred.</p>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Al Wood. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="fixing-incomplete-output-assignment-1">
+
+<h2>Fixing incomplete output assignment (1)</h2>
+
+<p>These sort of issues cause endless hair pulling avoid such things. Here is how
+we could correct this:</p>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="k">always_comb</span>
+   <span class="k">if</span> <span class="p">(</span><span class="n">a</span> <span class="o">&gt;</span> <span class="n">b</span><span class="p">)</span> <span class="k">begin</span>
+      <span class="n">gt</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+      <span class="n">eq</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+   <span class="k">end</span>
+   <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">a</span> <span class="o">==</span> <span class="n">b</span><span class="p">)</span> <span class="k">begin</span>
+      <span class="n">gt</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+      <span class="n">eq</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+   <span class="k">end</span>
+   <span class="k">else</span> <span class="k">begin</span>
+      <span class="n">gt</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+      <span class="n">eq</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+   <span class="k">end</span>
+</pre></div>
+</div>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Al Wood. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="fixing-incomplete-output-assignment-2">
+
+<h2>Fixing incomplete output assignment (2)</h2>
+
+<p>Or we can use default values.</p>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="k">always_comb</span>
+   <span class="k">begin</span>
+      <span class="n">gt</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+      <span class="n">eq</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+      <span class="k">if</span> <span class="p">(</span><span class="n">a</span> <span class="o">&gt;</span> <span class="n">b</span><span class="p">)</span>
+         <span class="n">gt</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+      <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">a</span><span class="o">==</span><span class="n">b</span><span class="p">);</span>
+         <span class="n">eq</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+   <span class="k">end</span>
+</pre></div>
+</div>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Al Wood. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="incomplete-output-with-case-statements-1">
+
+<h2>Incomplete output with case statements (1)</h2>
+
+<p>Similar problems can occur with <code class="docutils literal"><span class="pre">case</span></code> statements:</p>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="k">always_comb</span>
+   <span class="k">case</span> <span class="p">(</span><span class="n">a</span><span class="p">)</span>
+      <span class="mh">2</span><span class="mb">&#39;b00</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+      <span class="mh">2</span><span class="mb">&#39;b10</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+      <span class="mh">2</span><span class="mb">&#39;b11</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+   <span class="k">endcase</span>
+</pre></div>
+</div>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Al Wood. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="incomplete-output-with-case-statements-2">
+
+<h2>Incomplete output with case statements (2)</h2>
+
+<p>A default clause is a good catchall.</p>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="k">always_comb</span>
+   <span class="k">case</span> <span class="p">(</span><span class="n">a</span><span class="p">)</span>
+      <span class="mh">2</span><span class="mb">&#39;b00</span><span class="o">:</span>    <span class="n">y</span> <span class="o">=</span><span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+      <span class="mh">2</span><span class="mb">&#39;b10</span><span class="o">:</span>    <span class="n">y</span> <span class="o">=</span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+      <span class="mh">2</span><span class="mb">&#39;b11</span><span class="o">:</span>    <span class="n">y</span> <span class="o">=</span><span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+      <span class="k">default</span> <span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+   <span class="k">endcase</span>
+</pre></div>
+</div>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Al Wood. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="exercise-3">
+
+<h2>Exercise 3</h2>
+
+<p>Which is actually lots of exercises, all in <code class="docutils literal"><span class="pre">verilog_basic</span></code></p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">blink</span></code>: Make the LED flash. Extend to make LED's flash in a pattern.</li>
+<li><code class="docutils literal"><span class="pre">fibonacci</span></code>: Count through the LEDs in a fibonacci sequence.</li>
+<li><code class="docutils literal"><span class="pre">button</span></code>: Make the LED's count when you press the button. Why won't it
+count nice and smoothly?</li>
+<li><code class="docutils literal"><span class="pre">button_edge_detect</span></code>: This solves the problem of detecting a button press.</li>
+<li><code class="docutils literal"><span class="pre">lock</span></code>: Unlock the device with a password. This leads into the next talk.</li>
+</ul>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Al Wood. Freely available under a CC-BY-SA license.</div>
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>

@@ -11,21 +11,21 @@ Combinatorial Verilog
 Wires and net declarations
 --------------------------
 
-Wires used as inputs or outputs of modules
+.. code-block:: verilog
+
+   wire a, b;
+   wire y;
+   wire [1:0] a2, b2;
+
+Inputs and outputs to and from modules are automatically declared as wires,
+*unless* they are subsequently declared as registers (next talk).
 
 .. code-block:: verilog
 
-   wire input a,b;
-   wire output y;
-   wire input a2[1:0],b2[1:0];
-
-Wires for use within a module
-
-.. code-block:: verilog
-
-   wire y2[1:0];
-   wire y3[2:0];
-
+   module mymod (
+      input  [1:0] y2;
+      output [2:0] y3;
+     )
 
 Logic bitwise primitives
 ------------------------
@@ -49,16 +49,16 @@ Reduction
 
 .. code-block:: verilog
 
-   wire output y;
-   wire input a2[1:0];
+   wire y;
+   wire [1:0] a2;
    assign y = | a2;
 
 is equivalent to:
 
 .. code-block:: verilog
 
-   wire output y;
-   wire input a2[1:0];
+   wire y;
+   wire [1:0] a2;
    assign y = a2[1] | a2[0];
 
 Concatenation and Replication
@@ -67,8 +67,8 @@ Concatenation and Replication
 .. code-block:: verilog
 
    wire y;
-   wire y2[1:0];
-   wire y3[2:0];
+   wire [1:0] y2;
+   wire [2:0] y3;
 
    assign y2 = {a,b};            // creates a 2-bit signal of a with b
    assign y2 = {a,1'b0};         // a with 1 bit binary 0 (constant)
@@ -178,8 +178,8 @@ If/Else (1)
 
 .. code-block:: verilog
 
-   wire input [7:0]  a, b;
-   wire output [7:0] min;
+   wire [7:0] a, b;
+   wire [7:0] min;
 
    always_comb
       if(a < b)
@@ -225,9 +225,9 @@ Conditional example: implementation
 .. code-block:: verilog
 
    module decoder (
-      input wire [1:0] a,
-      input wire       en,
-      output reg [3:0] y
+      input [1:0]  a,
+      input        en,
+      output [3:0] y
      )
 
       always_comb
@@ -250,9 +250,9 @@ Conditional example: improved
 .. code-block:: verilog
 
    module decoder (
-      input wire [1:0] a,
-      input wire       en,
-      output reg [3:0] y
+      input [1:0]  a,
+      input        en,
+      output [3:0] y
      )
 
       always_comb
@@ -285,9 +285,9 @@ Decoder example using X
 .. code-block:: verilog
 
    module decoder (
-      input wire [1:0] a,
-      input wire       en,
-      output reg [3:0] y
+      input  [1:0] a,
+      input        en,
+      output [3:0] y
      )
 
       always_comb
@@ -303,8 +303,30 @@ Decoder example using X
 
 There is also ``casez``.
 
-Next exercise
--------------
+Multiple assignment
+-------------------
+
+.. code-block:: verilog
+
+   always_comb
+       if (en) y = 1'b0;
+
+   always_comb
+       y = a & b;
+
+Won't synthesize because ``y`` is the output of two circuits which is
+contraditory.  It should be written as:
+
+.. code-block:: verilog
+
+   always_comb
+    if (en)
+       y = 1'b0;
+    else
+       y = a & b;
+
+Exercise 2
+----------
 
 Start with ``button-led.v`` in the ``basic_verilog/led`` directory. Complete
 it so that the LED which is lit up depends on whether the button is pressed.

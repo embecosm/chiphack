@@ -65,15 +65,17 @@
 
 <h2>Wires and net declarations</h2>
 
-<p>Wires used as inputs or outputs of modules</p>
-<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="kt">wire</span> <span class="k">input</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">;</span>
-<span class="kt">wire</span> <span class="k">output</span> <span class="n">y</span><span class="p">;</span>
-<span class="kt">wire</span> <span class="k">input</span> <span class="n">a2</span><span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">],</span><span class="n">b2</span><span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">];</span>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="kt">wire</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">;</span>
+<span class="kt">wire</span> <span class="n">y</span><span class="p">;</span>
+<span class="kt">wire</span> <span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">a2</span><span class="p">,</span> <span class="n">b2</span><span class="p">;</span>
 </pre></div>
 </div>
-<p>Wires for use within a module</p>
-<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="kt">wire</span> <span class="n">y2</span><span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">];</span>
-<span class="kt">wire</span> <span class="n">y3</span><span class="p">[</span><span class="mh">2</span><span class="o">:</span><span class="mh">0</span><span class="p">];</span>
+<p>Inputs and outputs to and from modules are automatically declared as wires,
+<em>unless</em> they are subsequently declared as registers (next talk).</p>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="n">mymod</span> <span class="p">(</span>
+   <span class="k">input</span>  <span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">y2</span><span class="p">;</span>
+   <span class="k">output</span> <span class="p">[</span><span class="mh">2</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">y3</span><span class="p">;</span>
+  <span class="p">)</span>
 </pre></div>
 </div>
 
@@ -108,14 +110,14 @@
 
 <h2>Reduction</h2>
 
-<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="kt">wire</span> <span class="k">output</span> <span class="n">y</span><span class="p">;</span>
-<span class="kt">wire</span> <span class="k">input</span> <span class="n">a2</span><span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">];</span>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="kt">wire</span> <span class="n">y</span><span class="p">;</span>
+<span class="kt">wire</span> <span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">a2</span><span class="p">;</span>
 <span class="k">assign</span> <span class="n">y</span> <span class="o">=</span> <span class="o">|</span> <span class="n">a2</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>is equivalent to:</p>
-<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="kt">wire</span> <span class="k">output</span> <span class="n">y</span><span class="p">;</span>
-<span class="kt">wire</span> <span class="k">input</span> <span class="n">a2</span><span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">];</span>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="kt">wire</span> <span class="n">y</span><span class="p">;</span>
+<span class="kt">wire</span> <span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">a2</span><span class="p">;</span>
 <span class="k">assign</span> <span class="n">y</span> <span class="o">=</span> <span class="n">a2</span><span class="p">[</span><span class="mh">1</span><span class="p">]</span> <span class="o">|</span> <span class="n">a2</span><span class="p">[</span><span class="mh">0</span><span class="p">];</span>
 </pre></div>
 </div>
@@ -131,8 +133,8 @@
 <h2>Concatenation and Replication</h2>
 
 <div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="kt">wire</span> <span class="n">y</span><span class="p">;</span>
-<span class="kt">wire</span> <span class="n">y2</span><span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">];</span>
-<span class="kt">wire</span> <span class="n">y3</span><span class="p">[</span><span class="mh">2</span><span class="o">:</span><span class="mh">0</span><span class="p">];</span>
+<span class="kt">wire</span> <span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">y2</span><span class="p">;</span>
+<span class="kt">wire</span> <span class="p">[</span><span class="mh">2</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">y3</span><span class="p">;</span>
 
 <span class="k">assign</span> <span class="n">y2</span> <span class="o">=</span> <span class="p">{</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">};</span>            <span class="c1">// creates a 2-bit signal of a with b</span>
 <span class="k">assign</span> <span class="n">y2</span> <span class="o">=</span> <span class="p">{</span><span class="n">a</span><span class="p">,</span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">};</span>         <span class="c1">// a with 1 bit binary 0 (constant)</span>
@@ -273,8 +275,8 @@ the difference.</p>
 
 <h2>If/Else (1)</h2>
 
-<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="kt">wire</span> <span class="k">input</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>  <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">;</span>
-<span class="kt">wire</span> <span class="k">output</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">min</span><span class="p">;</span>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="kt">wire</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">;</span>
+<span class="kt">wire</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">min</span><span class="p">;</span>
 
 <span class="k">always_comb</span>
    <span class="k">if</span><span class="p">(</span><span class="n">a</span> <span class="o">&lt;</span> <span class="n">b</span><span class="p">)</span>
@@ -339,9 +341,9 @@ input is asserted (high). Truth table:</p>
 <h2>Conditional example: implementation</h2>
 
 <div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="n">decoder</span> <span class="p">(</span>
-   <span class="k">input</span> <span class="kt">wire</span> <span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">a</span><span class="p">,</span>
-   <span class="k">input</span> <span class="kt">wire</span>       <span class="n">en</span><span class="p">,</span>
-   <span class="k">output</span> <span class="kt">reg</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">y</span>
+   <span class="k">input</span> <span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>  <span class="n">a</span><span class="p">,</span>
+   <span class="k">input</span>        <span class="n">en</span><span class="p">,</span>
+   <span class="k">output</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">y</span>
   <span class="p">)</span>
 
    <span class="k">always_comb</span>
@@ -371,9 +373,9 @@ input is asserted (high). Truth table:</p>
 <h2>Conditional example: improved</h2>
 
 <div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="n">decoder</span> <span class="p">(</span>
-   <span class="k">input</span> <span class="kt">wire</span> <span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">a</span><span class="p">,</span>
-   <span class="k">input</span> <span class="kt">wire</span>       <span class="n">en</span><span class="p">,</span>
-   <span class="k">output</span> <span class="kt">reg</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">y</span>
+   <span class="k">input</span> <span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>  <span class="n">a</span><span class="p">,</span>
+   <span class="k">input</span>        <span class="n">en</span><span class="p">,</span>
+   <span class="k">output</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">y</span>
   <span class="p">)</span>
 
    <span class="k">always_comb</span>
@@ -418,9 +420,9 @@ both inputs and outputs, typically under the control of an enable signal.</p>
 <h2>Decoder example using X</h2>
 
 <div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="n">decoder</span> <span class="p">(</span>
-   <span class="k">input</span> <span class="kt">wire</span> <span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">a</span><span class="p">,</span>
-   <span class="k">input</span> <span class="kt">wire</span>       <span class="n">en</span><span class="p">,</span>
-   <span class="k">output</span> <span class="kt">reg</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">y</span>
+   <span class="k">input</span>  <span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">a</span><span class="p">,</span>
+   <span class="k">input</span>        <span class="n">en</span><span class="p">,</span>
+   <span class="k">output</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">y</span>
   <span class="p">)</span>
 
    <span class="k">always_comb</span>
@@ -443,9 +445,36 @@ both inputs and outputs, typically under the control of an enable signal.</p>
 <div class="slide-footer">Copyright (C) 2017 Al Wood. Freely available under a CC-BY-SA license.</div>
 
 </article>
-<article class="slide level-2" id="next-exercise">
+<article class="slide level-2" id="multiple-assignment">
 
-<h2>Next exercise</h2>
+<h2>Multiple assignment</h2>
+
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="k">always_comb</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">en</span><span class="p">)</span> <span class="n">y</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+
+<span class="k">always_comb</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">a</span> <span class="o">&amp;</span> <span class="n">b</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Won't synthesize because <code class="docutils literal"><span class="pre">y</span></code> is the output of two circuits which is
+contraditory.  It should be written as:</p>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="k">always_comb</span>
+ <span class="k">if</span> <span class="p">(</span><span class="n">en</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+ <span class="k">else</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">a</span> <span class="o">&amp;</span> <span class="n">b</span><span class="p">;</span>
+</pre></div>
+</div>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Al Wood. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="exercise-2">
+
+<h2>Exercise 2</h2>
 
 <p>Start with <code class="docutils literal"><span class="pre">button-led.v</span></code> in the <code class="docutils literal"><span class="pre">basic_verilog/led</span></code> directory. Complete
 it so that the LED which is lit up depends on whether the button is pressed.</p>
