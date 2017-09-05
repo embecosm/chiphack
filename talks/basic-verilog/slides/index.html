@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Basic Verilog &mdash; MyStorm Setup</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="_static/single.css" type="text/css" />
+    
+    <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2017.08.30',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/common.js"></script>
+    
+    <script type="text/javascript" src="_static/slides.js"></script>
+    <script type="text/javascript" src="_static/sync.js"></script>
+    <script type="text/javascript" src="_static/controller.js"></script>
+    <script type="text/javascript" src="_static/init.js"></script>
+    
+    
+    <link rel="top" title="MyStorm Setup" href="#" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="basic-verilog">
+
+<h1>Basic Verilog</h1>
+
+<div class="line-block">
+<div class="line">Jeremy Bennett</div>
+</div>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Embecosm Limited. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="the-process">
+
+<h2>The Process</h2>
+
+<div class="figure">
+<img alt="_images/process.png" src="_images/process.png" />
+</div>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Embecosm Limited. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="combinatorial-logic">
+
+<h2>Combinatorial Logic</h2>
+
+<div class="figure">
+<img alt="_images/combinatorial.png" src="_images/combinatorial.png" />
+</div>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Embecosm Limited. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="sequential-logic">
+
+<h2>Sequential Logic</h2>
+
+<div class="figure">
+<img alt="_images/sequential.png" src="_images/sequential.png" />
+</div>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Embecosm Limited. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="register-transfer-logic">
+
+<h2>Register Transfer Logic</h2>
+
+<p>Designing individual gates and flip-flops is possible, but infeasible on huge
+modern chips. Instead:</p>
+<ul class="simple">
+<li>we group flip flops together into <strong>registers</strong> to hold the state of one or
+more bits.</li>
+<li>we connect registers by networks of wires, or <strong>nets</strong>.</li>
+</ul>
+<p>We will use <strong>Verilog</strong> to describe this. It provides</p>
+<ul class="simple">
+<li><strong>modules</strong> to structure our design</li>
+<li><strong>sequential logic</strong> to control how state moves between registers on clock
+edges</li>
+<li><strong>combinatorial logic</strong> to link together nets continuously.</li>
+</ul>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Embecosm Limited. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="the-led-example-led-v">
+
+<h2>The LED Example: led.v</h2>
+
+<p>This continuously assigns the value 1 to the LED pin:</p>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="n">led</span> <span class="p">(</span><span class="k">output</span> <span class="n">led</span><span class="p">);</span>
+
+   <span class="k">assign</span> <span class="n">led</span> <span class="o">=</span> <span class="mh">1</span><span class="p">;</span>
+
+<span class="k">endmodule</span>
+</pre></div>
+</div>
+<p>But how does this understand that <code class="docutils literal"><span class="pre">led</span></code> is connected to the LED?</p>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Embecosm Limited. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="interface-to-the-led-example-chip-v-1">
+
+<h2>Interface to the LED Example: chip.v (1)</h2>
+
+<p>The module declaration tells us about all our input and output signals:</p>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="n">chip</span> <span class="p">(</span>
+    <span class="c1">// 100MHz clock input</span>
+    <span class="k">input</span>  <span class="n">clk</span><span class="p">,</span>
+    <span class="c1">// SRAM Memory lines</span>
+    <span class="k">output</span> <span class="p">[</span><span class="mh">18</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="no">ADR</span><span class="p">,</span>
+    <span class="k">output</span> <span class="p">[</span><span class="mh">15</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="no">DAT</span><span class="p">,</span>
+    <span class="k">output</span> <span class="no">RAMOE</span><span class="p">,</span>
+    <span class="k">output</span> <span class="no">RAMWE</span><span class="p">,</span>
+    <span class="k">output</span> <span class="no">RAMCS</span><span class="p">,</span>
+    <span class="c1">// All PMOD outputs</span>
+    <span class="k">output</span> <span class="p">[</span><span class="mh">55</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="no">PMOD</span><span class="p">,</span>
+    <span class="k">input</span> <span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="no">BUT</span>
+  <span class="p">);</span>
+</pre></div>
+</div>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Embecosm Limited. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="interface-to-the-led-example-chip-v-2">
+
+<h2>Interface to the LED Example: chip.v (2)</h2>
+
+<p>We can use continuous assignment to set signals we don't want to use:</p>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="c1">// SRAM signals are not use in this design, lets set them to default values</span>
+<span class="k">assign</span> <span class="no">ADR</span><span class="p">[</span><span class="mh">18</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mh">19</span><span class="p">{</span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">}};</span>
+<span class="k">assign</span> <span class="no">DAT</span><span class="p">[</span><span class="mh">15</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mh">16</span><span class="p">{</span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">}};</span>
+<span class="k">assign</span> <span class="no">RAMOE</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+<span class="k">assign</span> <span class="no">RAMWE</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+<span class="k">assign</span> <span class="no">RAMCS</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
+
+<span class="c1">// Set unused pmod pins to default</span>
+<span class="k">assign</span> <span class="no">UART_TX</span> <span class="o">=</span> <span class="no">PMOD</span><span class="p">[</span><span class="mh">11</span><span class="p">];</span>
+<span class="k">assign</span> <span class="no">PMOD</span><span class="p">[</span><span class="mh">54</span><span class="o">:</span><span class="mh">12</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mh">42</span><span class="p">{</span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">}};</span>
+<span class="k">assign</span> <span class="no">PMOD</span><span class="p">[</span><span class="mh">10</span><span class="o">:</span><span class="mh">00</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mh">11</span><span class="p">{</span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">}};</span>
+</pre></div>
+</div>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Embecosm Limited. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="interface-to-the-led-example-chip-v-3">
+
+<h2>Interface to the LED Example: chip.v (3)</h2>
+
+<p>And finally we <strong>instantiate</strong> an instance of the <code class="docutils literal"><span class="pre">led</span></code> module inside the
+<code class="docutils literal"><span class="pre">chip</span></code> module.</p>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span>  <span class="n">led</span> <span class="n">my_led</span> <span class="p">(</span>
+    <span class="p">.</span><span class="n">led</span> <span class="p">(</span><span class="no">PMOD</span><span class="p">[</span><span class="mh">55</span><span class="p">])</span>
+  <span class="p">);</span>
+
+<span class="k">endmodule</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">PMOD[55]</span></code> is the external pin corresponding to the red LED.  But how does
+Verilog know that?</p>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Embecosm Limited. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="the-physical-constraints-file-1">
+
+<h2>The Physical Constraints File (1)</h2>
+
+<p>The file <code class="docutils literal"><span class="pre">blackice.pcf</span></code> maps the named top level ports to actual pin
+numbers on the FPGA:</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>#pmod 1
+set_io PMOD[0] 94 # rd6
+set_io PMOD[1] 91 # rd4
+set_io PMOD[2] 88 # rd2
+set_io PMOD[3] 85 # rd0
+...
+#pmod 14 SPI muxed with leds
+set_io PMOD[52] 71 #LD4,!SS,p14_1
+set_io PMOD[53] 67 #LD3,MISO,p14_2
+set_io PMOD[54] 68 #LD2,MOSI,p14_3
+set_io PMOD[55] 70 #LD1,SCL,p14_4
+</pre></div>
+</div>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Embecosm Limited. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="the-physical-constraints-file-2">
+
+<h2>The Physical Constraints File (2)</h2>
+
+<div class="highlight-text"><div class="highlight"><pre><span></span># SRAM
+set_io ADR[0] 137
+set_io ADR[1] 138
+set_io ADR[2] 139
+...
+# Onboard 12Mhz oscillator
+set_io clk 129
+
+# Buttons
+set_io BUT[0] 63
+set_io BUT[1] 64
+</pre></div>
+</div>
+<p>But where do you find the pin numbers?</p>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Embecosm Limited. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="mystorm-schematic">
+
+<h2>MyStorm Schematic</h2>
+
+<p>MyStorm repository, <code class="docutils literal"><span class="pre">BlackIce</span></code> branch, in the <code class="docutils literal"><span class="pre">cad/mystorm</span></code> directory.</p>
+<div class="figure">
+<img alt="_images/mystorm-cad.png" src="_images/mystorm-cad.png" />
+</div>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Embecosm Limited. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="mystorm-schematic-detail">
+
+<h2>MyStorm Schematic Detail</h2>
+
+<div class="figure">
+<img alt="_images/mystorm-cad-detail.png" src="_images/mystorm-cad-detail.png" />
+</div>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Embecosm Limited. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="first-exercise">
+
+<h2>First exercise</h2>
+
+<p>Start with <code class="docutils literal"><span class="pre">led.v</span></code> in the <code class="docutils literal"><span class="pre">basic_verilog/led</span></code> directory.  Complete it and
+build it with:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">led</span>
+</pre></div>
+</div>
+<p>Then try the following changes:</p>
+<ul class="simple">
+<li>Modify <code class="docutils literal"><span class="pre">led.v</span></code> and <code class="docutils literal"><span class="pre">chip.v</span></code> to light one of the other LEDs.</li>
+<li>Try lighting up more than one LED at once.</li>
+</ul>
+<p>Next stage of the tutorial, we'll get the LED to flash.</p>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Embecosm Limited. Freely available under a CC-BY-SA license.</div>
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>
