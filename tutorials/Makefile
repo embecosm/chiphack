@@ -20,6 +20,7 @@
 DIRS = mystorm-setup \
        basic-verilog \
        combinatorial-verilog
+
 .PHONY: all
 all:
 	for d in ${DIRS} ;                   \
@@ -27,6 +28,7 @@ all:
 	    cd $$d ;                         \
 	    make SPHINXOPTS=-Wn slides ;     \
 	    make html ;                      \
+            cd .. ;                          \
 	done
 
 .PHONY: clean
@@ -35,4 +37,5 @@ clean:
 	do                                   \
 	    cd $$d ;                         \
 	    make clean  ;                    \
+            cd .. ;                          \
 	done
