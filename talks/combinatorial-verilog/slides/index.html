@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Combinatorial Verilog &mdash; MyStorm Setup</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="_static/single.css" type="text/css" />
+    
+    <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2017.08.30',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/common.js"></script>
+    
+    <script type="text/javascript" src="_static/slides.js"></script>
+    <script type="text/javascript" src="_static/sync.js"></script>
+    <script type="text/javascript" src="_static/controller.js"></script>
+    <script type="text/javascript" src="_static/init.js"></script>
+    
+    
+    <link rel="top" title="MyStorm Setup" href="#" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="combinatorial-verilog">
+
+<h1>Combinatorial Verilog</h1>
+
+<div class="line-block">
+<div class="line">Al Wood</div>
+</div>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Al Wood. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="wires-and-net-declarations">
+
+<h2>Wires and net declarations</h2>
+
+<p>Wires used as inputs or outputs of modules</p>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="kt">wire</span> <span class="k">input</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">;</span>
+<span class="kt">wire</span> <span class="k">output</span> <span class="n">y</span><span class="p">;</span>
+<span class="kt">wire</span> <span class="k">input</span> <span class="n">a2</span><span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">],</span><span class="n">b2</span><span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">];</span>
+</pre></div>
+</div>
+<p>Wires for use within a module</p>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="kt">wire</span> <span class="n">y2</span><span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">];</span>
+<span class="kt">wire</span> <span class="n">y3</span><span class="p">[</span><span class="mh">2</span><span class="o">:</span><span class="mh">0</span><span class="p">];</span>
+</pre></div>
+</div>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Al Wood. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="logic-bitwise-primitives">
+
+<h2>Logic bitwise primitives</h2>
+
+<p>Negation</p>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="k">assign</span> <span class="n">y</span> <span class="o">=</span> <span class="o">~</span><span class="n">a</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>AND, OR and exclusive-OR gates</p>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="k">assign</span> <span class="n">y</span> <span class="o">=</span> <span class="n">a</span> <span class="o">&amp;</span> <span class="n">b</span><span class="p">;</span>
+<span class="k">assign</span> <span class="n">y</span> <span class="o">=</span> <span class="n">a</span> <span class="o">|</span> <span class="n">b</span><span class="p">;</span>
+<span class="k">assign</span> <span class="n">y</span> <span class="o">=</span> <span class="n">a</span> <span class="o">^</span> <span class="n">b</span><span class="p">;</span>
+</pre></div>
+</div>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Al Wood. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="reduction">
+
+<h2>Reduction</h2>
+
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="kt">wire</span> <span class="k">output</span> <span class="n">y</span><span class="p">;</span>
+<span class="kt">wire</span> <span class="k">input</span> <span class="n">a2</span><span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">];</span>
+<span class="k">assign</span> <span class="n">y</span> <span class="o">=</span> <span class="o">|</span> <span class="n">a2</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>is equivalent to:</p>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="kt">wire</span> <span class="k">output</span> <span class="n">y</span><span class="p">;</span>
+<span class="kt">wire</span> <span class="k">input</span> <span class="n">a2</span><span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">];</span>
+<span class="k">assign</span> <span class="n">y</span> <span class="o">=</span> <span class="n">a2</span><span class="p">[</span><span class="mh">1</span><span class="p">]</span> <span class="o">|</span> <span class="n">a2</span><span class="p">[</span><span class="mh">0</span><span class="p">];</span>
+</pre></div>
+</div>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Al Wood. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="concatenation-and-replication">
+
+<h2>Concatenation and Replication</h2>
+
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="kt">wire</span> <span class="n">y</span><span class="p">;</span>
+<span class="kt">wire</span> <span class="n">y2</span><span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">];</span>
+<span class="kt">wire</span> <span class="n">y3</span><span class="p">[</span><span class="mh">2</span><span class="o">:</span><span class="mh">0</span><span class="p">];</span>
+
+<span class="k">assign</span> <span class="n">y2</span> <span class="o">=</span> <span class="p">{</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">};</span>            <span class="c1">// creates a 2-bit signal of a with b</span>
+<span class="k">assign</span> <span class="n">y2</span> <span class="o">=</span> <span class="p">{</span><span class="n">a</span><span class="p">,</span><span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">};</span>         <span class="c1">// a with 1 bit binary 0 (constant)</span>
+<span class="k">assign</span> <span class="n">y3</span> <span class="o">=</span> <span class="p">{</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">};</span>       <span class="c1">// a with b with binary 1 (constant)</span>
+<span class="k">assign</span> <span class="n">y3</span> <span class="o">=</span> <span class="p">{</span><span class="n">a</span><span class="p">,</span><span class="mh">2</span><span class="mb">&#39;b10</span><span class="p">};</span>        <span class="c1">// a with 2 binary bits 1, 0</span>
+<span class="k">assign</span> <span class="n">y3</span> <span class="o">=</span> <span class="p">{</span><span class="n">a</span><span class="p">,</span><span class="n">a2</span><span class="p">};</span>           <span class="c1">// a with a2 (a2 is 2 bits)</span>
+<span class="k">assign</span> <span class="n">y3</span> <span class="o">=</span> <span class="p">{</span><span class="n">a</span><span class="p">,</span><span class="n">a2</span><span class="p">[</span><span class="mh">0</span><span class="p">],</span><span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">};</span>   <span class="c1">// a with single bit from a2 with 1</span>
+<span class="k">assign</span> <span class="p">{</span><span class="n">y2</span><span class="p">,</span><span class="n">y</span><span class="p">}</span> <span class="o">=</span> <span class="p">{</span><span class="n">y3</span><span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">],</span><span class="n">a</span><span class="p">};</span>  <span class="c1">// multiple assignment: creates y2 as</span>
+                              <span class="c1">// 2 bits from y3 and y as a</span>
+<span class="k">assign</span> <span class="n">y3</span> <span class="o">=</span> <span class="p">{</span><span class="n">a</span><span class="p">,</span><span class="mh">2</span><span class="p">{</span><span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">}};</span>      <span class="c1">// a with 2 lots of binary 1</span>
+</pre></div>
+</div>
+<p>Note use of <code class="docutils literal"><span class="pre">//</span></code> to introduce a comment.</p>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Al Wood. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="shifting">
+
+<h2>Shifting</h2>
+
+<p>Both arithmetic and logic shifts are provided. The following table illustrates
+the difference.</p>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="n">a</span>           <span class="n">a</span> <span class="o">&gt;&gt;</span> <span class="mh">2</span>      <span class="n">a</span> <span class="o">&gt;&gt;&gt;</span> <span class="mh">2</span>     <span class="n">a</span> <span class="o">&lt;&lt;</span> <span class="mh">2</span>      <span class="n">a</span> <span class="o">&lt;&lt;&lt;</span> <span class="mh">3</span>
+<span class="mh">01001111</span>    <span class="mh">00010011</span>    <span class="mh">00010011</span>    <span class="mh">00111100</span>    <span class="mh">00111100</span>
+<span class="mh">11001111</span>    <span class="mh">00110011</span>    <span class="mh">11110011</span>    <span class="mh">00111100</span>    <span class="mh">00111100</span>
+</pre></div>
+</div>
+<p>Examples:</p>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="k">assign</span> <span class="n">y2</span> <span class="o">=</span> <span class="n">a2</span> <span class="o">&gt;&gt;</span> <span class="mh">1</span><span class="p">;</span>    <span class="c1">// Logical 0&#39;s shifted in</span>
+<span class="k">assign</span> <span class="n">y2</span> <span class="o">=</span> <span class="n">a2</span> <span class="o">&gt;&gt;&gt;</span> <span class="mh">1</span><span class="p">;</span>   <span class="c1">// Arithemtic MSB sign bit shifted in</span>
+<span class="k">assign</span> <span class="n">y2</span> <span class="o">=</span> <span class="n">a2</span> <span class="o">&lt;&lt;</span> <span class="mh">1</span><span class="p">;</span>    <span class="c1">// Logical shift left same result as</span>
+<span class="k">assign</span> <span class="n">y2</span> <span class="o">=</span> <span class="n">a2</span> <span class="o">&lt;&lt;&lt;</span> <span class="mh">1</span><span class="p">;</span>   <span class="c1">// Arithmetic shift left</span>
+</pre></div>
+</div>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Al Wood. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="rotation">
+
+<h2>Rotation</h2>
+
+<p>Rotate right 1 bit:</p>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="k">assign</span> <span class="n">y3</span> <span class="o">=</span> <span class="p">{</span><span class="n">y3</span><span class="p">[</span><span class="mh">0</span><span class="p">],</span><span class="n">y3</span><span class="p">[</span><span class="mh">2</span><span class="o">:</span><span class="mh">1</span><span class="p">]};</span>
+</pre></div>
+</div>
+<p>Rotate right 2 bit:</p>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="k">assign</span> <span class="n">y3</span> <span class="o">=</span> <span class="p">{</span><span class="n">y3</span><span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">],</span><span class="n">y3</span><span class="p">[</span><span class="mh">2</span><span class="p">]};</span>
+</pre></div>
+</div>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Al Wood. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="conditional-expressions">
+
+<h2>Conditional expressions</h2>
+
+<p>A tertiary operator:</p>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="k">assign</span> <span class="n">max</span> <span class="o">=</span> <span class="p">(</span><span class="n">a</span> <span class="o">&gt;</span> <span class="n">b</span><span class="p">)</span> <span class="o">?</span> <span class="n">a</span> <span class="o">:</span> <span class="n">b</span><span class="p">;</span>
+</pre></div>
+</div>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Al Wood. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="operator-precedence">
+
+<h2>Operator precedence</h2>
+
+<div class="highlight-default"><div class="highlight"><pre><span></span>() [] :: .
++ - ! ~ &amp; ~&amp; | ~| ^ ~^ ^~ ++ -- (unary)
+**
+* / %
++ - (binary)
+&lt;&lt; &gt;&gt; &lt;&lt;&lt; &gt;&gt;&gt;
+&lt; &lt;= &gt; &gt;= inside dist
+== != === !== =?= !?=
+&amp; (binary)
+^ ~^ ^~ (binary)
+| (binary)
+&amp;&amp;
+||
+? : (conditional operator)
+&gt;
+= += -= *= /= %= &amp;= ^= |= &lt;&lt;= &gt;&gt;= &lt;&lt;&lt;= &gt;&gt;&gt;= := :/ &lt;=
+{} {{}}
+</pre></div>
+</div>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Al Wood. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="combinatorial-always-blocks">
+
+<h2>Combinatorial always blocks</h2>
+
+<p>For use when simple expressions get too complicated</p>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="k">always</span> <span class="p">@(</span><span class="o">*</span><span class="p">)</span>
+   <span class="n">a</span> <span class="o">=</span> <span class="n">b</span><span class="p">;</span>
+
+<span class="k">always</span> <span class="p">@(</span><span class="o">*</span><span class="p">)</span>
+   <span class="k">begin</span>
+      <span class="n">a</span> <span class="o">=</span> <span class="n">b</span><span class="p">;</span>
+      <span class="n">y</span> <span class="o">=</span> <span class="n">a</span> <span class="o">|</span> <span class="n">b</span><span class="p">;</span>
+    <span class="k">end</span>
+</pre></div>
+</div>
+<p>SystemVerilog offers a more explicit format</p>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="k">always_comb</span>
+   <span class="n">a</span> <span class="o">=</span> <span class="n">b</span><span class="p">;</span>
+</pre></div>
+</div>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Al Wood. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="if-else-1">
+
+<h2>If/Else (1)</h2>
+
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="kt">wire</span> <span class="k">input</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span>  <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">;</span>
+<span class="kt">wire</span> <span class="k">output</span> <span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">min</span><span class="p">;</span>
+
+<span class="k">always_comb</span>
+   <span class="k">if</span><span class="p">(</span><span class="n">a</span> <span class="o">&lt;</span> <span class="n">b</span><span class="p">)</span>
+      <span class="n">min</span> <span class="o">=</span> <span class="n">a</span><span class="p">;</span>
+   <span class="k">else</span>
+      <span class="n">min</span> <span class="o">=</span> <span class="n">b</span><span class="p">;</span>
+</pre></div>
+</div>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Al Wood. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="if-else-2">
+
+<h2>If/Else (2)</h2>
+
+<p>More generally:</p>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="k">always_comb</span>
+   <span class="k">if</span><span class="p">(</span><span class="n">boolean</span><span class="p">)</span>
+      <span class="k">begin</span>     <span class="c1">// need begin...end if &gt;1 line of code within block</span>
+                <span class="c1">// begin code</span>
+      <span class="k">end</span>
+   <span class="k">else</span>
+      <span class="k">begin</span>
+                <span class="c1">// else code</span>
+      <span class="k">end</span>
+</pre></div>
+</div>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Al Wood. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="conditional-example-4-bit-decoder">
+
+<h2>Conditional example: 4-bit decoder</h2>
+
+<p>Given a 2 bit value input, set that bit in the output, but only if the enable
+input is asserted (high). Truth table:</p>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="n">en</span>      <span class="n">a1</span>      <span class="n">a2</span>      <span class="n">y</span>
+<span class="mh">0</span>       <span class="o">-</span>       <span class="o">-</span>       <span class="mh">0000</span>
+<span class="mh">1</span>       <span class="mh">0</span>       <span class="mh">0</span>       <span class="mh">0001</span>
+<span class="mh">1</span>       <span class="mh">0</span>       <span class="mh">1</span>       <span class="mh">0010</span>
+<span class="mh">1</span>       <span class="mh">1</span>       <span class="mh">0</span>       <span class="mh">0100</span>
+<span class="mh">1</span>       <span class="mh">1</span>       <span class="mh">1</span>       <span class="mh">1000</span>
+</pre></div>
+</div>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Al Wood. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="conditional-example-implementation">
+
+<h2>Conditional example: implementation</h2>
+
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="n">decoder</span> <span class="p">(</span>
+   <span class="k">input</span> <span class="kt">wire</span> <span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">a</span><span class="p">,</span>
+   <span class="k">input</span> <span class="kt">wire</span>       <span class="n">en</span><span class="p">,</span>
+   <span class="k">output</span> <span class="kt">reg</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">y</span>
+  <span class="p">)</span>
+
+   <span class="k">always_comb</span>
+      <span class="k">if</span> <span class="p">(</span><span class="o">~</span><span class="n">en</span><span class="p">)</span>
+         <span class="n">y</span> <span class="o">=</span> <span class="mh">4</span><span class="mb">&#39;b0000</span><span class="p">;</span>  <span class="c1">// 4-bit wide, binary representation: 0000</span>
+      <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">a</span> <span class="o">==</span> <span class="mh">2</span><span class="mb">&#39;b00</span><span class="p">)</span>
+         <span class="n">y</span> <span class="o">=</span> <span class="mh">4</span><span class="mb">&#39;b0001</span><span class="p">;</span>
+      <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">a</span> <span class="o">==</span> <span class="mh">2</span><span class="mb">&#39;b01</span><span class="p">)</span>
+         <span class="n">y</span> <span class="o">=</span> <span class="mh">4</span><span class="mb">&#39;b0010</span><span class="p">;</span>
+      <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">a</span> <span class="o">==</span> <span class="mh">2</span><span class="mb">&#39;b10</span><span class="p">)</span>
+         <span class="n">y</span> <span class="o">=</span> <span class="mh">4</span><span class="mb">&#39;b0100</span><span class="p">;</span>
+      <span class="k">else</span>
+         <span class="n">y</span> <span class="o">=</span> <span class="mh">4</span><span class="mb">&#39;b1000</span><span class="p">;</span>
+
+<span class="k">endmodule</span>
+</pre></div>
+</div>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Al Wood. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="conditional-example-improved">
+
+<h2>Conditional example: improved</h2>
+
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="n">decoder</span> <span class="p">(</span>
+   <span class="k">input</span> <span class="kt">wire</span> <span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">a</span><span class="p">,</span>
+   <span class="k">input</span> <span class="kt">wire</span>       <span class="n">en</span><span class="p">,</span>
+   <span class="k">output</span> <span class="kt">reg</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">y</span>
+  <span class="p">)</span>
+
+   <span class="k">always_comb</span>
+      <span class="k">case</span> <span class="p">({</span><span class="n">en</span><span class="p">,</span><span class="n">a</span><span class="p">})</span>
+         <span class="mh">3</span><span class="mb">&#39;b000</span><span class="p">,</span> <span class="mh">3</span><span class="mb">&#39;b001</span><span class="p">,</span><span class="mh">3</span><span class="mb">&#39;b010</span><span class="p">,</span><span class="mh">3</span><span class="mb">&#39;b011</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="mh">4</span><span class="mb">&#39;b0000</span><span class="p">;</span>
+         <span class="mh">3</span><span class="mb">&#39;b100</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="mh">4</span><span class="mb">&#39;b0001</span><span class="p">;</span>
+         <span class="mh">3</span><span class="mb">&#39;b101</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="mh">4</span><span class="mb">&#39;b0010</span><span class="p">;</span>
+         <span class="mh">3</span><span class="mb">&#39;b110</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="mh">4</span><span class="mb">&#39;b0100</span><span class="p">;</span>
+         <span class="mh">3</span><span class="mb">&#39;b111</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="mh">4</span><span class="mb">&#39;b1000</span><span class="p">;</span>
+      <span class="k">endcase</span>    <span class="c1">// {en,a}</span>
+
+<span class="k">endmodule</span>
+</pre></div>
+</div>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Al Wood. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="uncertainty-x-and-z-values">
+
+<h2>Uncertainty: X and Z values</h2>
+
+<p>X is the &quot;don't care&quot; value. Specifiying this can make for more efficient
+synthesis, since the tools can choose whichever value is most efficient.</p>
+<p>Z is the &quot;high impedence&quot; value, typically used for connections that can be
+both inputs and outputs, typically under the control of an enable signal.</p>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="k">assign</span> <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="n">oen</span><span class="p">)</span> <span class="o">?</span> <span class="n">a</span> <span class="o">:</span> <span class="mh">1</span><span class="p">&#39;</span><span class="n">bz</span><span class="p">;</span>
+</pre></div>
+</div>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Al Wood. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="decoder-example-using-x">
+
+<h2>Decoder example using X</h2>
+
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="n">decoder</span> <span class="p">(</span>
+   <span class="k">input</span> <span class="kt">wire</span> <span class="p">[</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">a</span><span class="p">,</span>
+   <span class="k">input</span> <span class="kt">wire</span>       <span class="n">en</span><span class="p">,</span>
+   <span class="k">output</span> <span class="kt">reg</span> <span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">y</span>
+  <span class="p">)</span>
+
+   <span class="k">always_comb</span>
+      <span class="k">casex</span> <span class="p">({</span><span class="n">en</span><span class="p">,</span><span class="n">a</span><span class="p">})</span>
+         <span class="mh">3</span><span class="mb">&#39;b0</span><span class="nl">xx:</span> <span class="n">y</span> <span class="o">=</span> <span class="mh">4</span><span class="mb">&#39;b0000</span><span class="p">;</span>
+         <span class="mh">3</span><span class="mb">&#39;b100</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="mh">4</span><span class="mb">&#39;b0001</span><span class="p">;</span>
+         <span class="mh">3</span><span class="mb">&#39;b101</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="mh">4</span><span class="mb">&#39;b0010</span><span class="p">;</span>
+         <span class="mh">3</span><span class="mb">&#39;b110</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="mh">4</span><span class="mb">&#39;b0100</span><span class="p">;</span>
+         <span class="mh">3</span><span class="mb">&#39;b111</span><span class="o">:</span> <span class="n">y</span> <span class="o">=</span> <span class="mh">4</span><span class="mb">&#39;b1000</span><span class="p">;</span>
+      <span class="k">endcase</span>    <span class="c1">// {en,a}</span>
+
+<span class="k">endmodule</span>
+</pre></div>
+</div>
+<p>There is also <code class="docutils literal"><span class="pre">casez</span></code>.</p>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Al Wood. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="next-exercise">
+
+<h2>Next exercise</h2>
+
+<p>Start with <code class="docutils literal"><span class="pre">button-led.v</span></code> in the <code class="docutils literal"><span class="pre">basic_verilog/led</span></code> directory. Complete
+it so that the LED which is lit up depends on whether the button is pressed.</p>
+<p>Build it with:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">button</span><span class="o">-</span><span class="n">led</span>
+</pre></div>
+</div>
+<p>Then experiment using both buttons, so that each combination of buttons lights
+a different LED. Use a <code class="docutils literal"><span class="pre">case</span></code> statement for this.</p>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Al Wood. Freely available under a CC-BY-SA license.</div>
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>
