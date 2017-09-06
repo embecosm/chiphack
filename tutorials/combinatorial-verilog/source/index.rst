@@ -328,12 +328,13 @@ contraditory.  It should be written as:
 Exercise 2
 ----------
 
-Start with ``button-led.v`` in the ``basic_verilog/led`` directory. Complete
-it so that the LED which is lit up depends on whether the button is pressed.
+Start with ``button_led.v`` in the ``basic_verilog/button_led``
+directory. Complete it so that the LED which is lit up depends on whether the
+button is pressed.
 
 Build it with::
 
-  make button-led
+  make button_led
 
 Then experiment using both buttons, so that each combination of buttons lights
 a different LED. Use a ``case`` statement for this.
