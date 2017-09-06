@@ -178,7 +178,7 @@ A default clause is a good catchall.
 Exercise 3
 ----------
 
-Which is actually lots of exercises, all in ``verilog_basic``
+Which is actually lots of exercises, all in ``basic_verilog``
 
 * ``blink``: Make the LED flash. Extend to make LED's flash in a pattern.
 
