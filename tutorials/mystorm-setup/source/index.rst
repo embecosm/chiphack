@@ -94,10 +94,15 @@ Uploading your design (Windows)
 Start up *teraterm*
 
 * Select the serial option, then go to setup>serial.
-* Delete the Baud rate option
+* Delete the Baud rate option (remove the text ``9600`` in the box)
 * Set data as 8 bit, no parity, 1 bit stop and no flow control.
-* Then file>send file navigate to hardware.bin
+* Then file>send file navigate to ``hardware.bin``
 * tick the Binary option box and open
+
+.. note::
+
+  If you experience very slow download rates, unplug the device from your computer.
+  Then plug it in again and re-check all settings above.
 
 Your first design
 -----------------
