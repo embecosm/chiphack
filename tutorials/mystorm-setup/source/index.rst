@@ -65,14 +65,14 @@ From ``cheat_sheet``, change to the ``led`` directory and copy in the parent PCF
 file::
 
   cd led
-  cp ..\blackice.pcf .
+  copy ..\blackice.pcf .
 
 Then synthesize the LED example with ``apio``::
 
   apio build --size 8k --type hx --pack tq144:4k
 
-This will synthesize the code in ``led\led.v`` to a bitstream in
-``hardware\chip.bin``.
+This will synthesize the code in ``led.v`` to a bitstream in
+``hardware.bin``.
 
 Uploading your design (Mac/Linux)
 ---------------------------------
