@@ -91,13 +91,15 @@ machine.
 Uploading your design (Windows)
 -------------------------------
 
+Make sure you know which COM port you device is connected to by checking under ```Ports (COM & LPT)``` in Device Manager. If in doubt unplug and plug in the device to make sure.
+
 Start up *teraterm*
 
-* Select the serial option, then go to setup>serial.
-* Delete the Baud rate option (remove the text ``9600`` in the box)
+* Select the Serial option and the COM port of your device, then go to the ```Setup``` > ```Serial port...``` menu item
+* Delete the Baud rate option
 * Set data as 8 bit, no parity, 1 bit stop and no flow control.
-* Then file>send file navigate to ``hardware.bin``
-* tick the Binary option box and open
+* Then select the ```File``` > ```Send file...``` menu item and navigate to directory containing ```hardware.bin```
+* Tick the ```Binary``` option box and open
 
 .. note::
 
