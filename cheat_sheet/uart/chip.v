@@ -34,7 +34,7 @@ module chip (
   assign RAMWE = 1'b1;
   assign RAMCS = 1'b1;
 
-  assign PMOD[49:0] = {49{1'b0}};
+  assign PMOD[49:0] = {50{1'b0}};
 
   wire OUT;
 

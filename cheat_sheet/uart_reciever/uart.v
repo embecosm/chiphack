@@ -33,7 +33,7 @@ module uart(  input clk,
   wire 					  reset;
   assign reset = ~button;
 
-  assign led[1:0] = recieve_state;
+  assign led[3:0] = recieve_state;
   assign led[2]   = UART_TX;
   assign led[3]   = UART_RX;
 
@@ -75,7 +75,7 @@ module uart(  input clk,
  		    //              detecting this is provided - "key1_edge_detect".)
             if (write_enable == 1) begin
               transmit_state <= 1;
-              transmit_data = recieved;
+              transmit_data <= recieved;
             end
  		      end
  	       1:
@@ -132,7 +132,7 @@ module uart(  input clk,
           begin
             write_enable = 0;
             if (UART_RX == 0)
-              recieve_state = 1;
+              recieve_state <= 1;
 
           end
         1,2,3,4,5,6,7,8:
@@ -147,7 +147,7 @@ module uart(  input clk,
             write_enable = 1;
           end
         default:
-          recieve_state = 0;
+          recieve_state <= 0;
       endcase
     end
   end
