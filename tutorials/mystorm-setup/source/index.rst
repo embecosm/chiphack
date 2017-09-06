@@ -79,11 +79,11 @@ Uploading your design (Mac/Linux)
 
 For Linux::
 
-  make SERIAL=/dev/ttyACM0 upload-linux
+  make SERIAL=/dev/ttyACM0 upload
 
 For Mac::
 
-  make SERIAL=/dev/cu.usbmodem1421 upload-linux
+  make SERIAL=/dev/cu.usbmodem1421 upload
 
 You may need to use a different value for ``SERIAL`` depending on your
 machine.
