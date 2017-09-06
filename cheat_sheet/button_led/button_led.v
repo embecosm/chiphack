@@ -13,34 +13,8 @@
 *                                                                             *
 ******************************************************************************/
 
-module chip (
-    // 100MHz clock input
-    input  clk,
-    // SRAM Memory lines
-    output [18:0] ADR,
-    output [15:0] DAT,
-    output RAMOE,
-    output RAMWE,
-    output RAMCS,
-    // All PMOD outputs
-    output [55:0] PMOD,
-    input [1:0] BUT
-  );
+module button_led (output led, input but);
 
-  // SRAM signals are not use in this design, lets set them to default values
-  assign ADR[18:0] = {19{1'b0}};
-  assign DAT[15:0] = {16{1'b0}};
-  assign RAMOE = 1'b1;
-  assign RAMWE = 1'b1;
-  assign RAMCS = 1'b1;
-
-  // Set unused pmod pins to default
-  assign UART_TX = PMOD[11];
-  assign PMOD[54:12] = {42{1'b0}};
-  assign PMOD[10:00] = {11{1'b0}};
-
-  led my_led (
-    .led (PMOD[55])
-  );
+	assign led = but;
 
 endmodule

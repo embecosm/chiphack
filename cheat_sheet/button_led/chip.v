@@ -39,8 +39,9 @@ module chip (
   assign PMOD[54:12] = {42{1'b0}};
   assign PMOD[10:00] = {11{1'b0}};
 
-  led my_led (
-    .led (PMOD[55])
+  button_led my_button_led (
+    .led (PMOD[55]),
+    .but (BUT[0])
   );
 
 endmodule

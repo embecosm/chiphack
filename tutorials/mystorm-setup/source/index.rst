@@ -7,7 +7,6 @@ MyStorm Setup
 =============
 
 | Dan Gorringe
-| Jeremy Bennett
 
 
 The MyStorm Board
@@ -29,17 +28,19 @@ The instructions are all online:
 Cloning the code from GitHub
 ----------------------------
 
-The simple examples used on day 1::
+You will want to access four repositories:
 
-  git clone https://github.com/embecosm/chiphack.git
+* The simple examples used on day 1
+* Hatim Kanchwala's EDSAC code
+* The reimagined EDSAC peripherals
+* The MyStorm board design
 
-Hatim Kanchwala's EDSAC code::
+::
 
-  git clone https://github.com/librecores/gsoc-museum-edsac.git
-
-The reimagined EDSAC peripherals::
-
-  git clone https://github.com/embecosm/edsac-peripherals.git
+   git clone https://github.com/embecosm/chiphack.git
+   git clone https://github.com/librecores/gsoc-museum-edsac.git
+   git clone https://github.com/embecosm/edsac-peripherals.git
+   git clone https://gitlab.com/Folknology/mystorm.git
 
 Your first design (Mac/Linux)
 -----------------------------
@@ -64,14 +65,14 @@ From ``cheat_sheet``, change to the ``led`` directory and copy in the parent PCF
 file::
 
   cd led
-  cp ..\blackice.pcf .
+  copy ..\blackice.pcf .
 
 Then synthesize the LED example with ``apio``::
 
   apio build --size 8k --type hx --pack tq144:4k
 
-This will synthesize the code in ``led\led.v`` to a bitstream in
-``hardware\chip.bin``.
+This will synthesize the code in ``led.v`` to a bitstream in
+``hardware.bin``.
 
 Uploading your design (Mac/Linux)
 ---------------------------------
@@ -99,6 +100,11 @@ Start up *teraterm*
 * Set data as 8 bit, no parity, 1 bit stop and no flow control.
 * Then select the ```File``` > ```Send file...``` menu item and navigate to directory containing ```hardware.bin```
 * Tick the ```Binary``` option box and open
+
+.. note::
+
+  If you experience very slow download rates, unplug the device from your computer.
+  Then plug it in again and re-check all settings above.
 
 Your first design
 -----------------

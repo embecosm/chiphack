@@ -53,9 +53,9 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = 'MyStorm Setup'
-copyright = '2017, Embecosm'
-author = 'Dan Gorringe'
+project = 'Sequential Verilog'
+copyright = '2017, Al Wood'
+author = 'Al Wood'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -233,7 +233,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     (master_doc, 'MyStormSetup.tex', 'MyStorm Setup Documentation',
-     'Dan Gorringe', 'manual'),
+     'Al Wood', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -303,7 +303,7 @@ extensions += [
 slide_title = 'MyStorm Setup'
 slide_theme = 'single-level'
 slide_levels = 3
-slide_footer = 'Copyright (C) 2017 Embecosm Limited. Freely available under a CC-BY-SA license.'
+slide_footer = 'Copyright (C) 2017 Al Wood. Freely available under a CC-BY-SA license.'
 
 # Place custom static assets in the _static directory and uncomment
 # the following lines to include them

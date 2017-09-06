@@ -82,11 +82,13 @@ Connect to the middle USB port.
 
 ### Linux
 
-Once having compiled and got your chip.bin, run `make upload`
+Once having compiled and got your chip.bin, run `cat /dev/ttyACM0 & cat chip.bin >/dev/ttyACM0` in a terminal.
 
 ### macOS
 
-You will need to have changed your makefile, else same as linux
+Once having compiled and got your chip.bin, run `cat /dev/cu.usbmodem1421 & cat chip.bin >/dev/cu.usbmodem1421`.
+
+note you may have to change `usbmodem1421` to the appropriate port.
 
 ### Windows
 
