@@ -26,6 +26,12 @@ chip.bin: ./led/chip.v ./led/led.v blackice.pcf
 .PHONY: led
 led: chip.bin
 
+.PHONY: button_led
+button_led: ./button_led/chip.v ./button_led/button_led.v blackice.pcf
+		yosys -q -p "synth_ice40 -blif chip.blif" ./button_led/chip.v ./button_led/button_led.v
+		arachne-pnr -d 8k -P tq144:4k -p blackice.pcf chip.blif -o chip.txt
+		icepack chip.txt chip.bin
+
 .PHONY: button
 button: ./button/chip.v ./button/button.v blackice.pcf
 		yosys -q -p "synth_ice40 -blif chip.blif" ./button/chip.v ./button/button.v
