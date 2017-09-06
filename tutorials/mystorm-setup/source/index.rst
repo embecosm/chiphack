@@ -96,6 +96,7 @@ Start up *teraterm*
 * Select the serial option, then go to setup>serial.
 * Delete the Baud rate option (remove the text ``9600`` in the box)
 * Set data as 8 bit, no parity, 1 bit stop and no flow control.
+* Ensure new lines are correclty set up by going to```Setup``` > ```Terminal...``` menu item and set ```Receive``` to ```AUTO```
 * Then file>send file navigate to ``hardware.bin``
 * tick the Binary option box and open
 
