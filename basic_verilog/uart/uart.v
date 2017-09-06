@@ -45,7 +45,6 @@ module uart(  input clk,
  	       0:
  		      begin
             // Wait here for the edge detect to be detected, then move on to the next state
-            end
  		      end
  	       1:
  		      begin
