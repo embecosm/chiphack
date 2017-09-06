@@ -20,7 +20,8 @@
 DIRS = mystorm-setup         \
        basic-verilog         \
        combinatorial-verilog \
-       sequential-verilog
+       sequential-verilog    \
+       uart
 
 .PHONY: all
 all:

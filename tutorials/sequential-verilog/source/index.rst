@@ -175,7 +175,7 @@ A default clause is a good catchall.
          default : y = 1'b1;
       endcase
 
-Exercise 3
+Exercise 4
 ----------
 
 Which is actually lots of exercises, all in ``basic_verilog``

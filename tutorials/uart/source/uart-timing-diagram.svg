@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.0"
+   viewBox="0 0 1390 144"
+   width="1390"
+   height="144"
+   id="svg4914"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="uart-timing-diagram.svg"
+   inkscape:export-filename="/home/jeremy/gittrees/chiphack/chiphack/tutorials/uart/source/uart-timing-diagram.png"
+   inkscape:export-xdpi="66.300003"
+   inkscape:export-ydpi="66.300003">
+  <metadata
+     id="metadata4952">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs4950" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1022"
+     id="namedview4948"
+     showgrid="true"
+     inkscape:showpageshadow="false"
+     inkscape:zoom="0.95179856"
+     inkscape:cx="695"
+     inkscape:cy="72"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg4914">
+    <inkscape:grid
+       type="xygrid"
+       id="grid5494"
+       dotted="true" />
+  </sodipodi:namedview>
+  <g
+     stroke="#000"
+     stroke-width="2"
+     fill="none"
+     id="g4916">
+    <path
+       d="m80 41h20l10 62h110l10-62h110l10 62h110l10-62h110l10 62h110l10-62h110l10 62h110l10-62h110l10 62h110l10-62h120"
+       id="path4918" />
+    <path
+       d="m80 41h-40"
+       stroke-dasharray="4, 2"
+       id="path4920" />
+    <path
+       d="m225 72l5 31h110l10-62h110l10 62h40 70l10-62h110l10 62h110l10-62h110l10 62h110l10-62h110l5 31"
+       id="path4922" />
+    <path
+       d="m1350 41h-40"
+       stroke-dasharray="4, 2"
+       id="path4924" />
+  </g>
+  <g
+     font-size="20.33px"
+     font-family="sans-serif"
+     fill="#000000"
+     id="g4926">
+    <text
+       y="78"
+       x="125"
+       id="text4928">start bit</text>
+    <text
+       y="78"
+       x="262"
+       id="text4930">bit 0</text>
+    <text
+       y="78"
+       x="382"
+       id="text4932">bit 1</text>
+    <text
+       y="78"
+       x="502"
+       id="text4934">bit 2</text>
+    <text
+       y="78"
+       x="622"
+       id="text4936">bit 3</text>
+    <text
+       y="78"
+       x="742"
+       id="text4938">bit 4</text>
+    <text
+       y="78"
+       x="862"
+       id="text4940">bit 5</text>
+    <text
+       y="78"
+       x="982"
+       id="text4942">bit 6</text>
+    <text
+       y="78"
+       x="1102"
+       id="text4944">bit 7</text>
+    <text
+       y="78"
+       x="1205"
+       id="text4946">stop bit</text>
+  </g>
+</svg>
