@@ -101,12 +101,14 @@ Uploading your design (Windows) (2)
 -----------------------------------
 
 * Select the Serial option and the COM port of your device, then go to the
-  ```Setup``` > ```Serial port...``` menu item
+  ``Setup`` > ``Serial port...`` menu item
 * Delete the Baud rate option
 * Set data as 8 bit, no parity, 1 bit stop and no flow control.
-* Then select the ```File``` > ```Send file...``` menu item and navigate to
-  directory containing ```hardware.bin```
-* Tick the ```Binary``` option box and open
+* Ensure new lines are correctly set up by going to ``Setup`` >
+  ``Terminal...`` menu item and set ``Receive`` to ``AUTO``
+* Then select the ``File`` > ``Send file...`` menu item and navigate to
+  directory containing ``hardware.bin``
+* Tick the ``Binary`` option box and open
 
 **Note.** If you experience very slow download rates, unplug the device from
 your computer.  Then plug it in again and re-check all settings above.
