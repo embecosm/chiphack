@@ -97,7 +97,7 @@ You now know Verilog :-)  Here are the common "gotchas".
 
 .. code-block:: verilog
 
-   alway_comb
+   always_comb
       if (a > b)
          gt = 1'b1; // no eq assignment in branch
       else if (a == b)
@@ -142,7 +142,7 @@ Or we can use default values.
          eq = 1'b0;
          if (a > b)
             gt = 1'b1;
-         else if (a==b);
+         else if (a==b)
             eq = 1'b1;
       end
 
