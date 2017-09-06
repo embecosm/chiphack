@@ -116,7 +116,7 @@ be used in combinatorial always blocks.</p>
 <li>Variable assigned in multiple always blocks</li>
 <li>Incomplete branch or output assignment</li>
 </ul>
-<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="n">alway_comb</span>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="k">always_comb</span>
    <span class="k">if</span> <span class="p">(</span><span class="n">a</span> <span class="o">&gt;</span> <span class="n">b</span><span class="p">)</span>
       <span class="n">gt</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span> <span class="c1">// no eq assignment in branch</span>
    <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">a</span> <span class="o">==</span> <span class="n">b</span><span class="p">)</span>
@@ -156,7 +156,7 @@ we could correct this:</p>
       <span class="n">eq</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
       <span class="k">if</span> <span class="p">(</span><span class="n">a</span> <span class="o">&gt;</span> <span class="n">b</span><span class="p">)</span>
          <span class="n">gt</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
-      <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">a</span><span class="o">==</span><span class="n">b</span><span class="p">);</span>
+      <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">a</span><span class="o">==</span><span class="n">b</span><span class="p">)</span>
          <span class="n">eq</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b1</span><span class="p">;</span>
    <span class="k">end</span>
 </pre></div>
@@ -187,8 +187,8 @@ we could correct this:</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="exercise-3">
-<h2>Exercise 3<a class="headerlink" href="#exercise-3" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="exercise-4">
+<h2>Exercise 4<a class="headerlink" href="#exercise-4" title="Permalink to this headline">¶</a></h2>
 <p>Which is actually lots of exercises, all in <code class="docutils literal"><span class="pre">basic_verilog</span></code></p>
 <ul class="simple">
 <li><code class="docutils literal"><span class="pre">blink</span></code>: Make the LED flash. Extend to make LED&#8217;s flash in a pattern.</li>
@@ -219,7 +219,7 @@ count nice and smoothly?</li>
 <li><a class="reference internal" href="#fixing-incomplete-output-assignment-2">Fixing incomplete output assignment (2)</a></li>
 <li><a class="reference internal" href="#incomplete-output-with-case-statements-1">Incomplete output with case statements (1)</a></li>
 <li><a class="reference internal" href="#incomplete-output-with-case-statements-2">Incomplete output with case statements (2)</a></li>
-<li><a class="reference internal" href="#exercise-3">Exercise 3</a></li>
+<li><a class="reference internal" href="#exercise-4">Exercise 4</a></li>
 </ul>
 </li>
 </ul>

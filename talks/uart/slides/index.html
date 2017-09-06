@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>UART Design &mdash; UART Design</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/styles.css" type="text/css" />
+    <link rel="stylesheet" href="_static/single.css" type="text/css" />
+    
+    <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+    
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2017.08.30',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/common.js"></script>
+    
+    <script type="text/javascript" src="_static/slides.js"></script>
+    <script type="text/javascript" src="_static/sync.js"></script>
+    <script type="text/javascript" src="_static/controller.js"></script>
+    <script type="text/javascript" src="_static/init.js"></script>
+    
+    
+    <link rel="top" title="UART Design" href="#" /> 
+  </head>
+  <body>
+
+<section
+   id="slide_container"
+   class='slides layout-regular'>
+
+
+  
+<article class="slide level-1" id="uart-design">
+
+<h1>UART Design</h1>
+
+<div class="line-block">
+<div class="line">Philipp Wagner</div>
+</div>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Embecosm Limited. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="state-machines">
+
+<h2>State Machines</h2>
+
+<div class="figure">
+<img alt="_images/state-machine.png" src="_images/state-machine.png" />
+</div>
+<p>Image courtesy Wikipedia</p>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Embecosm Limited. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="uart">
+
+<h2>UART</h2>
+
+<p>Two wire serial connection protocol</p>
+<ul class="simple">
+<li>Tx wire to transmit</li>
+<li>Rx wire to receive</li>
+</ul>
+<div class="figure">
+<img alt="_images/ehw5-uart.jpg" src="_images/ehw5-uart.jpg" />
+</div>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Embecosm Limited. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="the-ehw5-uart-set-to-3-3v">
+
+<h2>The EHW5 UART: Set to 3.3V!</h2>
+
+<div class="figure">
+<img alt="_images/ehw5-uart-top.jpg" src="_images/ehw5-uart-top.jpg" />
+</div>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Embecosm Limited. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="uart-protocol">
+
+<h2>UART protocol</h2>
+
+<p>The UART protocol sends a start bit, 8 data bits and a stop bit</p>
+<div class="figure">
+<img alt="_images/uart-timing-diagram.png" src="_images/uart-timing-diagram.png" />
+</div>
+<p>The idle state is high, so start bit is low. The stop bit is high.</p>
+<div class="figure">
+<img alt="_images/uart-example.png" src="_images/uart-example.png" />
+</div>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Embecosm Limited. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="exercise-4-hardware">
+
+<h2>Exercise 4: Hardware</h2>
+
+<div class="figure">
+<img alt="_images/uart-wiring.png" src="_images/uart-wiring.png" />
+</div>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Embecosm Limited. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="id1">
+
+<h2>The EHW5 UART: Set to 3.3V!</h2>
+
+<div class="figure">
+<img alt="_images/ehw5-uart-top.jpg" src="_images/ehw5-uart-top.jpg" />
+</div>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Embecosm Limited. Freely available under a CC-BY-SA license.</div>
+
+</article>
+<article class="slide level-2" id="exercise-5">
+
+<h2>Exercise 5</h2>
+
+<p>Two exercises</p>
+<ul class="simple">
+<li>Build a UART Transmitter (<code class="docutils literal"><span class="pre">uart</span></code> directory)</li>
+<li>Build a UART Receiver (<code class="docutils literal"><span class="pre">uart_receiver</span></code> directory)</li>
+</ul>
+<p>The UART to USB will need a suitable terminal program on the PC (<em>Teraterm</em> on
+PC, <em>screen</em> or <em>miniterm</em> on Mac/Linux).</p>
+
+
+
+
+<div class="slide-footer">Copyright (C) 2017 Embecosm Limited. Freely available under a CC-BY-SA license.</div>
+
+</article>
+
+</section>
+
+<section id="slide_notes">
+
+</section>
+
+  </body>
+</html>
