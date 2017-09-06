@@ -17,6 +17,9 @@ module button(input clk, input [1:0] buttons, output [3:0] led);
 
 	reg [3:0] count;
 
-	assign led[0] = ~buttons[0];
+	assign led = count;
+
+	always @(posedge buttons[0])
+		count <= count + 1;
 
 endmodule
