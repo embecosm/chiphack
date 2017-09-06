@@ -16,7 +16,7 @@ A simple memory to hold state, normally implemented as D-type flip-flop.
 .. code-block:: verilog
 
    reg  y;
-   reg [1:0], a2, b2;
+   reg [1:0] a2, b2;
 
 Inputs and outputs can be declared as registers:
 
