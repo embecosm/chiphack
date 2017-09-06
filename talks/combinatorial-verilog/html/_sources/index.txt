@@ -110,13 +110,13 @@ Rotate right 1 bit:
 
 .. code-block:: verilog
 
-   assign y3 = {y3[0],y3[2:1]};
+   assign y4 = {y3[0],y3[2:1]};
 
 Rotate right 2 bit:
 
 .. code-block:: verilog
 
-   assign y3 = {y3[1:0],y3[2]};
+   assign y4 = {y3[1:0],y3[2]};
 
 Conditional expressions
 -----------------------

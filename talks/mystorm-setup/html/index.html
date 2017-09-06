@@ -119,21 +119,28 @@ file:</p>
 <p>You may need to use a different value for <code class="docutils literal"><span class="pre">SERIAL</span></code> depending on your
 machine.</p>
 </div>
-<div class="section" id="uploading-your-design-windows">
-<h2>Uploading your design (Windows)<a class="headerlink" href="#uploading-your-design-windows" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="uploading-your-design-windows-1">
+<h2>Uploading your design (Windows) (1)<a class="headerlink" href="#uploading-your-design-windows-1" title="Permalink to this headline">¶</a></h2>
+<p>Make sure you know which COM port you device is connected to by checking under
+<code class="docutils literal"><span class="pre">`Ports</span> <span class="pre">(COM</span> <span class="pre">&amp;</span> <span class="pre">LPT)`</span></code> in Device Manager. If in doubt unplug and plug in the
+device to make sure.</p>
 <p>Start up <em>teraterm</em></p>
-<ul class="simple">
-<li>Select the serial option, then go to setup&gt;serial.</li>
-<li>Delete the Baud rate option (remove the text <code class="docutils literal"><span class="pre">9600</span></code> in the box)</li>
-<li>Set data as 8 bit, no parity, 1 bit stop and no flow control.</li>
-<li>Then file&gt;send file navigate to <code class="docutils literal"><span class="pre">hardware.bin</span></code></li>
-<li>tick the Binary option box and open</li>
-</ul>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">If you experience very slow download rates, unplug the device from your computer.
-Then plug it in again and re-check all settings above.</p>
 </div>
+<div class="section" id="uploading-your-design-windows-2">
+<h2>Uploading your design (Windows) (2)<a class="headerlink" href="#uploading-your-design-windows-2" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Select the Serial option and the COM port of your device, then go to the
+<code class="docutils literal"><span class="pre">Setup</span></code> &gt; <code class="docutils literal"><span class="pre">Serial</span> <span class="pre">port...</span></code> menu item</li>
+<li>Delete the Baud rate option</li>
+<li>Set data as 8 bit, no parity, 1 bit stop and no flow control.</li>
+<li>Ensure new lines are correctly set up by going to <code class="docutils literal"><span class="pre">Setup</span></code> &gt;
+<code class="docutils literal"><span class="pre">Terminal...</span></code> menu item and set <code class="docutils literal"><span class="pre">Receive</span></code> to <code class="docutils literal"><span class="pre">AUTO</span></code></li>
+<li>Then select the <code class="docutils literal"><span class="pre">File</span></code> &gt; <code class="docutils literal"><span class="pre">Send</span> <span class="pre">file...</span></code> menu item and navigate to
+directory containing <code class="docutils literal"><span class="pre">hardware.bin</span></code></li>
+<li>Tick the <code class="docutils literal"><span class="pre">Binary</span></code> option box and open</li>
+</ul>
+<p><strong>Note.</strong> If you experience very slow download rates, unplug the device from
+your computer.  Then plug it in again and re-check all settings above.</p>
 </div>
 <div class="section" id="your-first-design">
 <h2>Your first design<a class="headerlink" href="#your-first-design" title="Permalink to this headline">¶</a></h2>
@@ -158,7 +165,8 @@ Then plug it in again and re-check all settings above.</p>
 <li><a class="reference internal" href="#your-first-design-mac-linux">Your first design (Mac/Linux)</a></li>
 <li><a class="reference internal" href="#your-first-design-windows">Your first design (Windows)</a></li>
 <li><a class="reference internal" href="#uploading-your-design-mac-linux">Uploading your design (Mac/Linux)</a></li>
-<li><a class="reference internal" href="#uploading-your-design-windows">Uploading your design (Windows)</a></li>
+<li><a class="reference internal" href="#uploading-your-design-windows-1">Uploading your design (Windows) (1)</a></li>
+<li><a class="reference internal" href="#uploading-your-design-windows-2">Uploading your design (Windows) (2)</a></li>
 <li><a class="reference internal" href="#your-first-design">Your first design</a></li>
 </ul>
 </li>
