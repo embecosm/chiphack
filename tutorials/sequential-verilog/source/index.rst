@@ -3,8 +3,8 @@
    hieroglyph-quickstart on Sat Apr 30 21:13:03 2016.
 
 
-Seqential Verilog
-=================
+Sequential Verilog
+==================
 
 | Al Wood
 
