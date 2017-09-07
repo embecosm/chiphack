@@ -34,8 +34,8 @@ module uart(  input clk,
   assign reset = ~button;
 
   assign led[3:0] = recieve_state;
-  assign led[2]   = UART_TX;
-  assign led[3]   = UART_RX;
+//  assign led[2]   = UART_TX;
+//  assign led[3]   = UART_RX;
 
   // Tie UART_GND low
   assign UART_GND = 0;
@@ -116,9 +116,6 @@ module uart(  input clk,
   reg [7:00] 	recieved;
   reg 				write_enable;
   reg [5:0] 	transmit_data_state;
-  reg [5:0] 	saved;
-
-  // Saved memory
 
   always @(posedge clk or posedge reset) begin 		// Recieve
     if (reset) begin
