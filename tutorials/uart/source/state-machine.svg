@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
+
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://web.resource.org/cc/"
+   xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
@@ -10,13 +11,15 @@
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    id="svg2"
    sodipodi:version="0.32"
-   inkscape:version="0.45.1"
+   inkscape:version="0.91 r13725"
    width="500.10916"
    height="299.34848"
    version="1.0"
-   sodipodi:docbase="c:\temp"
-   sodipodi:docname="DFAexample.svg"
-   inkscape:output_extension="org.inkscape.output.svg.inkscape">
+   sodipodi:docname="state-machine.svg"
+   inkscape:output_extension="org.inkscape.output.svg.inkscape"
+   inkscape:export-filename="/home/jeremy/gittrees/chiphack/chiphack/tutorials/uart/source/state-machine.png"
+   inkscape:export-xdpi="184.28"
+   inkscape:export-ydpi="184.28">
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -31,8 +34,8 @@
   <defs
      id="defs5" />
   <sodipodi:namedview
-     inkscape:window-height="1031"
-     inkscape:window-width="1920"
+     inkscape:window-height="925"
+     inkscape:window-width="1214"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
      guidetolerance="10.0"
@@ -45,11 +48,13 @@
      width="200px"
      height="120px"
      inkscape:zoom="1.3876971"
-     inkscape:cx="466.5123"
+     inkscape:cx="289.9608"
      inkscape:cy="139.43848"
      inkscape:window-x="0"
-     inkscape:window-y="22"
-     inkscape:current-layer="svg2" />
+     inkscape:window-y="96"
+     inkscape:current-layer="svg2"
+     showgrid="false"
+     inkscape:window-maximized="0" />
   <path
      sodipodi:type="arc"
      style="fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
