@@ -92,8 +92,8 @@ set_io PMOD[48] 29 # 23b
 set_io PMOD[49] 28 # 23a
 #set_io PMOD[50] 24 # 17b
 #set_io PMOD[51] 23 # 17a
-set_io TX 24 # 17b
-set_io RX 23 # 17a
+set_io UART_TX 24 # 17b
+set_io UART_RX 23 # 17a
 
 #pmod 14 SPI muxed with leds
 set_io PMOD[52] 71 #LD4,!SS,p14_1
