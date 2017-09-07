@@ -1,0 +1,202 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>A New Implementation of EDSAC &mdash; A New EDSAC Implementation 2017.08.30 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2017.08.30',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="A New EDSAC Implementation 2017.08.30 documentation" href="#" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document">
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="a-new-implementation-of-edsac">
+<h1>A New Implementation of EDSAC<a class="headerlink" href="#a-new-implementation-of-edsac" title="Permalink to this headline">¶</a></h1>
+<div class="line-block">
+<div class="line">Hatim Kanchwala</div>
+</div>
+<div class="section" id="module-hierarchy">
+<h2>Module hierarchy<a class="headerlink" href="#module-hierarchy" title="Permalink to this headline">¶</a></h2>
+<div class="figure">
+<img alt="_images/1.png" src="_images/1.png" />
+</div>
+</div>
+<div class="section" id="generic-module-structure">
+<h2>Generic module structure<a class="headerlink" href="#generic-module-structure" title="Permalink to this headline">¶</a></h2>
+<div class="figure">
+<img alt="_images/2.png" src="_images/2.png" />
+</div>
+</div>
+<div class="section" id="delay-line-implementation-1">
+<h2>Delay line implementation (1)<a class="headerlink" href="#delay-line-implementation-1" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="n">delay_line</span>
+  <span class="p">#(</span><span class="k">parameter</span> <span class="no">STORE_LEN</span>  <span class="o">=</span> <span class="mh">16</span><span class="p">,</span>
+    <span class="k">parameter</span> <span class="no">WORD_WIDTH</span> <span class="o">=</span> <span class="mh">36</span><span class="p">)</span>
+   <span class="p">(</span><span class="k">output</span> <span class="kt">reg</span> <span class="p">[</span><span class="no">STORE_LEN</span><span class="o">*</span><span class="no">WORD_WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">monitor</span><span class="p">,</span>
+    <span class="k">output</span> <span class="kt">reg</span>                            <span class="n">data_out</span><span class="p">,</span>
+    <span class="k">input</span> <span class="kt">wire</span>                            <span class="n">clk</span><span class="p">,</span>
+    <span class="k">input</span> <span class="kt">wire</span>                            <span class="n">data_in</span><span class="p">,</span>
+    <span class="k">input</span> <span class="kt">wire</span>                            <span class="n">data_in_gate</span><span class="p">,</span>
+    <span class="k">input</span> <span class="kt">wire</span>                            <span class="n">data_clr</span> <span class="c1">// Active low. );</span>
+
+   <span class="kt">reg</span> <span class="p">[</span><span class="no">STORE_LEN</span><span class="o">*</span><span class="no">WORD_WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">store</span><span class="p">;</span>
+   <span class="k">integer</span>                        <span class="n">i</span><span class="p">;</span>
+
+   <span class="k">initial</span> <span class="k">begin</span>
+      <span class="c1">// Assuming stores in delay lines were cleared.</span>
+      <span class="n">monitor</span> <span class="o">=</span> <span class="mh">0</span><span class="p">;</span>
+      <span class="n">store</span> <span class="o">=</span> <span class="mh">0</span><span class="p">;</span>
+      <span class="n">data_out</span> <span class="o">=</span> <span class="mh">1</span><span class="mb">&#39;b0</span><span class="p">;</span>
+   <span class="k">end</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="delay-line-implementation-2">
+<h2>Delay line implementation (2)<a class="headerlink" href="#delay-line-implementation-2" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span>   <span class="c1">// Recirculation logic.</span>
+   <span class="k">always</span> <span class="p">@(</span><span class="k">posedge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>
+      <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mh">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="no">STORE_LEN</span><span class="o">*</span><span class="no">WORD_WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mh">1</span><span class="p">)</span>
+        <span class="n">store</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">store</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mh">1</span><span class="p">];</span>
+
+      <span class="n">store</span><span class="p">[</span><span class="no">STORE_LEN</span><span class="o">*</span><span class="no">WORD_WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="p">(</span><span class="n">data_in_gate</span><span class="p">)</span> <span class="o">?</span> <span class="n">data_in</span> <span class="o">:</span> <span class="p">(</span><span class="n">store</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span> <span class="o">&amp;</span> <span class="n">data_clr</span><span class="p">);</span>
+   <span class="k">end</span>
+
+   <span class="k">always</span> <span class="p">@(</span><span class="k">negedge</span> <span class="n">clk</span><span class="p">)</span> <span class="k">begin</span>
+      <span class="n">monitor</span><span class="p">[</span><span class="no">STORE_LEN</span><span class="o">*</span><span class="no">WORD_WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">store</span><span class="p">[</span><span class="no">STORE_LEN</span><span class="o">*</span><span class="no">WORD_WIDTH</span><span class="o">-</span><span class="mh">1</span><span class="o">:</span><span class="mh">0</span><span class="p">];</span>
+      <span class="n">data_out</span> <span class="o">&lt;=</span> <span class="n">store</span><span class="p">[</span><span class="mh">0</span><span class="p">];</span>
+   <span class="k">end</span>
+
+<span class="k">endmodule</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="use-of-delay-lines-in-memory">
+<h2>Use of delay lines in memory<a class="headerlink" href="#use-of-delay-lines-in-memory" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-verilog"><div class="highlight"><pre><span></span><span class="k">module</span> <span class="n">memory</span>
+   <span class="p">(</span><span class="k">output</span> <span class="kt">wire</span> <span class="p">[</span><span class="mh">575</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span> <span class="n">monitor</span><span class="p">,</span> <span class="c1">// External long tank display for full 576 bits.</span>
+    <span class="k">output</span> <span class="kt">wire</span>         <span class="n">mob_tn</span><span class="p">,</span>
+    <span class="k">input</span> <span class="kt">wire</span>          <span class="n">clk</span><span class="p">,</span>
+    <span class="k">input</span> <span class="kt">wire</span>          <span class="n">mib</span><span class="p">,</span>
+    <span class="k">input</span> <span class="kt">wire</span>          <span class="n">tn_in</span><span class="p">,</span>
+    <span class="k">input</span> <span class="kt">wire</span>          <span class="n">tn_clr</span><span class="p">,</span>
+    <span class="k">input</span> <span class="kt">wire</span>          <span class="n">tn_out</span> <span class="p">);</span>
+
+   <span class="n">delay_line</span> <span class="p">#(.</span><span class="no">STORE_LEN</span><span class="p">(</span><span class="mh">16</span><span class="p">),</span> <span class="p">.</span><span class="no">WORD_WIDTH</span><span class="p">(</span><span class="mh">36</span><span class="p">))</span> <span class="n">dl</span>
+     <span class="p">(.</span><span class="n">monitor</span>      <span class="p">(</span><span class="n">monitor</span><span class="p">),</span>
+      <span class="p">.</span><span class="n">clk</span>          <span class="p">(</span><span class="n">clk</span><span class="p">),</span>
+      <span class="p">.</span><span class="n">data_in</span>      <span class="p">(</span><span class="n">mib</span><span class="p">),</span>
+      <span class="p">.</span><span class="n">data_in_gate</span> <span class="p">(</span><span class="n">tn_in</span><span class="p">),</span>
+      <span class="p">.</span><span class="n">data_clr</span>     <span class="p">(</span><span class="n">tn_clr</span><span class="p">)</span> <span class="p">);</span>
+
+   <span class="k">assign</span> <span class="n">mob_tn</span> <span class="o">=</span> <span class="n">tn_out</span> <span class="o">?</span> <span class="n">monitor</span><span class="p">[</span><span class="mh">0</span><span class="p">]</span> <span class="o">:</span> <span class="mh">1</span><span class="p">&#39;</span><span class="n">bz</span><span class="p">;</span>
+ <span class="k">endmodule</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="control-section-modules">
+<h2>Control section modules<a class="headerlink" href="#control-section-modules" title="Permalink to this headline">¶</a></h2>
+<div class="figure">
+<img alt="_images/5.png" src="_images/5.png" />
+</div>
+</div>
+<div class="section" id="computer-modules">
+<h2>Computer modules<a class="headerlink" href="#computer-modules" title="Permalink to this headline">¶</a></h2>
+<div class="figure">
+<img alt="_images/6.png" src="_images/6.png" />
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">A New Implementation of EDSAC</a><ul>
+<li><a class="reference internal" href="#module-hierarchy">Module hierarchy</a></li>
+<li><a class="reference internal" href="#generic-module-structure">Generic module structure</a></li>
+<li><a class="reference internal" href="#delay-line-implementation-1">Delay line implementation (1)</a></li>
+<li><a class="reference internal" href="#delay-line-implementation-2">Delay line implementation (2)</a></li>
+<li><a class="reference internal" href="#use-of-delay-lines-in-memory">Use of delay lines in memory</a></li>
+<li><a class="reference internal" href="#control-section-modules">Control section modules</a></li>
+<li><a class="reference internal" href="#computer-modules">Computer modules</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2017, Hatim Kanchwala.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="_sources/index.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
