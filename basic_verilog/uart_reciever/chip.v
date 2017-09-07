@@ -24,7 +24,8 @@ module chip (
     output RAMCS,
     // All PMOD outputs
     output [55:0] PMOD,
-    input [1:0] BUT
+    input [1:0] BUT,
+    input [3:0] DIP
   );
 
   //UART(/slow) clock

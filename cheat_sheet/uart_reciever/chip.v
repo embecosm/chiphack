@@ -26,7 +26,8 @@ module chip (
     output [55:0] PMOD,
     input   UART_RX,
     output  UART_TX,
-    input [1:0] BUT
+    input [1:0] BUT,
+    input [3:0] DIP
   );
 
   // SRAM signals are not use in this design, lets set them to default values

@@ -145,6 +145,11 @@ set_io RAMCS 136
 set_io clk 129
 
 # Buttons
+set_io BUT[0] 63 # S3
+set_io BUT[1] 64 # S4
 
-set_io BUT[0] 63
-set_io BUT[1] 64
+#dip switches
+set_io DIP[0] 37 #S1(2)
+set_io DIP[1] 38 #S1(1)
+set_io DIP[2] 39 #S2(2)
+set_io DIP[3] 41 #S2(1)
