@@ -1,2 +1,11 @@
 # Ignore editor backup files
 *~
+
+# build outputs
+abc.history
+*.bin
+*.blif
+*.asc
+.sconsign.dblite
+chip.txt
+
