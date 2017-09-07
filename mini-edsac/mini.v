@@ -11,6 +11,7 @@ module mini (
             input BUT0
          );
 
+         // Divide the 100MHz clock by 8 to get a 12.5Mhz clock.
    reg [2:0] clock_div = 2'd0;
    always @ (posedge clk_in)
       clock_div <= clock_div + 2'd1;
@@ -19,6 +20,8 @@ module mini (
 
 // parameters (constants)
    reg [15:0] reset_ct = 0;
+   // Clock divisor based on a 12.5Mhz clock generated above.
+   // Make sure to use a 230400 buad rate with miniserve.
    parameter CLKDIV = (12_500_000) / 230400;
 
    reg rst_n = 0;
