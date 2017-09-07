@@ -1,0 +1,13 @@
+article {
+    background-image: url("chiphack-logo.png");
+    background-size: 90px;
+    background-repeat: no-repeat;
+    background-position: right bottom;
+}
+
+.slides > .slide {
+  -webkit-transition: none;
+  -moz-transition: none;
+  -o-transition: none;
+  transition: none;
+}

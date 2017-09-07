@@ -1,0 +1,1 @@
+Search.setIndex({envversion:47,filenames:["index"],objects:{},objnames:{},objtypes:{},terms:{bennett:0,dan:0,gorring:0,mari:0,peter:0},titles:["EDSAC Peripherals"],titleterms:{air:0,arduino:0,complet:0,delai:0,edsac:0,front:0,initi:0,intern:0,level:0,line:0,logic:0,order:0,our:0,panel:0,paper:0,peripher:0,reader:0,shift:0,signal:0,tape:0,teleprint:0}})

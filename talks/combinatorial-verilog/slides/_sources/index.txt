@@ -197,7 +197,7 @@ More generally:
    always_comb
       if(boolean)
          begin     // need begin...end if >1 line of code within block
-                   // begin code
+                   // if code
          end
       else
          begin
