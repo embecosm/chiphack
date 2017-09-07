@@ -27,7 +27,8 @@ module chip (
     input   UART_RX,
     output  UART_GND,
     output  UART_TX,
-    input [1:0] BUT
+    input [1:0] BUT,
+    input [3:0] DIP
   );
 
   // SRAM signals are not use in this design, lets set them to default values
