@@ -1,0 +1,39 @@
+=0
+Loader	T Op	; 00 0:  work 1
+Loop	T Work  ; 01 1:  work 2
+	T Addr  ; 02 2:  work 3
+L1	I 0	; 03 3:  read a character
+	S At	; 04 4:  is it alpha?
+	G L1	; 05 5:  no, ignore leaders
+	L 11	; 06 6:  shift to opcode pos
+	T Op    ; 07 7:  store in work1
+L2	I 0	; 08 8:  next character
+	S Zero	; 09 9:  is it a digit
+	G L2	; 0A 10: skip if not (space?)
+L3	T Work 	; 0B 11: store in work2
+	A Addr	; 0C 12: load address
+	V Ten   ; 0D 13: multiply by 10
+	L 16	; 0E 14: shift into 16-bit acc
+	A Work	; 0F 15: add latest digit
+	T Addr  ; 10 16: store updated address
+	I 0	; 11 17 get next digit
+	S Zero	; 12 18: check for digit
+	E L3	; 13 19: yes, loop back
+	T 0	; 14 20: clear acc
+	A Addr	; 15 21: get address
+	A Op	; 16 22: add opcode
+L4	T Start ; 17 23: store into memory
+	A L4	; 18 24: get store order
+	A One   ; 19 25: increment
+	U L4	; 1A 26: store updated order
+	S Start ; 1B 27: compare with limit
+	G Loop	; 1C 28: resume
+	E Start ; 1D 29: start program
+Op	@ 0	; 1E 30: work1
+Addr	@ 0	; 1F 31: work2
+Work	@ 0	; 20 32: work3
+At	@ 64	; 21 33: '@'
+Zero	@ 48	; 22 34: '0'
+Ten	@ 10	; 23 35: +10
+One	@ 1	; 24 36: +1
+Start	@ 0	; 25 37: START

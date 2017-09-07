@@ -1,0 +1,53 @@
+read_verilog mini.v
+read_verilog -nomem2reg CPU.v
+read_verilog uartrx.v
+read_verilog uarttx.v
+#
+begin:
+read_verilog -lib +/ice40/cells_sim.v
+hierarchy -check -auto-top
+flatten:
+#(unless -noflatten)
+proc
+flatten
+tribuf -logic
+deminout
+coarse:
+synth -run coarse
+bram:
+#(skip if -nobram)
+memory_bram -rules +/ice40/brams.txt
+techmap -map +/ice40/brams_map.v
+#fine:
+opt -fast -mux_undef -undriven -fine
+memory_map
+opt -undriven -fine
+techmap -map +/techmap.v -map +/ice40/arith_map.v
+abc -dff
+#(only if -retime)
+ice40_opt
+map_ffs:
+dffsr2dff
+dff2dffe -direct-match $_DFF_*
+techmap -map +/ice40/cells_map.v
+opt_expr -mux_undef
+simplemap
+ice40_ffinit
+ice40_ffssr
+ice40_opt -full
+map_luts:
+abc
+ice40_opt
+techmap -map +/ice40/latches_map.v
+abc -lut 4
+clean
+map_cells:
+techmap -map +/ice40/cells_map.v
+clean
+check:
+hierarchy -check
+stat
+check -noinit
+blif:
+write_blif -gates -attr -param mini.blif
+## show -prefix mini1 top

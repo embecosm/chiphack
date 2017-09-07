@@ -1,0 +1,37 @@
+# .pcf file for BlackIce
+#
+# based on Richard Miller's version - thanks, Richard!
+#
+
+#PMOD13: 17A 17B 23A 23B
+
+#set_io --warn-no-port PMOD13A 23
+set_io --warn-no-port RX 24		# PMOD13B
+set_io --warn-no-port TX 28		# PMOD13C
+#set_io --warn-no-port PMOD13D 29
+
+# new firmware test
+#set_io --warn-no-port RX 88	       # Richard's new firmware provides UART
+#set_io --warn-no-port TX 85
+
+#Buttons
+set_io --warn-no-port BUT0 63
+#set_io --warn-no-port BUT1 64
+
+# Onboard 100Mhz oscillator
+set_io clk_in 129
+
+# PMOD LED plugin
+set_io --warn-no-port leds[0] 18
+set_io --warn-no-port leds[1] 17
+set_io --warn-no-port leds[2] 12
+set_io --warn-no-port leds[3] 11
+set_io --warn-no-port leds[4] 8
+set_io --warn-no-port leds[5] 7
+set_io --warn-no-port leds[6] 4
+set_io --warn-no-port leds[7] 3
+
+set_io --warn-no-port leds[8] 70 # LD1
+set_io --warn-no-port leds[9] 68 # LD2
+set_io --warn-no-port leds[10] 67 # LD3
+set_io --warn-no-port leds[11] 71 # LD4

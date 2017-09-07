@@ -1,0 +1,80 @@
+	=37
+	T FIN	; 37 program end for loader
+	O P10	; 38 start on a new line
+SKIP	A i	; 39 SKIP: load i
+	V i     ; 40 i*i
+	L 16	; 41 re-align
+	T isq	; 42 store i*i
+	A i	; 43 load i
+	A P1    ; 44 add +1
+	T i	; 45 store updated i
+	A C0	; 46 digit = '0'
+	T digit	; 47 store digit
+	A P1000	; 48 load +1000
+	T M0	; 49 store in M0
+	A P100	; 50 load +100
+	T M1	; 51 store in M1
+	A P10	; 52 load +10
+	T M2	; 53 store in M2
+L1	T FIN	; 54 L1: clear acc
+	A isq	; 55 load square
+	S M0	; 56 subtract M0 (power of ten)
+	G L2	; 57 ->L2 if <0
+	T isq	; 58 store whats left (less M0)
+	A digit	; 59 load digit
+	A P1	; 60 add +1
+	T digit	; 61 store increased digit
+	E L1	; 62 loop back to L1
+L2	A M0	; 63 L2: add back power of ten
+	T isq	; 64 store remainder
+	O digit	; 65 print digit
+	A M1	; 66 load M1
+	T M0	; 67 store in M0
+	A M2	; 68 load M2
+	T M1	; 69 store in M1
+	T M2	; 70 clear M2
+	A C0	; 71 load '0'
+	T digit	; 72 store digit='0'
+	A M0	; 73 load current power of 10
+	S P1	; 74 subtract +1
+	E L1	; 75 ->L2 if M0 == 0
+	T FIN	; 76 clear acc
+	A isq	; 77 load remainder (units)
+	A C0	; 78 add '0'
+	T digit	; 79 store last digit
+	O digit	; 80 output final digit
+	A colct	; 81 load column count
+	A P1	; 82 add +1
+	U colct	; 83 store updated count
+	S P10	; 84 subtract +10
+	E L3	; 85 -> L3 if 0
+	T FIN   ; 86 clear acc
+	O SP	; 87 output space
+	E SKIP	; 88 -> SKIP, back for next square
+L3	O P10	; 89 L3: output newline
+	T FIN	; 90 clear FIN
+	A rowct ; 91 load row count
+	A P1	; 92 add +1
+	U rowct	; 93 store updated count
+	S P10	; 94 subtract +10
+	E L4    ; 95 ->L4 if count = 10
+	T FIN	; 96 clear acc
+	T colct	; 97 clear column count
+	E SKIP	; 98 ->SKIP, next square
+L4	Z 1	; 99 L4: Halt, all done
+;
+i	@ 0     ; 100 i
+colct	@ 0     ; 101 column count
+isq	@ 0     ; 102 i*i
+rowct	@ 0	; 103 row count
+digit	@ 0	; 104 digit
+P1	@ 1	; 105 +1
+C0	@ 48    ; 106 '0'
+P1000	@ 1000  ; 107 +1000
+P100	@ 100   ; 108 +100
+P10	@ 10    ; 109 +10 (and NL)
+M0	@ 0     ; 110 M0
+M1	@ 0     ; 111 M1
+M2	@ 0	; 112 M2
+SP	@ 32	; 113 SP
+FIN	@ 0     ; 114 end of program

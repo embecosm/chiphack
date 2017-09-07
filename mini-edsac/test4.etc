@@ -1,0 +1,42 @@
+;	stand alone test of loops
+;
+;	first count down, 9 to 0
+	T   temp
+	A   nine
+loop1	U   count
+	A   zero
+	T   temp
+	O   temp
+	A   count
+	S   one
+	E   loop1
+; finish with cr, lf
+	O   cr
+	O   lf
+; now count up, 0 to 9
+	T   count
+loop2	A   nine
+	S   count
+	G   fin2
+	T   temp
+	A   count
+	A   zero
+	T   temp
+	O   temp
+	A   count
+	A   one
+	T   count
+	E   loop2
+; and finish with cr,lf
+fin2	O   cr
+	O   lf
+; and halt
+	Z   0
+; data
+count	@   0
+nine	@   9
+zero	@   48
+one	@   1
+cr	@   13
+lf	@   10
+temp	@	0

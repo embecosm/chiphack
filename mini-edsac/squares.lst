@@ -1,0 +1,79 @@
+   1    0: 0025 	=37
+   2   37: a072 	T FIN	; 37 program end for loader
+   3   38: 786d 	O P10	; 38 start on a new line
+   4   39: 0864 SKIP	A i	; 39 SKIP: load i
+   5   40: b064 	V i     ; 40 i*i
+   6   41: 6010 	L 16	; 41 re-align
+   7   42: a066 	T isq	; 42 store i*i
+   8   43: 0864 	A i	; 43 load i
+   9   44: 0869 	A P1    ; 44 add +1
+  10   45: a064 	T i	; 45 store updated i
+  11   46: 086a 	A C0	; 46 digit = '0'
+  12   47: a068 	T digit	; 47 store digit
+  13   48: 086b 	A P1000	; 48 load +1000
+  14   49: a06e 	T M0	; 49 store in M0
+  15   50: 086c 	A P100	; 50 load +100
+  16   51: a06f 	T M1	; 51 store in M1
+  17   52: 086d 	A P10	; 52 load +10
+  18   53: a070 	T M2	; 53 store in M2
+  19   54: a072 L1	T FIN	; 54 L1: clear acc
+  20   55: 0866 	A isq	; 55 load square
+  21   56: 986e 	S M0	; 56 subtract M0 (power of ten)
+  22   57: 383f 	G L2	; 57 ->L2 if <0
+  23   58: a066 	T isq	; 58 store whats left (less M0)
+  24   59: 0868 	A digit	; 59 load digit
+  25   60: 0869 	A P1	; 60 add +1
+  26   61: a068 	T digit	; 61 store increased digit
+  27   62: 2836 	E L1	; 62 loop back to L1
+  28   63: 086e L2	A M0	; 63 L2: add back power of ten
+  29   64: a066 	T isq	; 64 store remainder
+  30   65: 7868 	O digit	; 65 print digit
+  31   66: 086f 	A M1	; 66 load M1
+  32   67: a06e 	T M0	; 67 store in M0
+  33   68: 0870 	A M2	; 68 load M2
+  34   69: a06f 	T M1	; 69 store in M1
+  35   70: a070 	T M2	; 70 clear M2
+  36   71: 086a 	A C0	; 71 load '0'
+  37   72: a068 	T digit	; 72 store digit='0'
+  38   73: 086e 	A M0	; 73 load current power of 10
+  39   74: 9869 	S P1	; 74 subtract +1
+  40   75: 2836 	E L1	; 75 ->L2 if M0 == 0
+  41   76: a072 	T FIN	; 76 clear acc
+  42   77: 0866 	A isq	; 77 load remainder (units)
+  43   78: 086a 	A C0	; 78 add '0'
+  44   79: a068 	T digit	; 79 store last digit
+  45   80: 7868 	O digit	; 80 output final digit
+  46   81: 0865 	A colct	; 81 load column count
+  47   82: 0869 	A P1	; 82 add +1
+  48   83: a865 	U colct	; 83 store updated count
+  49   84: 986d 	S P10	; 84 subtract +10
+  50   85: 2859 	E L3	; 85 -> L3 if 0
+  51   86: a072 	T FIN   ; 86 clear acc
+  52   87: 7871 	O SP	; 87 output space
+  53   88: 2827 	E SKIP	; 88 -> SKIP, back for next square
+  54   89: 786d L3	O P10	; 89 L3: output newline
+  55   90: a072 	T FIN	; 90 clear FIN
+  56   91: 0867 	A rowct ; 91 load row count
+  57   92: 0869 	A P1	; 92 add +1
+  58   93: a867 	U rowct	; 93 store updated count
+  59   94: 986d 	S P10	; 94 subtract +10
+  60   95: 2863 	E L4    ; 95 ->L4 if count = 10
+  61   96: a072 	T FIN	; 96 clear acc
+  62   97: a065 	T colct	; 97 clear column count
+  63   98: 2827 	E SKIP	; 98 ->SKIP, next square
+  64   99: d001 L4	Z 1	; 99 L4: Halt, all done
+  66  100: 0000 i	@ 0     ; 100 i
+  67  101: 0000 colct	@ 0     ; 101 column count
+  68  102: 0000 isq	@ 0     ; 102 i*i
+  69  103: 0000 rowct	@ 0	; 103 row count
+  70  104: 0000 digit	@ 0	; 104 digit
+  71  105: 0001 P1	@ 1	; 105 +1
+  72  106: 0030 C0	@ 48    ; 106 '0'
+  73  107: 03e8 P1000	@ 1000  ; 107 +1000
+  74  108: 0064 P100	@ 100   ; 108 +100
+  75  109: 000a P10	@ 10    ; 109 +10 (and NL)
+  76  110: 0000 M0	@ 0     ; 110 M0
+  77  111: 0000 M1	@ 0     ; 111 M1
+  78  112: 0000 M2	@ 0	; 112 M2
+  79  113: 0020 SP	@ 32	; 113 SP
+  80  114: 0000 FIN	@ 0     ; 114 end of program

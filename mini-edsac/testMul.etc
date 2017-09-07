@@ -1,0 +1,40 @@
+	T   0   ;  0 clear Acc
+	A P21   ;  1 load mpier=21
+	V  P9   ;  2 multiply 21x9
+	U  A1   ;  3 store +x+
+	L  16	;  4 ..
+	T  A1+1 ;  5 ..
+	S  P9   ;  6 load -9
+	T  N9   ;  7 store -9
+	A P21   ;  8 reload 21
+	V  N9   ;  9 multiply 21x-9
+	U  A2   ; 10 store +x-
+	L  16	; 11 ..
+ 	T  A2+1	; 12 ..
+	S P21   ; 13 load -21
+	U N21   ; 14 store
+	V  P9   ; 15 multiply -21x9
+	U  A3   ; 16 store -x+
+	L  16	; 17 ..
+	T  A3+1 ; 18 ..
+	A N21   ; 19 load -21
+	V  N9   ; 20 multiply -21x-9
+	U  A4   ; 21 store -x-
+	L  16	; 22 ..
+	T  A4+1	; 23 ..
+	Z   1   ; 24 halt 1, with memory dump
+P21	@  21   ; 25 +21
+P9	@   9   ; 26 +9
+N9	@   0   ; 27 = -9
+N21	@   0   ; 28 = -21
+	@ 189   ; 29 = 9x21=189
+	@   0   ; 30
+	@   0   ; 31
+A1	@   0   ; 32
+	@   0   ; 33
+A2	@   0   ; 34
+	@   0   ; 35
+A3	@   0   ; 36
+	@   0   ; 37
+A4	@   0   ; 38
+	@   0   ; 39
