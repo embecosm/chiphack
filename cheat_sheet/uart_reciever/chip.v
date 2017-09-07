@@ -23,9 +23,8 @@ module chip (
     output RAMWE,
     output RAMCS,
     // All PMOD outputs
-    output [55:52] PMOD,
+    output [55:0] PMOD,
     input   UART_RX,
-    output  UART_GND,
     output  UART_TX,
     input [1:0] BUT
   );
@@ -37,6 +36,8 @@ module chip (
   assign RAMWE = 1'b1;
   assign RAMCS = 1'b1;
 
+  assign PMOD[49:0] = {50{1'b0}};
+  
   wire OUT;
 
   wire enter_ed;
@@ -74,7 +75,6 @@ module chip (
     .next_ed (next_ed),
     .button (BUT[1]),
     .UART_TX (UART_TX),
-    .UART_GND (UART_GND),
     .UART_RX (UART_RX)
   );
 

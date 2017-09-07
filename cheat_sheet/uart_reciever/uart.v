@@ -22,7 +22,6 @@ module uart(  input clk,
               input button,
               output [3:0] led,
               output reg UART_TX,   // ** These are the ports used on the de0_nano
-              output UART_GND,      // possibly use i_tx(/rx) from PMOD3/4?
               input  UART_RX
               );
 
@@ -36,9 +35,6 @@ module uart(  input clk,
   assign led[3:0] = recieve_state;
 //  assign led[2]   = UART_TX;
 //  assign led[3]   = UART_RX;
-
-  // Tie UART_GND low
-  assign UART_GND = 0;
 
 // Transmit logic
 
