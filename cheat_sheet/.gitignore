@@ -1,4 +1,0 @@
-# Ignore generated chip intermediraies
-chip.bin
-chip.blif
-chip.txt
