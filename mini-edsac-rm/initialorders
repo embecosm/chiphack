@@ -1,0 +1,39 @@
+=0
+Loader  T Op      work 1
+Loop    T Work    work 2
+        T Addr    work 3
+L1      I 0       read a character
+        S At      is it alpha?
+        G L1      no, ignore leaders
+        L 11      shift to opcode pos
+        T Op      store in work1
+L2      I 0       next character
+        S Zero    is it a digit
+        G L2      skip if not (space?)
+L3      T Work    store in work2
+        A Addr    load address
+        V Ten     multiply by 10
+        L 16      shift into 16-bit acc
+        A Work    add latest digit
+        T Addr    store updated address
+        I 0       get next digit
+        S Zero    check for digit
+        E L3      yes, loop back
+        T 0       clear acc
+        A Addr    get address
+        A Op      add opcode
+L4      T Start   store into memory
+        A L4      get store order
+        A One     increment
+        U L4      store updated order
+        S Start   compare with limit
+        G Loop    resume
+        E Start   start program
+Op      @ 0     work1
+Addr    @ 0     work2
+Work    @ 0     work3
+At      @ 64    '@'
+Zero    @ 48    '0'
+Ten     @ 10    +10
+One     @ 1     +1
+Start   @ 0     START

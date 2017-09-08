@@ -1,0 +1,42 @@
+#LEDs share signals with SPI3 from stm32 (if SPI3_MUX_S and _OE are low)
+#  LD1 = SCK
+#  LD2 = MOSI
+#  LD3 = MISO
+#  LD4 = SS
+
+set_io --warn-no-port leds[0] 70
+set_io --warn-no-port leds[1] 68
+set_io --warn-no-port leds[2] 67
+set_io --warn-no-port leds[3] 71
+
+# Pushbuttons
+set_io --warn-no-port BUTTON[0] 63
+set_io --warn-no-port BUTTON[1] 64
+
+# Onboard 100Mhz oscillator
+set_io --warn-no-port clk_in 129
+
+# CH340 usb serial converter
+set_io --warn-no-port RX 88
+set_io --warn-no-port TX 85
+
+# PMOD 13 pins 3 & 4
+#set_io --warn-no-port RX 24
+#set_io --warn-no-port TX 23
+
+set_io --warn-no-port PMOD7_8[0]	10
+set_io --warn-no-port PMOD7_8[1]	9
+set_io --warn-no-port PMOD7_8[2]	2
+set_io --warn-no-port PMOD7_8[3]	1
+set_io --warn-no-port PMOD7_8[4]	8
+set_io --warn-no-port PMOD7_8[5]	7
+set_io --warn-no-port PMOD7_8[6]	4
+set_io --warn-no-port PMOD7_8[7]	3
+set_io --warn-no-port PMOD9_10[0]	20
+set_io --warn-no-port PMOD9_10[1]	19
+set_io --warn-no-port PMOD9_10[2]	16
+set_io --warn-no-port PMOD9_10[3]	15
+set_io --warn-no-port PMOD9_10[4]	18
+set_io --warn-no-port PMOD9_10[5]	17
+set_io --warn-no-port PMOD9_10[6]	12
+set_io --warn-no-port PMOD9_10[7]	11
