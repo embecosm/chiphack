@@ -19,7 +19,7 @@ upload: chip.bin
 clean:
 	$(RM) -f chip.blif chip.txt chip.bin
 
-test: upload
+test:
 	cp squares.txt /dev/ttyUSB0
 
 input:
