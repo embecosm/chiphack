@@ -3,7 +3,7 @@
 
 all: chip.bin
 
-chip.blif: top.v cpu.v mem.v uarttx.v uartrx.v led64.v
+chip.blif: top.v cpu.v mem.v meminit.v uarttx.v uartrx.v
 	yosys -q -p "synth_ice40 -blif chip.blif" $^ 
 
 chip.bin: chip.blif blackice.pcf

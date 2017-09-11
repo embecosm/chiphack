@@ -25,9 +25,10 @@ module top ( input clk_in, input RX, output TX, input [1:0] BUTTON,
 	wire clk = slowclk[1];
 `endif
 
-	wire memrd, memwr, memwait;
-	wire [ABITS-1:0] memaddr;
-	wire [15:0] memrdata, memwdata;
+	wire cpurd, cpuwr, initwr;
+	wire memwait;
+	wire [ABITS-1:0] cpuaddr, initaddr;
+	wire [15:0] memrdata, cpuwdata, initwdata;
 	wire [7:0] txdata, rxdata;
 	wire txwait, txstart, rxwait, rxstart;
 	wire [ABITS-1:0] iaddr;
@@ -37,18 +38,35 @@ module top ( input clk_in, input RX, output TX, input [1:0] BUTTON,
 		.iaddrout(iaddr),
 		.clk(clk),
 		.rst(rst),
-		.memrd(memrd),
-		.memwr(memwr),
-		.memwait(memwait),
-		.memaddr(memaddr),
+		.memrd(cpurd),
+		.memwr(cpuwr),
+		.memwait(memwait|initwr),
+		.memaddr(cpuaddr),
 		.memrdata(memrdata),
-		.memwdata(memwdata),
+		.memwdata(cpuwdata),
 		.txdata(txdata),
 		.rxdata(rxdata),
 		.rxwait(rxwait),
 		.txwait(txwait),
 		.txstart(txstart),
 		.rxstart(rxstart)
+	);
+	meminit #(.ABITS(ABITS)) MEMINIT (
+		.clk(clk),
+		.rst(rst),
+		.memwr(initwr),
+		.memwait(memwait),
+		.memaddr(initaddr),
+		.memwdata(initwdata)
+	);
+	mem #(.ABITS(ABITS)) MEM (
+		.clk(clk),
+		.rd(cpurd),
+		.wr(cpuwr|initwr),
+		.wait(memwait),
+		.addr(initwr? initaddr : cpuaddr),
+		.d(initwr? initwdata : cpuwdata),
+		.q(memrdata)
 	);
 	uarttx #(.CLKDIV(UARTDIV)) UTX (
 		.clk(clk),
@@ -65,14 +83,5 @@ module top ( input clk_in, input RX, output TX, input [1:0] BUTTON,
 		.q(rxdata),
 		.wait(rxwait),
 		.rx(RX)
-	);
-	mem #(.ABITS(ABITS)) MEM (
-		.clk(clk),
-		.rd(memrd),
-		.wr(memwr),
-		.wait(memwait),
-		.addr(memaddr),
-		.d(memwdata),
-		.q(memrdata)
 	);
 endmodule
