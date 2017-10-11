@@ -1,13 +1,18 @@
 module CPU (                    // MiniEdsac
-   input        clock,          // clock (25MHz)
-   input        reset,          // initial reset signal
-   input [7:0]  rx_data_in,     // character read from PC
-   input        rx_strobe,       // comes true when data has arrived
-   output reg [7:0] tx_data,    // data to be sent to the PC
-   output reg   tx_start,       // trigger to start sending
-   input tx_busy,               // send has completed
-   output [5:0] leds,           // output to LEDs 
-   input but0                   // dump/reset button
+   input 	     clock, // clock (25MHz)
+   input 	     reset, // initial reset signal
+   input [7:0] 	     rx_data_in, // character read from PC
+   input 	     rx_strobe, // comes true when data has arrived
+   output reg [7:0]  tx_data, // data to be sent to the PC
+   output reg 	     tx_start, // trigger to start sending
+   input 	     tx_busy, // send has completed
+   output reg[9:0]   Addr, // address for memory references
+   output reg [15:0] memwdata, // data to be written to memory
+   input [15:0]      memrdata, // data read from memory
+   output 	     memrd, memwr, // memory request triggers
+   input 	     memwait,	  // memory request in action
+   output [5:0]      leds, // output to LEDs 
+   input 	     but0                   // dump/reset button
    );
 
 `include "ascii.inc"
@@ -18,16 +23,15 @@ module CPU (                    // MiniEdsac
    reg [15:0] IR;                // Instruction Register
    reg [7:0]  boot_data;         // word being assembled for initial orders
    reg [7:0]  rx_data;           // byte of data received from RS232 link
-   reg [15:0] Mem[0:1023];	 // main memory
    reg 	      debug;	         // add extra tracing messages
    reg        dump;              // output a memory dump before execution
-   reg        postmortem;	 // send halt after dumping memory
+   reg 	      postmortem;	 // send halt after dumping memory
    reg [3:0]  debugindex;        // counter for debug info
    reg [7:0]  debugCode;         // error code for debug packets
    reg [7:0]  debug0, debug1, debug2; // debug bytes
    reg [7:0]  debug3, debug4, debug5; // debug bytes cont'd
    reg [15:0] mshift;            // bit shifter for multiply
-   reg [9:0]  Addr;              // address part of IR
+//   reg [10:0]  Addr;             // address part of IR
    reg 	      stopped;           // simulation halted
    reg 	      rx_ready1;         // synchronise rx_ready
    reg 	      data_ready;        // data has come ready
@@ -36,89 +40,118 @@ module CPU (                    // MiniEdsac
    reg 	      but1;              // latch for dump/reset button
    reg [5:0]  save_state;        // debug failing state
    reg [5:0]  tx_return;         // resume state after send
+   reg [5:0]  memret;		 // resume state after memory access
+   
+`ifdef Bline
+   reg [9:0]  B;		 // B-register
+   wire       Bmod;		 // bit in IR to test for modification
+   assign Bmod = memrdata[10];	 // map onto IR
+`else
+   wire       SPARE;		 // unused in original machine
+   assign SPARE = IR[10];
+`endif
+
+//   assign memaddr = Addr[9:0];	 // map memory address
+   assign memrd = state == S_MEMR;
+   assign memwr = state == S_MEMW;
 
    wire Sign;                    // sign of Accumulator
    wire [15:0] Mcand;            // 16 bit version of multiplicand
    wire [4:0]  Opcode;           // opcode part of IR
-   wire        SPARE;		 // undefined bit
    wire        rx_H, rx_S, rx_G; // received character tests
    //  
-   assign Sign  = Acc[31];
-   assign Mcand = Mcandx[31:16];
-   assign SPARE = IR[10];
+   assign Sign   = Acc[31];
+   assign Mcand  = Mcandx[31:16];
    assign Opcode = IR[15:11];
-   assign rx_H = rx_data == KH;
-   assign rx_S = rx_data == KS;
-   assign rx_G = rx_data == KG;
+   assign rx_H   = rx_data == KH;
+   assign rx_S   = rx_data == KS;
+   assign rx_G   = rx_data == KG;
 
    reg [5:0] state;              // overall state
-   parameter S_IDLE     = 6'd0;
-   parameter S_START    = 6'd1;
-   parameter S_CLEAR1   = 6'd2; 
-   parameter S_LOAD1    = 6'd3;
-   parameter S_LOAD2    = 6'd4;
-   parameter S_LOAD3    = 6'd5;
-   parameter S_LOAD4    = 6'd6;
-   parameter S_LOAD5    = 6'd7;
-   parameter S_FETCH1   = 6'd8;
-   parameter S_FETCH2   = 6'd9;
-   parameter S_FETCH3   = 6'd10;
-   parameter S_EXECUTE1 = 6'd11;
-   parameter S_EXECUTE2 = 6'd12;
-   parameter S_EXECUTE3 = 6'd13;
-   parameter S_EXECUTE4 = 6'd14;
-   parameter S_EXECUTE5 = 6'd15;
-   parameter S_EXECUTE6 = 6'd16;
-   parameter S_EXECUTE7 = 6'd17;
-   parameter S_EXECUTE8 = 6'd18;
-   parameter S_EXECUTE9 = 6'd19;
-   parameter S_DUMP1    = 6'd20;
-   parameter S_DUMP2    = 6'd21;
-   parameter S_DUMP3    = 6'd22;
-   parameter S_DUMP4    = 6'd23;
-   parameter S_RESET    = 6'd24;
-   parameter S_RESET1   = 6'd25;
-   parameter S_SEND     = 6'd26;
-   parameter S_SEND2    = 6'd27;
-   
+   parameter S_IDLE     = 6'h00;
+   parameter S_START    = 6'h01;
+   parameter S_CLEAR1   = 6'h02; 
+   parameter S_LOAD1    = 6'h03;
+   parameter S_LOAD2    = 6'h04;
+   parameter S_LOAD3    = 6'h05;
+   parameter S_LOAD4    = 6'h06;
+   parameter S_LOAD5    = 6'h07;
+   parameter S_FETCH1   = 6'h08;
+   parameter S_FETCH2   = 6'h09;
+   parameter S_EXECUTE1 = 6'h0a;
+   parameter S_EXECUTE2 = 6'h0b;
+   parameter S_EXECUTE3 = 6'h0c;
+   parameter S_EXECUTE4 = 6'h0d;
+   parameter S_EXECUTE5 = 6'h0e;
+   parameter S_EXECUTE6 = 6'h0f;
+   parameter S_EXECUTE7 = 6'h10;
+   parameter S_EXECUTE8 = 6'h11;
+   parameter S_EXECUTE9 = 6'h12;
+   parameter S_DUMP1    = 6'h13;
+   parameter S_DUMP2    = 6'h14;
+   parameter S_DUMP3    = 6'h15;
+   parameter S_DUMP4    = 6'h16;
+   parameter S_RESET    = 6'h17;
+   parameter S_RESET1   = 6'h18;
+   parameter S_SEND     = 6'h19;
+   parameter S_SEND2    = 6'h1a;
+   parameter S_MEMR     = 6'h1b;
+   parameter S_MEMW     = 6'h1c;
+   parameter S_MEM1     = 6'h1d;
+
    // pass current state to display on LEDs
    assign leds = state;
 
    // define the opcodes
+   // opcodes changed to be bottom 5 bits of ASCII codes
    wire OP_A;           // Add to Acc
+   assign OP_A = (Opcode == 5'b00001);
    wire OP_C;           // Collate opcode
+   assign OP_C = (Opcode == 5'b00011);
    wire OP_E;           // Jump if Acc >= 0
+   assign OP_E = (Opcode == 5'b00101);
    wire OP_G;           // Jump if Acc < 0
+   assign OP_G = (Opcode == 5'b00111);
    wire OP_I;           // Input from tape reader
+   assign OP_I = (Opcode == 5'b01001);
    wire OP_L;           // Shift Acc left
+   assign OP_L = (Opcode == 5'b01100);
    wire OP_O;           // Output to Printer
+   assign OP_O = (Opcode == 5'b01111);
    wire OP_R;           // Shift Acc right
+   assign OP_R = (Opcode == 5'b10010);
    wire OP_S;           // Subtract from Acc
+   assign OP_S = (Opcode == 5'b10011);
    wire OP_T;           // Store Acc and clear
+   assign OP_T = (Opcode == 5'b10100);
    wire OP_U;           // Store Acc, don't clear
+   assign OP_U = (Opcode == 5'b10101);
    wire OP_V;           // Multiply and Add
+   assign OP_V = (Opcode == 5'b10110);
    wire OP_Z;           // Halt machine
+   assign OP_Z = (Opcode == 5'b11010);
+
+`ifdef Bline
+   wire OP_B;		// Load B-Register
+   assign OP_B = (Opcode == 5'b00010);
+   wire OP_J;		// Jump if B-register non-zero
+   assign OP_J = (Opcode == 5'b01010);
+   wire OP_K;		// save B-register
+   assign OP_K = (Opcode == 5'b01011);
+
+`endif
    wire OP_FETCH;
    wire OP_TEST;
    wire OP_STORE;
    wire OP_SHIFT;
-   // opcodes changed to be bottom 5 bits of ASCII codes
-   assign OP_A = (Opcode == 5'b00001);
-   assign OP_C = (Opcode == 5'b00011);
-   assign OP_E = (Opcode == 5'b00101);
-   assign OP_G = (Opcode == 5'b00111);
-   assign OP_I = (Opcode == 5'b01001);
-   assign OP_L = (Opcode == 5'b01100);
-   assign OP_O = (Opcode == 5'b01111);
-   assign OP_R = (Opcode == 5'b10010);
-   assign OP_S = (Opcode == 5'b10011);
-   assign OP_T = (Opcode == 5'b10100);
-   assign OP_U = (Opcode == 5'b10101);
-   assign OP_V = (Opcode == 5'b10110);
-   assign OP_Z = (Opcode == 5'b11010);
    assign OP_FETCH = OP_A || OP_C || OP_O || OP_S || OP_V;
+`ifdef Bline
+   assign OP_STORE = OP_T || OP_U || OP_K;
+   assign OP_TEST  = OP_E || OP_G || OP_J;
+`else
    assign OP_STORE = OP_T || OP_U;
    assign OP_TEST  = OP_E || OP_G;
+`endif
    assign OP_SHIFT = OP_L || OP_R;
 
    always @ (posedge clock)
@@ -136,8 +169,10 @@ module CPU (                    // MiniEdsac
          debug4 <= 8'd0;
 	 debug5 <= 8'd0;
          but1 <= 1'b0;
+	 memwdata <= 16'd0;
 	 Acc <= 0;
 	 IR <= 0;
+	 Addr <= 0;
       end
       else begin
          if (rx_strobe) begin
@@ -180,6 +215,7 @@ module CPU (                    // MiniEdsac
                   stopped <= 1'b0;     // should be 1'b0 for real operation
                   debug <= (rx_data == KH || rx_data == KJ); // set debug messages on or off
                   dump  <= (rx_data == KI || rx_data == KJ); // set dump option
+		  memwdata <= 16'd0;			     // data to be stored
                   state <= S_CLEAR1;   // start by clearing store
                end
                // not Go or Debug, may be a new start?
@@ -194,15 +230,15 @@ module CPU (                    // MiniEdsac
          S_CLEAR1:
             begin
                // check if all store cleared
-               if (Addr == 11'd1023) begin
-		  Mem[1023] <= 16'd0;
-		  Addr <= 11'd0; // reset SCT
+               if (Addr == 10'd1023) begin
+		  Addr <= 10'd0; // reset SCT
 		  state <= S_LOAD1;
                end
                // if store ready, clear next word
                else begin
-                  Mem[Addr] <= 16'd0;
-                  Addr <= Addr + 11'd1;
+                  Addr <= Addr + 10'd1;
+		  memret <= S_CLEAR1;
+		  state <= S_MEMW;
                end
             end
  
@@ -232,15 +268,16 @@ module CPU (                    // MiniEdsac
          // wait for second byte to arrive
          S_LOAD3:
             if (data_ready) begin
-               Mem[Addr] <= { boot_data, rx_data }; // combine the two bytes
                data_ready <= 1'b0;
-	       Addr <= Addr + 10'd1;
-               state <= S_LOAD4;
+               memwdata <= { boot_data, rx_data }; // combine the two bytes
+               memret <= S_LOAD4;      // set return state
+	       state <= S_MEMW;	       // wait for write to complete
             end
 
          // write complete, request further word, or run command
          S_LOAD4:
             begin
+	       Addr <= Addr + 10'd1;
                tx_data <= KD;
                tx_start <= 1'd1;
                tx_return <= S_LOAD5;
@@ -272,53 +309,65 @@ module CPU (                    // MiniEdsac
          S_FETCH1:
 	   begin
 	      Addr <= SCT;
-               state <= S_FETCH2;
-            end
+              memret <= S_FETCH2;
+	      state <= S_MEMR;
+           end
 
-         // wait for fetch completion
-         S_FETCH2:
+	 // Next order now in IR
+	 S_FETCH2:
 	   begin
-               IR <= Mem[Addr];
-	      state <= S_FETCH3;
+	      // read completed
+	      IR <= memrdata;	// move order from mem buffer
+	      debug0 <= {6'd0, SCT[9:8]};
+	      debug1 <= SCT[7:0];
+	      debug2 <= memrdata[15:8];
+	      debug3 <= memrdata[7:0];
+	      debug4 <= 8'd0;
+	      debug5 <= 8'd0;
+`ifdef Bline
+	      if (Bmod)
+		Addr <= memrdata[9:0] + B;
+	      else
+`endif
+		Addr <= memrdata[9:0];
+	      state <= S_EXECUTE1;  // enter execute phase
 	   end
-
-	   // Next order now in IR
-	   S_FETCH3:
-	     begin
-		 // read completed
-		debug0 <= { 6'd0, SCT[9:8] };
-		debug1 <= SCT[7:0];
-		debug2 <= IR[15:8];
-		debug3 <= IR[7:0];
-		debug4 <= 8'd0;
-		debug5 <= 8'd0;
-		Addr <= IR[9:0];
-		// Opcode <= IR[15:11];  // already set via assign
-		state <= S_EXECUTE1;  // enter execute phase
-	      end
-
+	   
          // Run Phase 2: Execute instruction
          S_EXECUTE1:
             begin
                // interpret the opcode
                // See if Store access is required
                if (OP_FETCH) begin
-		  Mcandx <= { Mem[Addr], 16'd0 };
-                  state <= S_EXECUTE3;
+		  memret <= S_EXECUTE2;
+                  state <= S_MEMR;
  	       end
 	       else if (OP_STORE) begin
                   // Store, initiate store write
                   // address already set in Addr above
-                  Mem[Addr] <= Acc[31:16];
+`ifdef Bline
+		  if (OP_K)
+		    memwdata <= { 6'b000100, B };
+		  else
+`endif
+                    memwdata <= Acc[31:16];
 		  if (OP_T)
 		    Acc <= 32'd0;         // clear Acc if T
-		  state <= S_EXECUTE6;    // finished
+		  memret <= S_EXECUTE6;    // finished
+		  state <= S_MEMW;
                end
                else if (OP_SHIFT) begin
                   // Shifts don't need store access
                   shift <= Addr[5:0]; // set shift bit count
                   state <= S_EXECUTE2;
                end
+`ifdef Bline
+	       else if (OP_B) begin
+		  // load B register
+		  B <= Addr[9:0];	       // Load number into B-register
+		  state <= S_EXECUTE6; // finished
+	       end
+`endif
                else if (OP_I) begin
                   // Input data, send request to PC for data
                   tx_data <= KR;
@@ -328,10 +377,14 @@ module CPU (                    // MiniEdsac
                end
                else if (OP_TEST) begin
                   // tests can be executed immediately
-                  if ((OP_G && Sign) || (OP_E && !Sign))
-                     SCT <= Addr;    // set new address in SCT
+`ifdef Bline
+                  if ((OP_G && Sign) || (OP_E && !Sign) || (OP_J && B != 10'd0) )
+`else
+                  if ((OP_G && Sign) || (OP_E && !Sign) )
+`endif
+                     SCT <= Addr;  // set new address in SCT
                   else
-                     SCT <= SCT + 11'd1;// increment SCT if no jump
+                     SCT <= SCT + 10'd1;// increment SCT if no jump
                   if (debug)
                      state <= S_EXECUTE8; // direct to instruction completion
                   else
@@ -342,12 +395,12 @@ module CPU (                    // MiniEdsac
                   stopped <= 1'b1;
                   debugCode <= KZ;
 		  if (Addr == 10'd1) begin
-		     postmortem <= 1'b1; // request memory dump after halt
+		     postmortem <= 1'b1;      // request memory dump after halt
 		     Addr <= 10'd0;
 		     state <= S_DUMP1;
 		  end
 		  else
-                    state <= S_EXECUTE8; // complete send then idle
+                     state <= S_EXECUTE8; // complete send then idle
                end
                else begin           
                   // illegal opcode?, halt anyway
@@ -359,10 +412,14 @@ module CPU (                    // MiniEdsac
                end
             end // case: S_EXECUTE1
 
-         // Continue execution, depends on the order
+         // Continue execution, shift or input come here
          S_EXECUTE2:
             begin
-               if (OP_SHIFT) begin
+               if (OP_FETCH) begin
+		  Mcandx <= { memrdata, 16'd0 };
+		  state <= S_EXECUTE3;
+	       end
+	       else if (OP_SHIFT) begin
                   // now we can do the shift, one bit at a time
                   if (shift == 16'd0)
                      state <= S_EXECUTE6; // complete, finish off
@@ -396,7 +453,7 @@ module CPU (                    // MiniEdsac
                state <= S_EXECUTE6;
             end
             else if (OP_C) begin
-               Acc <= Acc & Mcandx;    // Collate operation
+               Acc <= Acc & (Mcandx | 32'h0000ffff);    // Collate operation
                state <= S_EXECUTE6;
             end
             else if (OP_V) begin       // Multiply operation
@@ -423,9 +480,9 @@ module CPU (                    // MiniEdsac
          S_EXECUTE4:
             if (OP_V) begin
                if (mshift == 16'd0) begin
-                  if (Mpier[15])
+		  if (Mpier[15])
 		    Acc <= Acc - Mcandx;
-		  state <= S_EXECUTE6; // opertion complete, finish off
+                  state <= S_EXECUTE6; // opertion complete, finish off
 	       end
                else begin
                   // test muliplier bit to see if we need to add in mcand
@@ -464,16 +521,26 @@ module CPU (                    // MiniEdsac
          S_EXECUTE6:
 	         // operation ended normally, Acc involved
 	         // Add Acc to trace
-            begin
-               debug4 <= Acc[31:24];
-               debug5 <= Acc[23:16];
-               state <= S_EXECUTE7;
+           begin
+`ifdef Bline
+	      if (OP_B || OP_J || OP_K) begin
+		 debug4 <= { 6'd0, B[9:8] }; // trace B-register
+		 debug5 <= B[7:0];
+	      end
+	      else begin
+`endif
+		 debug4 <= Acc[31:24]; // trace top half of Acc
+		 debug5 <= Acc[23:16];
+`ifdef Bline
+	      end		// 
+`endif
+              state <= S_EXECUTE7;
             end
 
          // Bump SCT ready for next instruction
          S_EXECUTE7:
             begin
-               SCT <= SCT+11'd1;
+               SCT <= SCT+10'd1;
                if (debug)
                   state <= S_EXECUTE8;
                else
@@ -496,7 +563,7 @@ module CPU (                    // MiniEdsac
             begin
                if (debugindex == 4'd6) begin
                   if (stopped)
-                     state <= S_IDLE;
+		     state <= S_IDLE;
                   else
                      state <= S_FETCH1;
                end
@@ -507,7 +574,7 @@ module CPU (                    // MiniEdsac
                     4'd2:    tx_data <= debug2;
                     4'd3:    tx_data <= debug3;
                     4'd4:    tx_data <= debug4;
-                    4'd5:    tx_data <= debug5;
+		    4'd5:    tx_data <= debug5;
 		    default: tx_data <= 8'd0;
                   endcase // case (debugindex)
                   tx_start <= 1'b1;
@@ -531,15 +598,16 @@ module CPU (                    // MiniEdsac
 	       end
             end
             else begin
-               IR <= Mem[Addr];
-               state <= S_DUMP2;
+	       memret <= S_DUMP2;
+	       state <= S_MEMR;
             end
 
          // dump: Check for nulls, send trigger byte
          S_DUMP2:
             begin
-               if (IR == 16'd0) begin
-                  state <= S_DUMP4;
+               if (memrdata == 16'd0) begin
+		  Addr <= Addr + 10'd1;
+                  state <= S_DUMP1;
                end
                else begin
                   tx_data <= KM;
@@ -558,22 +626,15 @@ module CPU (                    // MiniEdsac
             end
             else begin
                case (debugindex)
-		 4'd0: tx_data <= { 6'd0, Addr[9:8] };
-		 4'd1: tx_data <= Addr[7:0];
-		 4'd2: tx_data <= IR[15:8];
-		 4'd3: tx_data <= IR[7:0];
-		 default: tx_data <= 8'd0;
+               4'd0: tx_data <= { 6'd0, Addr[9:8] };
+               4'd1: tx_data <= Addr[7:0];
+               4'd2: tx_data <= memrdata[15:8];
+               4'd3: tx_data <= memrdata[7:0];
+               default: tx_data <= 8'd0;
                endcase
                tx_start <= 1'd1;
                debugindex <= debugindex + 4'd1;
                state <= S_SEND;
-            end
-
-         // dump: bump Addr and repeat until done
-         S_DUMP4:
-            begin
-               Addr <= Addr + 10'd1;
-               state <= S_DUMP1;
             end
 
          // dump/reset button pressed
@@ -581,7 +642,7 @@ module CPU (                    // MiniEdsac
             begin
                tx_data <= save_state;
                tx_start <= 1'b1;
-               Addr <= 11'd0;
+               Addr <= 10'd0;
                tx_return <= S_RESET1;
                state <= S_SEND;
             end
@@ -605,6 +666,14 @@ module CPU (                    // MiniEdsac
             if (!tx_busy)
                state <= tx_return;
 
+	 // Memory handler
+	 S_MEMR:
+	   state <= S_MEM1;
+	 S_MEMW:
+	   state <= S_MEM1;
+         S_MEM1:
+	   if (~memwait)
+	     state <= memret;
          endcase // case (state)
       end // else: !if(reset)
 endmodule

@@ -1,0 +1,26 @@
+This is the extended Mini-EDSAC implementation for the
+MyStorm BlackIce board. This implements the basic Mini-EDSAC
+as used at ChipHack 2017, with extensions as proposed in my
+talk to add the B-Line register and associated orders.
+
+The Makefile should compile the code ready for downloading
+to the BlackIce board. You can type either:
+   make mini	to make the basic (without extensions)
+or
+   make minib	to make it with the extensions.
+
+To run it you need to run miniserve on the PC (or Mac).
+That now lives in a separate folder (Programs) along with
+test and demo programs.
+
+Upload the binary with either:
+       make upload     for the basic version, or
+       make uploadb    for the exetnded version
+
+To run the squares demo, cd to the Programs folder and
+run:
+	./miniserve -t squares.txt
+
+Have fun!
+
+Bill		12th September, 2017

@@ -1,10 +1,10 @@
 module uartrx #(parameter CLKDIV = (100000000/115200)) (
-	input clk,
-	input rst,
-	input rx,
+	input 		 clk,
+	input 		 rst,
+	input 		 rx,
 	output reg [7:0] q,
-	output reg strobe,
-   output [1:0] leds);
+	output reg 	 strobe,
+	output [1:0] 	 leds);
 
 	localparam
 		Idle = 0, ReadingStartBit = 1,
