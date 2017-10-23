@@ -1,3 +1,39 @@
+# Mini-EDSAC
+
+## Notes from 19 Oct 2017
+
+Update to biloader.c. Earlier version immediately closed the device after
+writing data.  This caused the last few bytes to be discarded, rather than
+sent, and the loader was simply waiting for these last few bytes.
+
+I've now added a call to =tcdrain()= to my code before the close, and this has
+cured it for me.
+
+Attached is my C code - it's fairly simple. Just type:
+
+    biloader filename
+
+(feel free to think of a better name!).
+By default it writes to /dev/ttyACM0, but you can override this with
+
+biloader -D /dev/ttyACM1 filename
+
+or whatever device you have. If you regularly use some other port then
+you can type:
+
+    export BIPORT=/dev/ttyUSB0
+
+or whatever.
+
+Note that this version uses threads, and so compile with -lpthread.
+Feel free to adapt or pass on to anyone that could use it.
+
+Enjoy!
+
+Bill
+
+## Notes from 12 Sep 2017
+
 This is the extended Mini-EDSAC implementation for the
 MyStorm BlackIce board. This implements the basic Mini-EDSAC
 as used at ChipHack 2017, with extensions as proposed in my
