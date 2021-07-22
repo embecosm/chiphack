@@ -1,24 +1,30 @@
+// Button example.
+// modified from https://github.com/im-tomu/fomu-workshop/blob/master/hdl/verilog/blink-expanded/blink.v
+
 // assuming production board! 
 `define GREENPWM RGB0PWM
 `define REDPWM   RGB1PWM
 `define BLUEPWM  RGB2PWM
 
-module top (
+`include "button.v"
+
+module blink (
     // 48MHz Clock input
     // --------
     input clki,
-    // User touchable pins
-    // touch 1 
-    input  user_1,
-    output user_2,
-    // touch 2
-    output user_3,
-    input  user_4,
     // LED outputs
     // --------
     output rgb0,
     output rgb1,
     output rgb2,
+    // User touchable pins
+    // --------
+    // Connect 1-2 to enable blue LED
+    input  user_1,
+    output user_2,
+    // Connect 3-4 to enable red LED
+    output user_3,
+    input  user_4,
     // USB Pins (which should be statically driven if not being used).
     // --------
     output usb_dp,
@@ -33,11 +39,6 @@ module top (
     assign usb_dn = 1'b0;
     assign usb_dp_pu = 1'b0;
 
-    // Configure user pins so that we can detect the user connecting
-    // 1-2 or 3-4 with conductive material.
-    assign user_2 = 1'b0;
-    assign user_3 = 1'b0;
-
     // Connect to system clock (with buffering)
     wire clk;
     SB_GB clk_gb (
@@ -45,7 +46,29 @@ module top (
         .GLOBAL_BUFFER_OUTPUT(clk)
     );
 
-    // Instantiate iCE40 LED driver hard logic
+    // Configure user pins so that we can detect the user connecting
+    // 1-2 or 3-4 with conductive material.
+    //
+    // We do this by grounding user_2 and user_3, and configuring inputs
+    // with pullups on user_1 and user_4.
+    wire user_1_pulled;
+    wire user_4_pulled;
+    button leftButton(.clk(clk), .pad1(user_1), .pad2(user_2), .buttonStatus(user_1_pulled));
+    button rightButton(.clk(clk), .pad1(user_4), .pad2(user_3), .buttonStatus(user_4_pulled));
+
+
+    wire enable_blue = ~user_1_pulled;
+    wire enable_red  = ~user_4_pulled;
+
+    // Use counter logic to divide system clock.  The clock is 48 MHz,
+    // so we divide it down by 2^28.
+    reg [28:0] counter = 0;
+    always @(posedge clk) begin
+        counter <= counter + 1;
+    end
+
+    // Instantiate iCE40 LED driver hard logic, connecting up
+    // latched button state, counter state, and LEDs.
     //
     // Note that it's possible to drive the LEDs directly,
     // however that is not current-limited and results in
@@ -59,14 +82,13 @@ module top (
         .RGB1_CURRENT("0b000011"),  // 4 mA
         .RGB2_CURRENT("0b000011")   // 4 mA
     ) RGBA_DRIVER (
-        .CURREN(1'b1), // 25217f
+        .CURREN(1'b1),
         .RGBLEDEN(1'b1),
-        .`BLUEPWM(2'h7f),     // Blue
-        .`REDPWM(2'h00),      // Red
-        .`GREENPWM(2'h00),    // Green
+        .`BLUEPWM(enable_blue),     // Blue
+        .`REDPWM(enable_red),      // Red
+        .`GREENPWM(counter[26]),    // Green
         .RGB0(rgb0),
         .RGB1(rgb1),
         .RGB2(rgb2)
     );
-
 endmodule

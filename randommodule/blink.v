@@ -1,7 +1,12 @@
+// https://github.com/im-tomu/fomu-workshop/blob/master/hdl/verilog/blink/blink.v
+// Simple tri-colour LED blink example.
+
 // assuming production board! 
 `define GREENPWM RGB0PWM
 `define REDPWM   RGB1PWM
 `define BLUEPWM  RGB2PWM
+
+`include "randomBit.v"
 
 module top (
     // 48MHz Clock input
@@ -45,7 +50,37 @@ module top (
         .GLOBAL_BUFFER_OUTPUT(clk)
     );
 
-    // Instantiate iCE40 LED driver hard logic
+    // Use counter logic to divide system clock.  The clock is 48 MHz,
+    // so we divide it down by 2^28.
+    reg [28:0] counter = 0;
+
+    wire randomRed;
+    wire randomGreen;
+    wire randomBlue;
+
+    randomBit redbitRandom(
+        .CLK(clki),
+        .seed(4'b0010),
+        .randomt(randomRed)
+    );
+
+    randomBit greenbitRandom(
+        .CLK(clki),
+        .seed(4'b0011),
+        .randomt(randomGreen)
+    );
+
+    randomBit bluebitRandom(
+        .CLK(clki),
+        .seed(4'b0110),
+        .randomt(randomBlue)
+    );
+
+    always @(posedge clk) begin
+        counter <= counter + 1;
+    end
+    // Instantiate iCE40 LED driver hard logic, connecting up
+    // counter state and LEDs.
     //
     // Note that it's possible to drive the LEDs directly,
     // however that is not current-limited and results in
@@ -59,11 +94,11 @@ module top (
         .RGB1_CURRENT("0b000011"),  // 4 mA
         .RGB2_CURRENT("0b000011")   // 4 mA
     ) RGBA_DRIVER (
-        .CURREN(1'b1), // 25217f
+        .CURREN(1'b1),
         .RGBLEDEN(1'b1),
-        .`BLUEPWM(2'h7f),     // Blue
-        .`REDPWM(2'h00),      // Red
-        .`GREENPWM(2'h00),    // Green
+        .`BLUEPWM(randomBlue),     // Blue
+        .`REDPWM(randomRed),      // Red
+        .`GREENPWM(randomGreen),    // Green
         .RGB0(rgb0),
         .RGB1(rgb1),
         .RGB2(rgb2)

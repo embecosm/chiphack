@@ -1,3 +1,6 @@
+// https://github.com/im-tomu/fomu-workshop/blob/master/hdl/verilog/blink/blink.v
+// Simple tri-colour LED blink example.
+
 // assuming production board! 
 `define GREENPWM RGB0PWM
 `define REDPWM   RGB1PWM
@@ -25,7 +28,6 @@ module top (
     output usb_dn,
     output usb_dp_pu
 );
-
     // Assign USB pins to "0" so as to disconnect Fomu from
     // the host system.  Otherwise it would try to talk to
     // us over USB, which wouldn't work since we have no stack.
@@ -45,7 +47,36 @@ module top (
         .GLOBAL_BUFFER_OUTPUT(clk)
     );
 
-    // Instantiate iCE40 LED driver hard logic
+    // Use counter logic to divide system clock.  The clock is 48 MHz,
+    // so we divide it down by 2^28.
+    reg [28:0] counter = 0;
+    // reg [8*11:0 ] message = "I LOVE FOMU";
+    parameter MESSAGELENGTH = 11;
+    reg [8*MESSAGELENGTH:0 ] message = "ABABABABABA";
+    reg [4:0] characterIndex = MESSAGELENGTH;
+    reg [2:0] state = 0;
+
+
+    always @(posedge clk) begin
+        counter <= counter + 1;
+        if (counter == 12_000_000) begin
+            case (message[8*characterIndex: 8*(characterIndex-1)])
+                "A": state <= 3'b100; // red
+                "B": state <= 3'b010; // greeb
+                "C": state <= 3'b001; // blue
+                default: state <= 3'b111; // white. everything is wrong
+            endcase 
+            // MSB first so we must count backwards! 
+            characterIndex <= characterIndex -1;
+            if (characterIndex == 0) begin 
+                characterIndex <= MESSAGELENGTH;
+            end
+            counter <= 0;
+            
+        end
+    end
+    // Instantiate iCE40 LED driver hard logic, connecting up
+    // counter state and LEDs.
     //
     // Note that it's possible to drive the LEDs directly,
     // however that is not current-limited and results in
@@ -59,11 +90,11 @@ module top (
         .RGB1_CURRENT("0b000011"),  // 4 mA
         .RGB2_CURRENT("0b000011")   // 4 mA
     ) RGBA_DRIVER (
-        .CURREN(1'b1), // 25217f
+        .CURREN(1'b1),
         .RGBLEDEN(1'b1),
-        .`BLUEPWM(2'h7f),     // Blue
-        .`REDPWM(2'h00),      // Red
-        .`GREENPWM(2'h00),    // Green
+        .`BLUEPWM(state[0]),     // Blue
+        .`REDPWM(state[2]),      // Red
+        .`GREENPWM(state[1]),    // Green
         .RGB0(rgb0),
         .RGB1(rgb1),
         .RGB2(rgb2)
