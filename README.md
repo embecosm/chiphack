@@ -12,9 +12,29 @@ This is a minimal Verilog project for your Fomu. It contains just enough to turn
 
 Hello blinky! This uses a counter to flash each channel of the RGB LED!
 
-### TBD
+### button
 
-For future use! I can hope for a UART one day :)
+This is a basic project that can use the two capacitive "touch" buttons. This is abstracted into a module.
+
+### deadbeef
+
+This is a string to LED lights project, you can display ABCDEF through different colours
+
+### serialTalker
+
+Similar to deadbeef but over UART from the front pads. A crocodile dile clip and a usb to UART is recommended.
+
+### serialTalkerNumberEdition
+
+This displays binary over the UART
+
+### serialTalkerFibonacciEdition
+
+Displays the fibonacci sequence over the UART
+
+### serialTalkerPRSBEdition
+
+Displays "random" numbers over UART by using linear shift feedback registers
 
 ## Prerequisites
 
