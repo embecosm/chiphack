@@ -1,0 +1,8 @@
+
+*.bin
+*.json
+*.dfu
+*.bit
+*.asc
+serialTalkerNumberEdition/yosys-report.txt
+*.bin

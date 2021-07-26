@@ -47,28 +47,33 @@ module top (
         .GLOBAL_BUFFER_OUTPUT(clk)
     );
 
-    // Use counter logic to divide system clock.  The clock is 48 MHz,
-    // so we divide it down by 2^28.
     reg [28:0] counter = 0;
-    // reg [8*11:0 ] message = "I LOVE FOMU";
-    parameter MESSAGELENGTH = 11;
-    reg [8*MESSAGELENGTH:0 ] message = "ABABABABABA";
+
+    // please remember to change this !
+    parameter MESSAGELENGTH = 14;
+    reg [8*MESSAGELENGTH - 1:0 ] message = "DEAD BEEF CAFE";
+
+
     reg [4:0] characterIndex = MESSAGELENGTH;
     reg [2:0] state = 0;
 
 
     always @(posedge clk) begin
         counter <= counter + 1;
-        if (counter == 12_000_000) begin
-            case (message[8*characterIndex: 8*(characterIndex-1)])
+        if (counter == 48_000_000) begin
+            case (message[8*characterIndex - 1: 8*(characterIndex-1)])
                 "A": state <= 3'b100; // red
                 "B": state <= 3'b010; // greeb
                 "C": state <= 3'b001; // blue
-                default: state <= 3'b111; // white. everything is wrong
+                "D": state <= 3'b101; // pink
+                "E": state <= 3'b110; // yellow
+                "F": state <= 3'b011; // cyan
+                " ": state <= 3'b111; // white
+                default: state <= 3'b000; // off. everything is wrong
             endcase 
             // MSB first so we must count backwards! 
             characterIndex <= characterIndex -1;
-            if (characterIndex == 0) begin 
+            if (characterIndex == 1) begin 
                 characterIndex <= MESSAGELENGTH;
             end
             counter <= 0;
