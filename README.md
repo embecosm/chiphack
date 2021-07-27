@@ -1,7 +1,7 @@
 # [Chip Hack](http://www.chiphack.org)
 
 This repository contains tutorial code and
-documentation for the [Chip Hack](http://www.chiphack.org) events. 
+documentation for [Issue 2 of Chiphack](http://www.chiphack.org). 
 This has all been updated in 2021 to accomodate Fomu, an FPGA in your USB port! 
 
 ### empty
@@ -47,7 +47,8 @@ To install everything I recommend following the Fomu Toolchain installation guid
 Full guidance is provided in the ChipHack Fomu application notes. 
 (Link coming soon!)
 
-The simple way is probably just to use ```make; make load``` in the folder with your project + makefile
+The simple way is probably just to use ```make load``` in the folder with your project + makefile. You'll also have to add your 
+```export FOMU_REV=pvt``` to your bash profile.
 
 ## Files
 The following files have been taken from various [im-tomu](https://github.com/im-tomu) repositories. 
@@ -58,4 +59,6 @@ These are licensed under Apache 2.0. I have lovingly included a short notice in 
 * fomu-pvt.pcf
 * PnR_Prog.mk
 * Makefile
+* blink.v 
 
+All other projects are derivatives of blink.v 
