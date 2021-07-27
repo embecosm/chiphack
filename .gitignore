@@ -4,5 +4,5 @@
 *.dfu
 *.bit
 *.asc
-serialTalkerNumberEdition/yosys-report.txt
+yosys-report.txt
 *.bin
