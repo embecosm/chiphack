@@ -69,11 +69,11 @@ module serialTalker (
     always @ (posedge clk) begin
         // about 9600 baud
         // 48,000,000 / 9600 = every 5000 clock cycles
-        if (counter  == 4000 ) begin
+        if (counter  == 5000 ) begin
 
             if (currentColumn == 0) begin
                 currentdatatosend[7:0] <= "\n";
-            end else begin            
+            end else begin           
                 currentdatatosend[7:0] <= "0" + numbertosend[currentColumn - 1];
             end
             // 1 start bit, 8 data bits, 1 stop bit
