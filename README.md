@@ -38,7 +38,7 @@ Displays the fibonacci sequence over the UART.
 
 ### serialTalkerPRBSEdition
 
-Displays "random" numbers over UART by using a linear shift feedback register.
+Displays pseudorandom numbers over UART by using a linear shift feedback register.
 
 ## Prerequisites
 

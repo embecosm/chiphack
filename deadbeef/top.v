@@ -1,5 +1,5 @@
 // https://github.com/im-tomu/fomu-workshop/blob/master/hdl/verilog/blink/blink.v
-// Simple tri-colour LED blink example.
+// This flashes the Fomu's LED according to an ASCII string
 
 // assuming production board! 
 `define GREENPWM RGB0PWM

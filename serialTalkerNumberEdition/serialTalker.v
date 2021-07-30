@@ -1,5 +1,6 @@
 // https://github.com/im-tomu/fomu-workshop/blob/master/hdl/verilog/blink/blink.v
-// Simple tri-colour LED blink example.
+// A simple UART implementation using the second pad on the Fomu. 
+// This outputs numbers in binary using ASCII.
 
 // assuming production board! 
 `define GREENPWM RGB0PWM
