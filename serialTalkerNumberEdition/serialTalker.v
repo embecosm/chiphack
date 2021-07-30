@@ -102,7 +102,7 @@ module serialTalker (
                     currentColumn <= currentColumn - 1;
                 end
             end else begin
-                // keep sending current UART frame
+                // keep sending current UART packet
                 txstatecounter <= txstatecounter + 1; 
             end
             

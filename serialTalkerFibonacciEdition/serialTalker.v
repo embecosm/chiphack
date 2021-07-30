@@ -105,8 +105,8 @@ module serialTalker (
                     currentColumn <= currentColumn - 1;
                 end
             end else begin
-                // keep sending current UART frame
-                txstatecounter <= txstatecounter + 1; // how far in current UART frame
+                // keep sending current UART packet
+                txstatecounter <= txstatecounter + 1; // how far in current UART packet
             end
             
             // this is where the message gets send out
