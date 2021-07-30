@@ -1,7 +1,7 @@
 
 include ../board.mk
 
-DESIGN = morse
+DESIGN = ledtransmitter
 TOP    = top
 
 VERILOG_SYN_FILES = top.v

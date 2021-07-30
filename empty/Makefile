@@ -1,7 +1,7 @@
 
 include ../board.mk
 
-DESIGN = top
+DESIGN = empty
 TOP    = top
 
 VERILOG_SYN_FILES = top.v

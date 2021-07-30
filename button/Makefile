@@ -1,10 +1,10 @@
 
 include ../board.mk
 
-DESIGN = blink
-TOP    = blink
+DESIGN = button
+TOP    = top
 
-VERILOG_SYN_FILES = blink.v
+VERILOG_SYN_FILES = top.v
 
 YOSYS     ?= yosys
 NEXTPNR   ?= nextpnr-ice40

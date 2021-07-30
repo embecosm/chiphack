@@ -1,7 +1,7 @@
 
 include ../board.mk
 
-DESIGN = serialTalker
+DESIGN = serialTalkerNumberEdition
 TOP    = serialTalker
 
 VERILOG_SYN_FILES = serialTalker.v

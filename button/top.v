@@ -8,7 +8,7 @@
 
 `include "button.v"
 
-module blink (
+module top (
     // 48MHz Clock input
     // --------
     input clki,

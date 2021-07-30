@@ -6,15 +6,15 @@ This has all been updated in 2021 to accomodate Fomu, an FPGA in your USB port!
 
 ### empty
 
-This is a minimal Verilog project for your Fomu. It contains just enough to turn the LED on and a clock buffer.
+This is a minimal Verilog project for your Fomu. It contains just enough to turn the LEDs on and a clock buffer.
 
 ### blink
 
-Hello blinky! This uses a counter to flash each channel of the RGB LED!
+Hello blinky! This uses a counter to flash each colour of the RGB LED!
 
 ### button
 
-This is a basic project that can use the two capacitive "touch" buttons. This is abstracted into a module.
+This is a basic project that can use the two capacitive "touch" buttons. The button logic is inside a module.
 
 ### buttonHalfAdder
 
@@ -38,7 +38,7 @@ Displays the fibonacci sequence over the UART.
 
 ### serialTalkerPRBSEdition
 
-Displays "random" numbers over UART by using a linear shift feedback registers.
+Displays "random" numbers over UART by using a linear shift feedback register.
 
 ## Prerequisites
 
